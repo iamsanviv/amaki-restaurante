@@ -25,16 +25,16 @@
   --beige:#F3CA9B;
   --marron:#4D2000;
 
-  /* TEMA CLARO (principal) */
-  --fondo:#FBF4EA;
-  --fondo-alt:#F5E9D8;
+  /* TEMA CLARO (principal) — crema de marca */
+  --fondo:#F8E7CF;
+  --fondo-alt:#F3CA9B;
   --tinta:#3A1800;
-  --tinta-suave:rgba(58,24,0,.68);
+  --tinta-suave:rgba(58,24,0,.72);
   --acento:#4D2000;
   --realce:#384C23;
-  --linea:rgba(77,32,0,.18);
-  --sombra:0 18px 50px -28px rgba(77,32,0,.5);
-  --grano:.035;
+  --linea:rgba(77,32,0,.22);
+  --sombra:0 18px 50px -28px rgba(77,32,0,.55);
+  --grano:.04;
 
   --f-display:"TAN Grandeur","Cormorant Garamond","Bodoni MT",Didot,Georgia,serif;
   --f-body:"TAN Mignon","Cormorant Garamond",Georgia,"Times New Roman",serif;
@@ -71,8 +71,9 @@ body{
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.14),transparent 68%),
-    radial-gradient(55% 40% at 96% 26%,rgba(243,202,155,.28),transparent 72%);
+    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.16),transparent 68%),
+    radial-gradient(55% 40% at 96% 26%,rgba(77,32,0,.10),transparent 72%),
+    radial-gradient(60% 45% at 50% 108%,rgba(243,202,155,.5),transparent 70%);
 }
 :root[data-tema="oscuro"] body::before{
   background:
