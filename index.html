@@ -1,286 +1,341 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AMAKI — Restaurante Amazónico · Neiva</title>
-<meta name="description" content="AMAKI, restaurante amazónico en Neiva. Cocina de autor con raíces de selva: comer con conciencia, emoción y gratitud hacia la tierra." />
+<meta name="description" content="AMAKI, restaurante amazónico en Neiva, Huila. Cocina de raíz amazónica, carta completa y propuestas para eventos sociales y empresariales." />
 
 <style>
-/* ───────────────── Tipografías de marca ─────────────────
-   Coloca los archivos reales en assets/fonts/ y estas reglas
-   toman el control automáticamente. Mientras tanto se usa el
-   fallback serif definido en --f-display / --f-body.        */
+/* ═══════════ Tipografías de marca ═══════════
+   Sube los archivos a assets/fonts/ y estas reglas
+   toman el control automáticamente.                */
 @font-face{
   font-family:"TAN Grandeur";
   src:url("assets/fonts/TAN-Grandeur.woff2") format("woff2"),
       url("assets/fonts/TAN-Grandeur.otf") format("opentype");
-  font-weight:400; font-display:swap;
+  font-weight:400;font-display:swap;
 }
 @font-face{
   font-family:"TAN Mignon";
   src:url("assets/fonts/TAN-Mignon.woff2") format("woff2"),
       url("assets/fonts/TAN-Mignon.otf") format("opentype");
-  font-weight:400; font-display:swap;
+  font-weight:400;font-display:swap;
 }
 
+/* ═══════════ Tokens ═══════════ */
 :root{
-  /* Paleta — un solo mundo visual: la selva de noche */
   --verde:#384C23;
   --beige:#F3CA9B;
   --marron:#4D2000;
-  --tierra:#2B1206;        /* fondo, derivado del marrón */
-  --tierra-hondo:#1B0B03;
-  --crema:#EDDCC6;
-  --crema-tenue:rgba(237,220,198,.62);
+
+  /* TEMA CLARO (principal) */
+  --fondo:#FBF4EA;
+  --fondo-alt:#F5E9D8;
+  --tinta:#3A1800;
+  --tinta-suave:rgba(58,24,0,.68);
+  --acento:#4D2000;
+  --realce:#384C23;
+  --linea:rgba(77,32,0,.18);
+  --sombra:0 18px 50px -28px rgba(77,32,0,.5);
+  --grano:.035;
+
+  --f-display:"TAN Grandeur","Cormorant Garamond","Bodoni MT",Didot,Georgia,serif;
+  --f-body:"TAN Mignon","Cormorant Garamond",Georgia,"Times New Roman",serif;
+
+  --ancho:1180px;
+  --r-seccion:clamp(4.5rem,11vh,8.5rem);   /* aire entre secciones */
+  --r-bloque:clamp(2.2rem,5vw,3.6rem);     /* aire entre bloques   */
+  --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
+}
+
+/* TEMA OSCURO (alternativa) */
+:root[data-tema="oscuro"]{
+  --fondo:#2B1206;
+  --fondo-alt:#1F0D04;
+  --tinta:#EDDCC6;
+  --tinta-suave:rgba(237,220,198,.66);
+  --acento:#F3CA9B;
+  --realce:#F3CA9B;
   --linea:rgba(243,202,155,.22);
-
-  --f-display:"TAN Grandeur", "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
-  --f-body:"TAN Mignon", "Cormorant Garamond", Georgia, "Times New Roman", serif;
-
-  --ancho:1240px;
-  --paso:clamp(1.4rem, 4vw, 3.2rem);
+  --sombra:0 18px 50px -28px rgba(0,0,0,.8);
+  --grano:.06;
 }
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;
-  background:var(--tierra);
-  color:var(--crema);
+  margin:0;background:var(--fondo);color:var(--tinta);
   font-family:var(--f-body);
-  font-size:clamp(1rem,.95rem + .3vw,1.125rem);
-  line-height:1.75;
-  overflow-x:hidden;
+  font-size:clamp(1rem,.95rem + .28vw,1.1rem);
+  line-height:1.8;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  transition:background .6s ease,color .6s ease;
 }
-/* Grano y neblina de fondo */
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(70% 50% at 15% 0%, rgba(56,76,35,.55), transparent 65%),
-    radial-gradient(60% 45% at 95% 30%, rgba(77,32,0,.6), transparent 70%),
-    radial-gradient(50% 40% at 50% 110%, rgba(56,76,35,.4), transparent 70%);
+    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.14),transparent 68%),
+    radial-gradient(55% 40% at 96% 26%,rgba(243,202,155,.28),transparent 72%);
+}
+:root[data-tema="oscuro"] body::before{
+  background:
+    radial-gradient(70% 50% at 15% 0%,rgba(56,76,35,.55),transparent 65%),
+    radial-gradient(60% 45% at 95% 30%,rgba(77,32,0,.65),transparent 70%);
 }
 body::after{
-  content:"";position:fixed;inset:-50%;pointer-events:none;z-index:0;opacity:.05;
+  content:"";position:fixed;inset:-50%;pointer-events:none;z-index:0;opacity:var(--grano);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 main,header,footer{position:relative;z-index:1}
-
 img,video{max-width:100%;display:block}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--beige);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--realce);outline-offset:3px;border-radius:2px}
 
-.env{width:min(100% - 2.4rem, var(--ancho));margin-inline:auto}
+.env{width:min(100% - 2.4rem,var(--ancho));margin-inline:auto}
 
-h1,h2,h3,.display{
-  font-family:var(--f-display);
-  font-weight:400;
-  line-height:1.02;
-  text-wrap:balance;
-  letter-spacing:.02em;
-  margin:0;
-}
+/* ═══════════ Tipografía y ritmo ═══════════ */
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;line-height:1.08;
+  letter-spacing:.02em;text-wrap:balance;margin:0}
+p{margin:0 0 1.2em;max-width:64ch}
+p:last-child{margin-bottom:0}
+
 .eyebrow{
-  font-family:var(--f-body);
-  font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
-  color:var(--beige);opacity:.8;margin:0 0 1.1rem;
+  font-family:var(--f-body);font-size:.72rem;letter-spacing:.42em;
+  text-transform:uppercase;color:var(--realce);opacity:.85;
+  margin:0 0 1.4rem;
 }
-p{margin:0 0 1.15em;max-width:62ch}
-.tenue{color:var(--crema-tenue)}
+.titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
+  margin-bottom:var(--r-titulo)}
+.titulo em{font-style:italic;font-family:var(--f-body);color:var(--tinta)}
+.tenue{color:var(--tinta-suave)}
 
-/* ───────────────── Navegación ───────────────── */
+/* encabezado de sección: título + entradilla con aire garantizado */
+.cabecera{margin-bottom:var(--r-bloque);max-width:64ch}
+.cabecera p{margin-bottom:0}
+
+/* ═══════════ Navegación ═══════════ */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;padding:1rem clamp(1.2rem,4vw,3rem);
-  transition:background .5s ease, backdrop-filter .5s ease, border-color .5s;
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.95rem clamp(1.2rem,4vw,3rem);
   border-bottom:1px solid transparent;
+  transition:background .5s,backdrop-filter .5s,border-color .5s;
 }
 .nav[data-fijo="si"]{
-  background:rgba(27,11,3,.86);backdrop-filter:blur(14px);
-  border-bottom-color:var(--linea);
+  background:color-mix(in srgb,var(--fondo) 88%,transparent);
+  backdrop-filter:blur(14px);border-bottom-color:var(--linea);
 }
-.nav__marca{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.34em;color:var(--beige);text-decoration:none}
-.nav__menu{display:flex;gap:clamp(1rem,2.4vw,2.2rem);list-style:none;margin:0;padding:0}
+.nav__marca{font-family:var(--f-display);font-size:1.1rem;letter-spacing:.34em;
+  color:var(--acento);text-decoration:none}
+.nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
+.nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
 .nav__menu a{
-  text-decoration:none;font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--crema-tenue);position:relative;padding-bottom:.3rem;transition:color .3s;
+  text-decoration:none;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--tinta-suave);position:relative;padding-bottom:.28rem;transition:color .3s;
 }
-.nav__menu a::after{
-  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--beige);
-  transition:width .4s cubic-bezier(.2,.8,.2,1);
-}
-.nav__menu a:hover{color:var(--beige)}
+.nav__menu a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--realce);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.nav__menu a:hover{color:var(--acento)}
 .nav__menu a:hover::after{width:100%}
-@media (max-width:820px){ .nav__menu{display:none} }
+.tema{
+  background:none;border:1px solid var(--linea);color:var(--tinta-suave);
+  font:inherit;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:.5rem .9rem;cursor:pointer;border-radius:99px;
+  transition:border-color .3s,color .3s;white-space:nowrap;
+}
+.tema:hover{border-color:var(--realce);color:var(--acento)}
+@media (max-width:900px){.nav__menu{display:none}}
 
-/* ───────────────── Portada ───────────────── */
-.portada{
-  min-height:100svh;display:grid;align-content:center;
-  padding:clamp(7rem,16vh,11rem) 0 var(--paso);
-}
+/* ═══════════ Portada ═══════════ */
+.portada{min-height:100svh;display:grid;align-content:center;
+  padding:clamp(7rem,15vh,10rem) 0 var(--r-bloque)}
+.logo{display:block;margin:0 auto;max-width:min(680px,88vw)}
 .marca{text-align:center}
-.marca__desde,.marca__anio{
-  font-size:.66rem;letter-spacing:.36em;color:var(--beige);line-height:1.35;opacity:.85;
-}
-.marca__fila{
-  display:flex;align-items:center;justify-content:center;gap:clamp(.8rem,3vw,2.4rem);
-}
-.marca__nombre{
-  font-size:clamp(3.6rem,15vw,11rem);
-  color:var(--beige);letter-spacing:.06em;
-}
+.marca__fila{display:flex;align-items:center;justify-content:center;gap:clamp(.8rem,3vw,2.4rem)}
+.marca__desde,.marca__anio{font-size:.66rem;letter-spacing:.36em;color:var(--acento);
+  line-height:1.4;opacity:0;animation:aparece 1s ease 1.25s forwards}
+.marca__nombre{font-size:clamp(3.4rem,14vw,10rem);color:var(--acento);letter-spacing:.06em}
 .marca__nombre span{display:inline-block;opacity:0;transform:translateY(.45em);
   animation:sube .95s cubic-bezier(.2,.75,.2,1) forwards}
-.marca__sub{
-  font-family:var(--f-body);font-style:italic;
-  font-size:clamp(1.05rem,3.4vw,2rem);color:var(--beige);
-  letter-spacing:.06em;margin-top:.4rem;opacity:0;
-  animation:sube 1s ease .95s forwards;
-}
-.marca__desde,.marca__anio{opacity:0;animation:aparece 1s ease 1.25s forwards}
-.portada__pie{
-  margin-top:clamp(2.4rem,7vh,4.4rem);text-align:center;
-  opacity:0;animation:aparece 1.1s ease 1.5s forwards;
-}
-.portada__pie p{margin-inline:auto;max-width:46ch;color:var(--crema-tenue)}
-.baja{
-  display:inline-flex;flex-direction:column;align-items:center;gap:.6rem;
-  margin-top:1.6rem;text-decoration:none;font-size:.68rem;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--beige);
-}
-.baja i{display:block;width:1px;height:52px;background:linear-gradient(var(--beige),transparent);
+.marca__sub{font-family:var(--f-body);font-style:italic;
+  font-size:clamp(1.05rem,3.2vw,1.9rem);color:var(--acento);letter-spacing:.06em;
+  margin:.5rem 0 0;opacity:0;animation:sube 1s ease .95s forwards}
+
+.portada__pie{margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center;
+  opacity:0;animation:aparece 1.1s ease 1.5s forwards}
+.portada__pie p{margin-inline:auto;max-width:48ch;color:var(--tinta-suave)}
+.baja{display:inline-flex;flex-direction:column;align-items:center;gap:.7rem;
+  margin-top:1.9rem;text-decoration:none;font-size:.68rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--realce)}
+.baja i{display:block;width:1px;height:52px;
+  background:linear-gradient(var(--realce),transparent);
   animation:respira 2.6s ease-in-out infinite}
 
 @keyframes sube{to{opacity:1;transform:none}}
 @keyframes aparece{to{opacity:1}}
-@keyframes respira{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+@keyframes respira{0%,100%{transform:scaleY(.4);transform-origin:top}
+  50%{transform:scaleY(1);transform-origin:top}}
 
-/* ───────────────── Secciones ───────────────── */
-.seccion{padding:clamp(4.5rem,12vh,9rem) 0}
-.seccion--verde{background:linear-gradient(180deg, rgba(56,76,35,.42), rgba(56,76,35,.12))}
-.titulo{font-size:clamp(2rem,6vw,4.2rem);color:var(--beige)}
-.titulo em{font-style:italic;font-family:var(--f-body);color:var(--crema)}
+/* ═══════════ Secciones ═══════════ */
+.seccion{padding-block:var(--r-seccion)}
+.seccion--tinte{background:var(--fondo-alt)}
 
-.dos{display:grid;gap:clamp(2rem,6vw,5rem);grid-template-columns:1fr;align-items:center}
-@media (min-width:900px){
-  .dos{grid-template-columns:1.05fr .95fr}
-  .dos--invertido > :first-child{order:2}
-}
+.dos{display:grid;gap:clamp(2.2rem,6vw,5rem);grid-template-columns:1fr;align-items:center}
+@media (min-width:900px){.dos{grid-template-columns:1.05fr .95fr}}
 
-/* Retrato con marco desplazado */
-.retrato{position:relative;aspect-ratio:4/5;border-radius:2px;overflow:hidden;
-  background:var(--verde) center/cover no-repeat;}
-.retrato::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(200deg,transparent 40%,rgba(27,11,3,.55))}
+.retrato{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:3px;
+  background:linear-gradient(150deg,var(--verde),var(--marron));
+  background-size:cover;background-position:center;box-shadow:var(--sombra)}
 .marco{position:relative}
-.marco::before{
-  content:"";position:absolute;inset:1.6rem -1.6rem -1.6rem 1.6rem;
-  border:1px solid var(--linea);pointer-events:none;
-}
+.marco::before{content:"";position:absolute;inset:1.6rem -1.6rem -1.6rem 1.6rem;
+  border:1px solid var(--linea);pointer-events:none}
 
-/* Cifras del propósito */
-.pilares{display:grid;gap:clamp(1.4rem,3vw,2.6rem);grid-template-columns:1fr;margin-top:clamp(2rem,5vw,3.4rem)}
+.pilares{display:grid;gap:clamp(1.8rem,3.4vw,2.8rem);grid-template-columns:1fr}
 @media (min-width:760px){.pilares{grid-template-columns:repeat(3,1fr)}}
-.pilar{padding-top:1.4rem;border-top:1px solid var(--linea)}
-.pilar h3{font-size:1.5rem;color:var(--beige);margin-bottom:.6rem}
-.pilar p{font-size:.95rem;color:var(--crema-tenue);margin:0}
+.pilar{padding-top:1.5rem;border-top:1px solid var(--linea)}
+.pilar h3{font-size:1.5rem;color:var(--acento);margin-bottom:.75rem}
+.pilar p{font-size:.96rem;color:var(--tinta-suave)}
 
-/* ───────────────── Carta ───────────────── */
-.carta{display:grid;gap:0;margin-top:clamp(2rem,5vw,3.5rem)}
-.plato{
-  display:grid;gap:.3rem 2rem;grid-template-columns:1fr auto;
-  padding:1.5rem 0;border-top:1px solid var(--linea);
-  transition:padding-left .45s cubic-bezier(.2,.8,.2,1), background .45s;
+/* ═══════════ Carta ═══════════ */
+.carta__nav{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:var(--r-bloque)}
+.chip{
+  font:inherit;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:.6rem 1.2rem;border:1px solid var(--linea);background:none;color:var(--tinta-suave);
+  border-radius:99px;cursor:pointer;transition:all .35s cubic-bezier(.2,.8,.2,1);
 }
-.plato:last-child{border-bottom:1px solid var(--linea)}
-.plato:hover{padding-left:1.2rem;background:linear-gradient(90deg,rgba(243,202,155,.07),transparent 70%)}
-.plato__nombre{font-family:var(--f-display);font-size:clamp(1.25rem,3vw,1.9rem);color:var(--beige);letter-spacing:.03em}
-.plato__precio{font-size:.95rem;color:var(--beige);font-variant-numeric:tabular-nums;align-self:center}
-.plato__desc{grid-column:1/-1;font-size:.95rem;color:var(--crema-tenue);margin:0;max-width:70ch}
-.grupo{font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--crema-tenue);
-  margin:clamp(2.2rem,5vw,3.4rem) 0 .4rem}
-.grupo:first-of-type{margin-top:0}
+.chip:hover{border-color:var(--realce);color:var(--acento)}
+.chip[aria-selected="true"]{background:var(--acento);border-color:var(--acento);
+  color:var(--fondo)}
 
-/* ───────────────── Videos ───────────────── */
+.grupo{margin-bottom:clamp(2.6rem,6vw,4rem)}
+.grupo:last-child{margin-bottom:0}
+.grupo__titulo{
+  font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);
+  padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+}
+.grupo__nota{font-family:var(--f-body);font-size:.72rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--tinta-suave)}
+
+.plato{
+  display:grid;gap:.35rem 1.8rem;grid-template-columns:1fr auto;
+  padding:1.25rem 0;border-bottom:1px solid var(--linea);
+  transition:padding-left .45s cubic-bezier(.2,.8,.2,1),background .45s;
+}
+.plato:hover{padding-left:1rem;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--realce) 9%,transparent),transparent 72%)}
+.plato__nombre{font-family:var(--f-display);font-size:clamp(1.1rem,2.4vw,1.45rem);
+  color:var(--acento);letter-spacing:.03em}
+.plato__precio{font-size:.95rem;color:var(--realce);align-self:center;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.plato__desc{grid-column:1/-1;font-size:.94rem;color:var(--tinta-suave);
+  margin:0;max-width:72ch;line-height:1.6}
+
+/* dos columnas para listas cortas (bebidas, adiciones) */
+.columnas{columns:2;column-gap:clamp(2rem,5vw,4rem)}
+@media (max-width:640px){.columnas{columns:1}}
+.columnas .plato{break-inside:avoid}
+
+.adiciones{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.tag{border:1px solid var(--linea);border-radius:99px;padding:.45rem 1rem;
+  font-size:.85rem;color:var(--tinta-suave)}
+
+/* ═══════════ Eventos ═══════════ */
+.planes{display:grid;gap:clamp(1.4rem,3vw,2rem);grid-template-columns:1fr}
+@media (min-width:800px){.planes{grid-template-columns:1fr 1fr}}
+.plan{
+  border:1px solid var(--linea);border-radius:4px;padding:clamp(1.6rem,3.4vw,2.4rem);
+  background:color-mix(in srgb,var(--realce) 5%,transparent);
+  display:flex;flex-direction:column;gap:1.1rem;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
+}
+.plan:hover{transform:translateY(-6px);border-color:var(--realce);box-shadow:var(--sombra)}
+.plan__cabeza{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  flex-wrap:wrap}
+.plan h3{font-size:1.6rem;color:var(--acento)}
+.plan__precio{font-family:var(--f-display);font-size:1.5rem;color:var(--realce);
+  font-variant-numeric:tabular-nums}
+.plan ul{margin:0;padding-left:1.1rem;color:var(--tinta-suave);font-size:.96rem;
+  display:grid;gap:.35rem}
+.plan__pie{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tinta-suave);margin-top:auto}
+
+.extras{display:grid;gap:clamp(1.2rem,2.6vw,1.8rem);grid-template-columns:1fr;
+  margin-top:var(--r-bloque)}
+@media (min-width:720px){.extras{grid-template-columns:repeat(3,1fr)}}
+.extra{border-top:1px solid var(--linea);padding-top:1.2rem}
+.extra h4{font-size:1.15rem;color:var(--acento);margin-bottom:.5rem}
+.extra p{font-size:.92rem;color:var(--tinta-suave)}
+.extra strong{color:var(--realce);font-weight:400;font-variant-numeric:tabular-nums}
+
+/* ═══════════ Videos ═══════════ */
+.presentacion{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:3px;
+  border:1px solid var(--linea);background:var(--fondo-alt);box-shadow:var(--sombra)}
+.presentacion video{width:100%;height:100%;object-fit:cover}
+
 .reel{
   display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:1.6rem .2rem 2.2rem;margin-inline:calc(50% - 50vw);
-  padding-inline:max(1.2rem, calc(50vw - var(--ancho)/2));
+  padding-block:1.4rem 2rem;margin-inline:calc(50% - 50vw);
+  padding-inline:max(1.2rem,calc(50vw - var(--ancho)/2));
   scrollbar-width:thin;scrollbar-color:var(--linea) transparent;
 }
 .reel::-webkit-scrollbar{height:5px}
 .reel::-webkit-scrollbar-thumb{background:var(--linea);border-radius:99px}
 .clip{
-  flex:0 0 clamp(200px,58vw,268px);scroll-snap-align:center;
-  aspect-ratio:9/16;position:relative;border-radius:3px;overflow:hidden;
-  background:var(--tierra-hondo);border:1px solid var(--linea);
-  transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s;
+  flex:0 0 clamp(196px,56vw,258px);scroll-snap-align:center;aspect-ratio:9/16;
+  position:relative;overflow:hidden;border-radius:3px;border:1px solid var(--linea);
+  background:var(--fondo-alt);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
 }
-.clip:hover{transform:translateY(-8px) scale(1.015);border-color:var(--beige)}
+.clip:hover{transform:translateY(-8px);border-color:var(--realce);box-shadow:var(--sombra)}
 .clip video{width:100%;height:100%;object-fit:cover}
-.clip__vacio{
-  position:absolute;inset:0;display:grid;place-content:center;gap:.5rem;text-align:center;
-  padding:1.2rem;color:var(--crema-tenue);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
-  background:linear-gradient(160deg, rgba(56,76,35,.5), rgba(43,18,6,.9));
-}
-.clip__pie{
-  position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .9rem;
-  background:linear-gradient(transparent,rgba(27,11,3,.92));
-  font-size:.76rem;letter-spacing:.14em;color:var(--crema);
-}
-.presentacion{
-  position:relative;aspect-ratio:16/9;border:1px solid var(--linea);
-  border-radius:3px;overflow:hidden;background:var(--tierra-hondo);
-  margin-top:clamp(1.8rem,4vw,3rem);
-}
-.presentacion video{width:100%;height:100%;object-fit:cover}
-.presentacion .clip__vacio{font-size:.8rem}
+.vacio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
+  padding:1.2rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--tinta-suave);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--verde) 16%,transparent),
+                                    color-mix(in srgb,var(--marron) 12%,transparent))}
+.clip__pie{position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .85rem;
+  background:linear-gradient(transparent,color-mix(in srgb,var(--marron) 88%,transparent));
+  font-size:.75rem;letter-spacing:.14em;color:#F3CA9B}
+.sub-eyebrow{margin-top:var(--r-bloque)}
 
-/* ───────────────── Visita ───────────────── */
-.datos{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr}
+/* ═══════════ Visita ═══════════ */
+.datos{display:grid;gap:clamp(1.8rem,4vw,3rem);grid-template-columns:1fr}
 @media (min-width:760px){.datos{grid-template-columns:repeat(3,1fr)}}
-.dato h3{font-size:1.35rem;color:var(--beige);margin-bottom:.5rem}
-.dato p,.dato a{font-size:.95rem;color:var(--crema-tenue);text-decoration:none}
-.dato a:hover{color:var(--beige)}
-.horario{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1.2rem;font-size:.95rem;
-  color:var(--crema-tenue);font-variant-numeric:tabular-nums}
-.horario dt{color:var(--crema)}
+.dato h3{font-size:1.3rem;color:var(--acento);margin-bottom:.85rem}
+.dato p{font-size:.96rem;color:var(--tinta-suave)}
+.dato a{text-decoration:none;border-bottom:1px solid var(--linea);transition:border-color .3s,color .3s}
+.dato a:hover{color:var(--acento);border-color:var(--acento)}
+.horario{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1.2rem;
+  font-size:.95rem;color:var(--tinta-suave);font-variant-numeric:tabular-nums;margin:0}
+.horario dt{color:var(--tinta)}
 .horario dd{margin:0;text-align:right}
 
-.redes{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:clamp(2.4rem,5vw,3.4rem)}
-.boton{
-  display:inline-block;text-decoration:none;padding:.95rem 2.1rem;
-  border:1px solid var(--beige);color:var(--beige);
+.redes{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:var(--r-bloque)}
+.boton{display:inline-block;text-decoration:none;padding:.95rem 2.1rem;
+  border:1px solid var(--acento);color:var(--acento);
   font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;
-  position:relative;overflow:hidden;transition:color .4s;
-}
+  position:relative;overflow:hidden;transition:color .4s}
 .boton span{position:relative;z-index:1}
-.boton::before{
-  content:"";position:absolute;inset:0;background:var(--beige);
-  transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1);
-}
-.boton:hover{color:var(--marron)}
+.boton::before{content:"";position:absolute;inset:0;background:var(--acento);
+  transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.boton:hover{color:var(--fondo)}
 .boton:hover::before{transform:none}
 
-/* ───────────────── Cierre ───────────────── */
-.cita{
-  text-align:center;font-family:var(--f-display);
-  font-size:clamp(1.6rem,5vw,3.4rem);color:var(--beige);
-  max-width:20ch;margin-inline:auto;line-height:1.15;
-}
-.pie{
-  border-top:1px solid var(--linea);padding:2.6rem 0 3.4rem;
+.cita{text-align:center;font-family:var(--f-display);
+  font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
+  max-width:22ch;margin-inline:auto;line-height:1.18}
+
+.pie{border-top:1px solid var(--linea);padding:2.6rem 0 3.4rem;
   display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
-  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--crema-tenue);
-}
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-suave)}
 
-/* ───────────────── Revelado al hacer scroll ───────────────── */
-.rev{opacity:0;transform:translateY(28px);
-  transition:opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1)}
+/* ═══════════ Revelado ═══════════ */
+.rev{opacity:0;transform:translateY(26px);
+  transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
 .rev[data-visible="si"]{opacity:1;transform:none}
-.rev:nth-child(2){transition-delay:.09s}
-.rev:nth-child(3){transition-delay:.18s}
+.pilares .rev:nth-child(2),.planes .rev:nth-child(2),.extras .rev:nth-child(2){transition-delay:.1s}
+.pilares .rev:nth-child(3),.extras .rev:nth-child(3){transition-delay:.2s}
+.extras .rev:nth-child(4){transition-delay:.3s}
 
-@media (prefers-reduced-motion: reduce){
+@media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
   .rev{opacity:1;transform:none}
   html{scroll-behavior:auto}
@@ -289,21 +344,28 @@ p{margin:0 0 1.15em;max-width:62ch}
 
 <header class="nav" id="nav">
   <a class="nav__marca" href="#inicio">AMAKI</a>
-  <nav aria-label="Principal">
-    <ul class="nav__menu">
-      <li><a href="#historia">Historia</a></li>
-      <li><a href="#proposito">Propósito</a></li>
-      <li><a href="#carta">Carta</a></li>
-      <li><a href="#videos">Videos</a></li>
-      <li><a href="#visita">Visítanos</a></li>
-    </ul>
-  </nav>
+  <div class="nav__der">
+    <nav aria-label="Principal">
+      <ul class="nav__menu">
+        <li><a href="#historia">Historia</a></li>
+        <li><a href="#proposito">Propósito</a></li>
+        <li><a href="#carta">Carta</a></li>
+        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#visita">Visítanos</a></li>
+      </ul>
+    </nav>
+    <button class="tema" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
+  </div>
 </header>
 
 <main>
-  <!-- PORTADA -->
+  <!-- ══ PORTADA ══ -->
   <section class="portada env" id="inicio">
-    <div class="marca">
+    <!-- Cuando subas el logo a assets/img/logo.svg aparece aquí y se oculta el texto -->
+    <img class="logo" id="logo" src="assets/img/logo.svg" alt="AMAKI · Restaurante amazónico · Desde 2025" hidden />
+
+    <div class="marca" id="marca-texto">
       <div class="marca__fila">
         <div class="marca__desde">DES<br />DE</div>
         <h1 class="marca__nombre" aria-label="AMAKI">
@@ -320,25 +382,25 @@ p{margin:0 0 1.15em;max-width:62ch}
     </div>
   </section>
 
-  <!-- HISTORIA -->
+  <!-- ══ HISTORIA ══ -->
   <section class="seccion env" id="historia">
     <div class="dos">
       <div class="rev">
         <p class="eyebrow">Nuestra historia</p>
         <h2 class="titulo">Nacimos escuchando <em>el río</em></h2>
         <p>AMAKI comenzó como un viaje: recorrer la selva, sentarnos en cocinas de leña y aprender de las manos que llevan siglos preparando el mismo caldo. Volvimos a Neiva con recetas, con nombres en lenguas que casi nadie pronuncia y con la certeza de que esos sabores merecían una mesa.</p>
-        <p class="tenue">Desde 2025 servimos esa memoria: ingredientes del Amazonas y del Huila, técnicas ancestrales y una mano de autor que las presenta sin disfrazarlas.</p>
+        <p class="tenue">Desde 2025 servimos esa memoria en la Carrera 16 #51-76: ingredientes del Amazonas y del Huila, técnicas ancestrales y una mano de autor que las presenta sin disfrazarlas.</p>
       </div>
       <div class="marco rev">
-        <div class="retrato" style="background-image:linear-gradient(150deg,rgba(56,76,35,.9),rgba(77,32,0,.95))" role="img" aria-label="Espacio del restaurante AMAKI"></div>
+        <div class="retrato" role="img" aria-label="El espacio de AMAKI en Neiva"></div>
       </div>
     </div>
   </section>
 
-  <!-- PROPÓSITO -->
-  <section class="seccion seccion--verde" id="proposito">
+  <!-- ══ PROPÓSITO ══ -->
+  <section class="seccion seccion--tinte" id="proposito">
     <div class="env">
-      <div class="rev">
+      <div class="cabecera rev">
         <p class="eyebrow">Propósito de marca</p>
         <h2 class="titulo">Comer con conciencia, <em>emoción y gratitud</em></h2>
         <p>Rendimos tributo a la selva amazónica y a sus pueblos a través de la gastronomía: una experiencia que conecta a las personas con la tierra, con las raíces y con el amor por lo ancestral.</p>
@@ -350,7 +412,7 @@ p{margin:0 0 1.15em;max-width:62ch}
         </article>
         <article class="pilar rev">
           <h3>Memoria</h3>
-          <p>Cada preparación conserva una técnica indígena. Cocinar es también una manera de no dejar que se olvide.</p>
+          <p>Cada preparación conserva una técnica ancestral. Cocinar es también una manera de no dejar que se olvide.</p>
         </article>
         <article class="pilar rev">
           <h3>Autoría</h3>
@@ -360,128 +422,354 @@ p{margin:0 0 1.15em;max-width:62ch}
     </div>
   </section>
 
-  <!-- CARTA -->
+  <!-- ══ CARTA ══ -->
   <section class="seccion env" id="carta">
-    <div class="rev">
+    <div class="cabecera rev">
       <p class="eyebrow">La carta</p>
       <h2 class="titulo">Platos que <em>cuentan un territorio</em></h2>
-      <p class="tenue">Una selección de la carta actual. Cambia con las cosechas y con lo que el río permite.</p>
+      <p class="tenue">Del pirarucú del río a la cocina huilense de siempre. Precios en pesos colombianos.</p>
     </div>
 
-    <p class="grupo rev">Para empezar</p>
-    <div class="carta rev">
+    <div class="carta__nav rev" role="tablist" aria-label="Secciones de la carta">
+      <button class="chip" role="tab" aria-selected="true" data-ir="g-entradas">Entradas</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-fuertes">Platos fuertes</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-hamburguesas">Hamburguesas</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-bocaditos">Bocaditos</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-bebidas">Bebidas</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-adiciones">Adiciones</button>
+    </div>
+
+    <div class="grupo rev" id="g-entradas">
+      <h3 class="grupo__titulo">Entradas</h3>
       <article class="plato">
-        <h3 class="plato__nombre">Casabe de la maloca</h3>
-        <span class="plato__precio">$ 18.000</span>
-        <p class="plato__desc">Torta de yuca brava tostada al fogón, con ají negro amazónico y queso costeño ahumado.</p>
+        <h4 class="plato__nombre">Chorizo ahumado</h4><span class="plato__precio">$ 20.000</span>
+        <p class="plato__desc">Chorizo de cerdo artesanal ahumado, tacacho y chimichurri.</p>
       </article>
       <article class="plato">
-        <h3 class="plato__nombre">Ceviche de copoazú</h3>
-        <span class="plato__precio">$ 26.000</span>
-        <p class="plato__desc">Pescado blanco del Magdalena curado en copoazú, leche de tigre de cocona y cebolla encurtida en chontaduro.</p>
+        <h4 class="plato__nombre">Montaditos</h4><span class="plato__precio">$ 20.000</span>
+        <p class="plato__desc">Tostones de banano verde con carne desmechada.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Croquetas de pollo o de pirarucú</h4><span class="plato__precio">$ 18.000</span>
+        <p class="plato__desc">Carne pulpa apanada con bastoncitos de papa.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Canoítas de maduro</h4><span class="plato__precio">$ 20.000</span>
+        <p class="plato__desc">Plátano maduro asado, carne mechada de res, tocineta y gratinado con queso.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Mini hamburguesas</h4><span class="plato__precio">$ 22.000</span>
+        <p class="plato__desc">Tres mini hamburguesas tradicionales con pan, carne burger, lechuga, tomate, queso y tocineta.</p>
       </article>
     </div>
 
-    <p class="grupo rev">Fuertes</p>
-    <div class="carta rev">
+    <div class="grupo rev" id="g-fuertes">
+      <h3 class="grupo__titulo">Platos fuertes <span class="grupo__nota">Del río y del campo</span></h3>
       <article class="plato">
-        <h3 class="plato__nombre">Pirarucú a la hoja de bijao</h3>
-        <span class="plato__precio">$ 52.000</span>
-        <p class="plato__desc">Envuelto y asado lentamente sobre brasa, con puré de plátano hartón y aceite de cilantro cimarrón.</p>
+        <h4 class="plato__nombre">Milanesa de pirarucú</h4><span class="plato__precio">$ 55.000</span>
+        <p class="plato__desc">Filete de pirarucú apanado, guarnición y ensalada fresca.</p>
       </article>
       <article class="plato">
-        <h3 class="plato__nombre">Costilla en tucupí negro</h3>
-        <span class="plato__precio">$ 48.000</span>
-        <p class="plato__desc">Ocho horas de cocción en tucupí reducido, jambú fresco y arroz de coco tostado.</p>
+        <h4 class="plato__nombre">Pirarucú marinero</h4><span class="plato__precio">$ 72.000</span>
+        <p class="plato__desc">Rodaja de pirarucú en salsa blanca con mixtura de mariscos y guarnición.</p>
       </article>
       <article class="plato">
-        <h3 class="plato__nombre">Asado huilense de la casa</h3>
-        <span class="plato__precio">$ 45.000</span>
-        <p class="plato__desc">Nuestro homenaje al Huila: cerdo marinado en naranja agria, insulso de maíz y ají de arazá.</p>
+        <h4 class="plato__nombre">Pirarucú agridulce</h4><span class="plato__precio">$ 65.000</span>
+        <p class="plato__desc">Filete glaseado con mantequilla, bañado en salsa de arazá, guarnición y ensalada fresca.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Cazuela amazónica</h4><span class="plato__precio">$ 65.000</span>
+        <p class="plato__desc">Trozos de pirarucú, filete de mojarra, trozos de bagre, palmito y camarón en salsa de la casa, con patacón y arroz.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Arroz amazónico</h4><span class="plato__precio">$ 65.000</span>
+        <p class="plato__desc">Arroz atollado con bagre, pirarucú, palmito, camarón y vegetales salteados, con tostón de plátano.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Salmón con frutos del río</h4><span class="plato__precio">$ 60.000</span>
+        <p class="plato__desc">Crema a base de frutos del río amazónico, trozos de pirarucú, bagre, tilapia y camarones, con guarnición.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Picada amazónica</h4><span class="plato__precio">$ 50.000</span>
+        <p class="plato__desc">Trozos de pirarucú, bagre, tilapia y camarón, papa frita, bastones de yuca y arepa frita.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Picada del campo</h4><span class="plato__precio">$ 38.000</span>
+        <p class="plato__desc">Trozos de cerdo, res y pechuga sellados y glaseados con mantequilla aromatizada con hierbas, chorizo, papa a la francesa, bastones de yuca y arepa frita.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Churrasco de res en salsa de asaí</h4><span class="plato__precio">$ 42.000</span>
+        <p class="plato__desc">Lomo de res sellado con mantequilla de finas hierbas, bañado en reducción de vino de asaí, con guarnición y ensalada fresca.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Churrasco a la brasa</h4><span class="plato__precio">$ 40.000</span>
+        <p class="plato__desc">Carne de res a la plancha sellada con mantequilla, chimichurri y guarnición.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Costillas</h4><span class="plato__precio">$ 40.000</span>
+        <p class="plato__desc">Costillas de cerdo al horno bañadas en salsa BBQ de la casa, con guarnición y ensalada.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Pechuga de pollo dulce</h4><span class="plato__precio">$ 38.000</span>
+        <p class="plato__desc">Salteada con mantequilla, gratinada con tocineta y piña, con guarnición y ensalada fresca.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Lomo de cerdo en salsa de arazá</h4><span class="plato__precio">$ 35.000</span>
+        <p class="plato__desc">Lomo sellado en mantequilla, bañado en salsa de arazá, con guarnición y ensalada fresca.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Pechuga de pollo a la brasa</h4><span class="plato__precio">$ 35.000</span>
+        <p class="plato__desc">Sellada en mantequilla, con guarnición y ensalada fresca.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Pasta alfredo con pollo o camarón</h4><span class="plato__precio">$ 35.000</span>
+        <p class="plato__desc">Fettuccine bañado en salsa cremosa, acompañado con pollo o camarones, queso fresco y pan baguette de ajo.</p>
       </article>
     </div>
 
-    <p class="grupo rev">Dulces y bebidas</p>
-    <div class="carta rev">
+    <div class="grupo rev" id="g-hamburguesas">
+      <h3 class="grupo__titulo">Hamburguesas</h3>
       <article class="plato">
-        <h3 class="plato__nombre">Postre de asaí y arazá</h3>
-        <span class="plato__precio">$ 19.000</span>
-        <p class="plato__desc">Crema helada de asaí, gel de arazá y crocante de nuez de la Amazonía.</p>
+        <h4 class="plato__nombre">Hamburguesa tradicional</h4><span class="plato__precio">$ 18.000</span>
+        <p class="plato__desc">Carne, tocineta, queso, vegetales, pan artesanal, ripio y salsa de la casa.</p>
       </article>
       <article class="plato">
-        <h3 class="plato__nombre">Refajo de cocona</h3>
-        <span class="plato__precio">$ 14.000</span>
-        <p class="plato__desc">Cocona fermentada, cítricos del Huila y un toque de hierbas de monte. También sin alcohol.</p>
+        <h4 class="plato__nombre">Hamburguesa amazónica</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Carne, pechuga, queso, tocineta, cebolla caramelizada, piña caramelizada, vegetales, pan artesanal, papa y salsa de la casa.</p>
       </article>
+    </div>
+
+    <div class="grupo rev" id="g-bocaditos">
+      <h3 class="grupo__titulo">Bocaditos</h3>
+      <article class="plato">
+        <h4 class="plato__nombre">Perro americano</h4><span class="plato__precio">$ 15.000</span>
+        <p class="plato__desc">Pan brioche, salchicha americana, queso, ripio y salsas.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Salchipapa</h4><span class="plato__precio">$ 15.000</span>
+        <p class="plato__desc">Papa francesa, salchicha americana, tocineta, queso, ripio y salsas.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Nuggets</h4><span class="plato__precio">$ 15.000</span>
+        <p class="plato__desc">Nuggets de pollo con papa francesa.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Nachos</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Nachos, carne desmechada en salsa de la casa, maíz tierno, guacamole y pico de gallo. Picante al gusto.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Alitas BBQ</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Alitas acompañadas de papa francesa o papa casco.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Mazorcada</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Cubos de pechuga asada en salsa de maíz, maíz tierno, papa a la francesa, queso doble crema, papa ripio y huevo de codorniz.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Ceviche de camarones</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Acompañado de chips de plátano o patacones.</p>
+      </article>
+      <article class="plato">
+        <h4 class="plato__nombre">Menú infantil</h4><span class="plato__precio">$ 25.000</span>
+        <p class="plato__desc">Mini hamburguesa, papa francesa, jugo Hit y sorpresa.</p>
+      </article>
+    </div>
+
+    <div class="grupo rev" id="g-bebidas">
+      <h3 class="grupo__titulo">Bebidas <span class="grupo__nota">De la selva y de la casa</span></h3>
+      <div class="columnas">
+        <article class="plato"><h4 class="plato__nombre">Refrescante de arazá</h4><span class="plato__precio">$ 16.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Cóctel de asaí</h4><span class="plato__precio">$ 16.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda de camu camu</h4><span class="plato__precio">$ 16.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda de copoazú</h4><span class="plato__precio">$ 16.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda de canangucha</h4><span class="plato__precio">$ 16.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda de frutos rojos</h4><span class="plato__precio">$ 14.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda de frutos amarillos</h4><span class="plato__precio">$ 14.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Limonada de coco</h4><span class="plato__precio">$ 15.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Limonada cerezada</h4><span class="plato__precio">$ 13.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Limonada de hierbabuena</h4><span class="plato__precio">$ 12.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Limonada natural</h4><span class="plato__precio">$ 10.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Cerveza Corona</h4><span class="plato__precio">$ 8.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Cerveza Águila</h4><span class="plato__precio">$ 6.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Cerveza Poker</h4><span class="plato__precio">$ 5.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Soda Bretaña</h4><span class="plato__precio">$ 6.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Coca-Cola personal</h4><span class="plato__precio">$ 6.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Agua</h4><span class="plato__precio">$ 3.000</span></article>
+        <article class="plato"><h4 class="plato__nombre">Vaso michelado</h4><span class="plato__precio">$ 2.000</span></article>
+      </div>
+    </div>
+
+    <div class="grupo rev" id="g-adiciones">
+      <h3 class="grupo__titulo">Adiciones <span class="grupo__nota">$ 6.000 cada una</span></h3>
+      <div class="adiciones">
+        <span class="tag">Puré del momento</span>
+        <span class="tag">Arroz</span>
+        <span class="tag">Papa a la francesa</span>
+        <span class="tag">Papa casco</span>
+        <span class="tag">Tacacho</span>
+        <span class="tag">Maduro con queso</span>
+        <span class="tag">Bastones de yuca</span>
+        <span class="tag">Patacón</span>
+      </div>
     </div>
   </section>
 
-  <!-- VIDEOS -->
-  <section class="seccion seccion--verde" id="videos">
-    <div class="env rev">
-      <p class="eyebrow">En video</p>
-      <h2 class="titulo">Así se siente <em>estar aquí</em></h2>
-      <p class="tenue">Nuestra presentación completa, y luego lo que se cuenta de AMAKI en redes.</p>
-    </div>
-
-    <div class="env rev">
-      <div class="presentacion">
-        <!-- Reemplaza por: <video src="assets/video/presentacion.mp4" controls poster="assets/img/poster.jpg"></video> -->
-        <div class="clip__vacio">Video de presentación · 16:9</div>
+  <!-- ══ EVENTOS ══ -->
+  <section class="seccion seccion--tinte" id="eventos">
+    <div class="env">
+      <div class="cabecera rev">
+        <p class="eyebrow">Eventos sociales y empresariales</p>
+        <h2 class="titulo">Celebra con <em>sabor auténtico</em></h2>
+        <p>Transformamos ingredientes nativos en experiencias memorables para eventos que buscan identidad, propósito y sabor. Nos encargamos del menú, la ambientación y el servicio completo.</p>
       </div>
-    </div>
 
-    <div class="env" style="margin-top:clamp(3rem,7vw,5rem)">
-      <p class="eyebrow rev">Nos recomendaron</p>
-    </div>
-    <div class="reel">
-      <article class="clip"><div class="clip__vacio">Prensa 01 · 9:16</div><div class="clip__pie">Reseña · Instagram</div></article>
-      <article class="clip"><div class="clip__vacio">Prensa 02 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
-      <article class="clip"><div class="clip__vacio">Prensa 03 · 9:16</div><div class="clip__pie">Creador invitado</div></article>
-      <article class="clip"><div class="clip__vacio">Prensa 04 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
-    </div>
+      <div class="planes">
+        <article class="plan rev">
+          <div class="plan__cabeza">
+            <h3>Opción 1</h3>
+            <span class="plan__precio">$ 35.000</span>
+          </div>
+          <ul>
+            <li>Suprema de pollo en salsa de champiñones o tocineta</li>
+            <li>Lomo de cerdo en salsa de arazá</li>
+            <li>Arroz con ajonjolí</li>
+            <li>Puré cremoso de papa</li>
+            <li>Ensalada dulce a base de frutas y verduras</li>
+            <li>Jugo</li>
+          </ul>
+          <p class="plan__pie">Por persona</p>
+        </article>
 
-    <div class="env" style="margin-top:clamp(2rem,5vw,3.4rem)">
-      <p class="eyebrow rev">Desde nuestra cocina</p>
-    </div>
-    <div class="reel">
-      <article class="clip"><div class="clip__vacio">AMAKI 01 · 9:16</div><div class="clip__pie">Detrás del fogón</div></article>
-      <article class="clip"><div class="clip__vacio">AMAKI 02 · 9:16</div><div class="clip__pie">El pirarucú</div></article>
-      <article class="clip"><div class="clip__vacio">AMAKI 03 · 9:16</div><div class="clip__pie">Nuestra gente</div></article>
-      <article class="clip"><div class="clip__vacio">AMAKI 04 · 9:16</div><div class="clip__pie">Mesa servida</div></article>
+        <article class="plan rev">
+          <div class="plan__cabeza">
+            <h3>Opción 2</h3>
+            <span class="plan__precio">$ 30.000</span>
+          </div>
+          <ul>
+            <li>Suprema de pollo en salsa de tocineta</li>
+            <li>Arroz fiesta</li>
+            <li>Puré de papa</li>
+            <li>Ensalada dulce a base de frutas y verduras</li>
+            <li>Jugo</li>
+          </ul>
+          <p class="plan__pie">Por persona</p>
+        </article>
+      </div>
+
+      <div class="cabecera rev" style="margin-top:var(--r-seccion)">
+        <p class="eyebrow">Para recibir invitados</p>
+        <h3 class="titulo" style="font-size:clamp(1.6rem,4vw,2.6rem)">Pasabocas y bebidas</h3>
+      </div>
+      <div class="grupo rev">
+        <div class="columnas">
+          <article class="plato"><h4 class="plato__nombre">Conitos de pollo</h4><span class="plato__precio">$ 7.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Canastitas de plátano con carne</h4><span class="plato__precio">$ 7.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Mini albóndigas BBQ</h4><span class="plato__precio">$ 4.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Maduros burguer</h4><span class="plato__precio">$ 4.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Nachos con guacamole</h4><span class="plato__precio">$ 3.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Sangría amazónica</h4><span class="plato__precio">$ 10.000</span></article>
+          <article class="plato"><h4 class="plato__nombre">Sodas refrescantes</h4><span class="plato__precio">$ 8.000</span></article>
+        </div>
+        <p class="tenue" style="font-size:.88rem;margin-top:1.2rem">Las bebidas de esta selección se entregan en vaso de jugo, no en copa, para ajustar el precio.</p>
+      </div>
+
+      <div class="cabecera rev" style="margin-top:var(--r-seccion)">
+        <p class="eyebrow">Ambientación</p>
+        <h3 class="titulo" style="font-size:clamp(1.6rem,4vw,2.6rem)">Decoración a la medida</h3>
+        <p class="tenue">Trabajamos mesas de ocho personas. Cada mesa se organiza con floreros, velas decorativas, sobreplatos, vasos y cubiertos.</p>
+      </div>
+      <div class="extras">
+        <article class="extra rev">
+          <h4>Mesa decorada</h4>
+          <p><strong>$ 50.000</strong> por mesa · floreros, velas, sobreplatos, vasos y cubiertos.</p>
+        </article>
+        <article class="extra rev">
+          <h4>Montaje floral</h4>
+          <p><strong>$ 250.000</strong> · spot arcoíris, arreglo floral, mesas en acrílico, alfombra y mesas con manteles.</p>
+        </article>
+        <article class="extra rev">
+          <h4>Montaje con backing LED</h4>
+          <p><strong>$ 250.000</strong> · backing con luz LED, mesas con camino, arreglos florales, globos en helio.</p>
+        </article>
+        <article class="extra rev">
+          <h4>Montaje completo</h4>
+          <p><strong>$ 300.000</strong> · backing con luz LED, arco orgánico, mesas con camino de tela, globos en helio y decoración de mesas.</p>
+        </article>
+      </div>
+
+      <div class="redes rev">
+        <a class="boton" href="https://wa.me/573189551594?text=Hola%20AMAKI,%20quiero%20cotizar%20un%20evento" target="_blank" rel="noopener"><span>Cotizar mi evento</span></a>
+      </div>
     </div>
   </section>
 
-  <!-- VISITA -->
-  <section class="seccion env" id="visita">
-    <div class="rev">
-      <p class="eyebrow">Visítanos</p>
-      <h2 class="titulo">Te esperamos <em>en Neiva</em></h2>
+  <!-- ══ VIDEOS ══ -->
+  <section class="seccion" id="videos">
+    <div class="env">
+      <div class="cabecera rev">
+        <p class="eyebrow">En video</p>
+        <h2 class="titulo">Así se siente <em>estar aquí</em></h2>
+        <p class="tenue">Nuestra presentación completa, y luego lo que se cuenta de AMAKI en redes.</p>
+      </div>
+      <div class="presentacion rev">
+        <!-- <video src="assets/video/presentacion.mp4" controls poster="assets/img/poster.jpg"></video> -->
+        <div class="vacio">Video de presentación · 16:9</div>
+      </div>
+
+      <p class="eyebrow sub-eyebrow rev">Nos recomendaron</p>
     </div>
-    <div class="datos" style="margin-top:clamp(2rem,5vw,3.2rem)">
-      <div class="dato rev">
-        <h3>Dónde</h3>
-        <p>Neiva, Huila — Colombia<br /><span class="tenue">(dirección por confirmar)</span></p>
-      </div>
-      <div class="dato rev">
-        <h3>Horarios</h3>
-        <dl class="horario">
-          <dt>Mar – Jue</dt><dd>12:00 – 22:00</dd>
-          <dt>Vie – Sáb</dt><dd>12:00 – 23:30</dd>
-          <dt>Domingo</dt><dd>12:00 – 18:00</dd>
-          <dt>Lunes</dt><dd>Cerrado</dd>
-        </dl>
-      </div>
-      <div class="dato rev">
-        <h3>Reservas</h3>
-        <p>Escríbenos por WhatsApp o por Instagram y te confirmamos la mesa el mismo día.</p>
-        <p><a href="https://www.instagram.com/amaki.restaurante" target="_blank" rel="noopener">@amaki.restaurante</a></p>
-      </div>
+    <div class="reel">
+      <article class="clip"><div class="vacio">Prensa 01 · 9:16</div><div class="clip__pie">Reseña · Instagram</div></article>
+      <article class="clip"><div class="vacio">Prensa 02 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
+      <article class="clip"><div class="vacio">Prensa 03 · 9:16</div><div class="clip__pie">Creador invitado</div></article>
+      <article class="clip"><div class="vacio">Prensa 04 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
     </div>
 
-    <div class="redes">
-      <a class="boton" href="https://www.instagram.com/amaki.restaurante" target="_blank" rel="noopener"><span>Instagram</span></a>
-      <a class="boton" href="https://www.tiktok.com/@amaki.restaurante.neiva" target="_blank" rel="noopener"><span>TikTok</span></a>
+    <div class="env"><p class="eyebrow sub-eyebrow rev">Desde nuestra cocina</p></div>
+    <div class="reel">
+      <article class="clip"><div class="vacio">AMAKI 01 · 9:16</div><div class="clip__pie">Detrás del fogón</div></article>
+      <article class="clip"><div class="vacio">AMAKI 02 · 9:16</div><div class="clip__pie">El pirarucú</div></article>
+      <article class="clip"><div class="vacio">AMAKI 03 · 9:16</div><div class="clip__pie">Nuestra gente</div></article>
+      <article class="clip"><div class="vacio">AMAKI 04 · 9:16</div><div class="clip__pie">Mesa servida</div></article>
+    </div>
+  </section>
+
+  <!-- ══ VISITA ══ -->
+  <section class="seccion seccion--tinte" id="visita">
+    <div class="env">
+      <div class="cabecera rev">
+        <p class="eyebrow">Visítanos</p>
+        <h2 class="titulo">Te esperamos <em>en Neiva</em></h2>
+      </div>
+      <div class="datos">
+        <div class="dato rev">
+          <h3>Dónde</h3>
+          <p><a href="https://maps.google.com/?q=Carrera+16+%2351-76+Neiva+Huila" target="_blank" rel="noopener">Carrera 16 #51-76<br />Comuna 2, Neiva — Huila</a></p>
+        </div>
+        <div class="dato rev">
+          <h3>Horarios</h3>
+          <dl class="horario">
+            <dt>Mar – Jue</dt><dd>12:00 – 22:00</dd>
+            <dt>Vie – Sáb</dt><dd>12:00 – 23:30</dd>
+            <dt>Domingo</dt><dd>12:00 – 18:00</dd>
+            <dt>Lunes</dt><dd>Cerrado</dd>
+          </dl>
+          <p class="tenue" style="font-size:.82rem;margin-top:.8rem">Horario por confirmar.</p>
+        </div>
+        <div class="dato rev">
+          <h3>Contacto</h3>
+          <p>
+            <a href="tel:+573189551594">318 955 1594</a><br />
+            <a href="mailto:amakirestauranteamazonico@gmail.com">amakirestauranteamazonico@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="redes">
+        <a class="boton" href="https://wa.me/573189551594" target="_blank" rel="noopener"><span>WhatsApp</span></a>
+        <a class="boton" href="https://www.instagram.com/amaki.restaurante" target="_blank" rel="noopener"><span>Instagram</span></a>
+        <a class="boton" href="https://www.tiktok.com/@amaki.restaurante.neiva" target="_blank" rel="noopener"><span>TikTok</span></a>
+      </div>
     </div>
   </section>
 
@@ -493,22 +781,59 @@ p{margin:0 0 1.15em;max-width:62ch}
 <footer class="env">
   <div class="pie">
     <span>AMAKI · Restaurante amazónico</span>
-    <span>Neiva, Huila · Desde 2025</span>
+    <span>Carrera 16 #51-76, Neiva · Desde 2025</span>
   </div>
 </footer>
 
 <script>
-  // Barra superior sólida al desplazarse
+  /* Logo: si el archivo existe, reemplaza el bloque de texto */
+  const logo = document.getElementById('logo');
+  logo.addEventListener('load', () => {
+    logo.hidden = false;
+    document.getElementById('marca-texto').hidden = true;
+  });
+  logo.addEventListener('error', () => { logo.remove(); });
+
+  /* Tema claro / oscuro */
+  const raiz = document.documentElement;
+  const btn = document.getElementById('btn-tema');
+  raiz.dataset.tema = 'claro';
+  btn.addEventListener('click', () => {
+    const oscuro = raiz.dataset.tema === 'oscuro';
+    raiz.dataset.tema = oscuro ? 'claro' : 'oscuro';
+    btn.textContent = oscuro ? 'Tema oscuro' : 'Tema claro';
+  });
+
+  /* Barra superior */
   const nav = document.getElementById('nav');
-  const alScroll = () => nav.dataset.fijo = window.scrollY > 60 ? 'si' : 'no';
+  const alScroll = () => nav.dataset.fijo = scrollY > 60 ? 'si' : 'no';
   alScroll();
   addEventListener('scroll', alScroll, {passive:true});
 
-  // Revelado progresivo
-  const ojo = new IntersectionObserver((entradas) => {
+  /* Filtros de la carta: llevan al grupo y marcan el chip */
+  const chips = [...document.querySelectorAll('.chip')];
+  chips.forEach(chip => chip.addEventListener('click', () => {
+    chips.forEach(c => c.setAttribute('aria-selected', String(c === chip)));
+    document.getElementById(chip.dataset.ir)
+      .scrollIntoView({behavior:'smooth', block:'start'});
+  }));
+
+  /* El chip activo sigue al grupo visible */
+  const grupos = chips.map(c => document.getElementById(c.dataset.ir));
+  const vigia = new IntersectionObserver(entradas => {
+    for (const e of entradas) {
+      if (!e.isIntersecting) continue;
+      const i = grupos.indexOf(e.target);
+      if (i > -1) chips.forEach((c, j) => c.setAttribute('aria-selected', String(i === j)));
+    }
+  }, {rootMargin:'-20% 0px -70% 0px'});
+  grupos.forEach(g => vigia.observe(g));
+
+  /* Revelado progresivo */
+  const ojo = new IntersectionObserver(entradas => {
     for (const e of entradas) {
       if (e.isIntersecting) { e.target.dataset.visible = 'si'; ojo.unobserve(e.target); }
     }
-  }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+  }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.rev').forEach(el => ojo.observe(el));
 </script>
