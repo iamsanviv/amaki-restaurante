@@ -1,0 +1,514 @@
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AMAKI — Restaurante Amazónico · Neiva</title>
+<meta name="description" content="AMAKI, restaurante amazónico en Neiva. Cocina de autor con raíces de selva: comer con conciencia, emoción y gratitud hacia la tierra." />
+
+<style>
+/* ───────────────── Tipografías de marca ─────────────────
+   Coloca los archivos reales en assets/fonts/ y estas reglas
+   toman el control automáticamente. Mientras tanto se usa el
+   fallback serif definido en --f-display / --f-body.        */
+@font-face{
+  font-family:"TAN Grandeur";
+  src:url("assets/fonts/TAN-Grandeur.woff2") format("woff2"),
+      url("assets/fonts/TAN-Grandeur.otf") format("opentype");
+  font-weight:400; font-display:swap;
+}
+@font-face{
+  font-family:"TAN Mignon";
+  src:url("assets/fonts/TAN-Mignon.woff2") format("woff2"),
+      url("assets/fonts/TAN-Mignon.otf") format("opentype");
+  font-weight:400; font-display:swap;
+}
+
+:root{
+  /* Paleta — un solo mundo visual: la selva de noche */
+  --verde:#384C23;
+  --beige:#F3CA9B;
+  --marron:#4D2000;
+  --tierra:#2B1206;        /* fondo, derivado del marrón */
+  --tierra-hondo:#1B0B03;
+  --crema:#EDDCC6;
+  --crema-tenue:rgba(237,220,198,.62);
+  --linea:rgba(243,202,155,.22);
+
+  --f-display:"TAN Grandeur", "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
+  --f-body:"TAN Mignon", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --ancho:1240px;
+  --paso:clamp(1.4rem, 4vw, 3.2rem);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--tierra);
+  color:var(--crema);
+  font-family:var(--f-body);
+  font-size:clamp(1rem,.95rem + .3vw,1.125rem);
+  line-height:1.75;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* Grano y neblina de fondo */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(70% 50% at 15% 0%, rgba(56,76,35,.55), transparent 65%),
+    radial-gradient(60% 45% at 95% 30%, rgba(77,32,0,.6), transparent 70%),
+    radial-gradient(50% 40% at 50% 110%, rgba(56,76,35,.4), transparent 70%);
+}
+body::after{
+  content:"";position:fixed;inset:-50%;pointer-events:none;z-index:0;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main,header,footer{position:relative;z-index:1}
+
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--beige);outline-offset:3px;border-radius:2px}
+
+.env{width:min(100% - 2.4rem, var(--ancho));margin-inline:auto}
+
+h1,h2,h3,.display{
+  font-family:var(--f-display);
+  font-weight:400;
+  line-height:1.02;
+  text-wrap:balance;
+  letter-spacing:.02em;
+  margin:0;
+}
+.eyebrow{
+  font-family:var(--f-body);
+  font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--beige);opacity:.8;margin:0 0 1.1rem;
+}
+p{margin:0 0 1.15em;max-width:62ch}
+.tenue{color:var(--crema-tenue)}
+
+/* ───────────────── Navegación ───────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:1rem clamp(1.2rem,4vw,3rem);
+  transition:background .5s ease, backdrop-filter .5s ease, border-color .5s;
+  border-bottom:1px solid transparent;
+}
+.nav[data-fijo="si"]{
+  background:rgba(27,11,3,.86);backdrop-filter:blur(14px);
+  border-bottom-color:var(--linea);
+}
+.nav__marca{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.34em;color:var(--beige);text-decoration:none}
+.nav__menu{display:flex;gap:clamp(1rem,2.4vw,2.2rem);list-style:none;margin:0;padding:0}
+.nav__menu a{
+  text-decoration:none;font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--crema-tenue);position:relative;padding-bottom:.3rem;transition:color .3s;
+}
+.nav__menu a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--beige);
+  transition:width .4s cubic-bezier(.2,.8,.2,1);
+}
+.nav__menu a:hover{color:var(--beige)}
+.nav__menu a:hover::after{width:100%}
+@media (max-width:820px){ .nav__menu{display:none} }
+
+/* ───────────────── Portada ───────────────── */
+.portada{
+  min-height:100svh;display:grid;align-content:center;
+  padding:clamp(7rem,16vh,11rem) 0 var(--paso);
+}
+.marca{text-align:center}
+.marca__desde,.marca__anio{
+  font-size:.66rem;letter-spacing:.36em;color:var(--beige);line-height:1.35;opacity:.85;
+}
+.marca__fila{
+  display:flex;align-items:center;justify-content:center;gap:clamp(.8rem,3vw,2.4rem);
+}
+.marca__nombre{
+  font-size:clamp(3.6rem,15vw,11rem);
+  color:var(--beige);letter-spacing:.06em;
+}
+.marca__nombre span{display:inline-block;opacity:0;transform:translateY(.45em);
+  animation:sube .95s cubic-bezier(.2,.75,.2,1) forwards}
+.marca__sub{
+  font-family:var(--f-body);font-style:italic;
+  font-size:clamp(1.05rem,3.4vw,2rem);color:var(--beige);
+  letter-spacing:.06em;margin-top:.4rem;opacity:0;
+  animation:sube 1s ease .95s forwards;
+}
+.marca__desde,.marca__anio{opacity:0;animation:aparece 1s ease 1.25s forwards}
+.portada__pie{
+  margin-top:clamp(2.4rem,7vh,4.4rem);text-align:center;
+  opacity:0;animation:aparece 1.1s ease 1.5s forwards;
+}
+.portada__pie p{margin-inline:auto;max-width:46ch;color:var(--crema-tenue)}
+.baja{
+  display:inline-flex;flex-direction:column;align-items:center;gap:.6rem;
+  margin-top:1.6rem;text-decoration:none;font-size:.68rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--beige);
+}
+.baja i{display:block;width:1px;height:52px;background:linear-gradient(var(--beige),transparent);
+  animation:respira 2.6s ease-in-out infinite}
+
+@keyframes sube{to{opacity:1;transform:none}}
+@keyframes aparece{to{opacity:1}}
+@keyframes respira{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* ───────────────── Secciones ───────────────── */
+.seccion{padding:clamp(4.5rem,12vh,9rem) 0}
+.seccion--verde{background:linear-gradient(180deg, rgba(56,76,35,.42), rgba(56,76,35,.12))}
+.titulo{font-size:clamp(2rem,6vw,4.2rem);color:var(--beige)}
+.titulo em{font-style:italic;font-family:var(--f-body);color:var(--crema)}
+
+.dos{display:grid;gap:clamp(2rem,6vw,5rem);grid-template-columns:1fr;align-items:center}
+@media (min-width:900px){
+  .dos{grid-template-columns:1.05fr .95fr}
+  .dos--invertido > :first-child{order:2}
+}
+
+/* Retrato con marco desplazado */
+.retrato{position:relative;aspect-ratio:4/5;border-radius:2px;overflow:hidden;
+  background:var(--verde) center/cover no-repeat;}
+.retrato::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(200deg,transparent 40%,rgba(27,11,3,.55))}
+.marco{position:relative}
+.marco::before{
+  content:"";position:absolute;inset:1.6rem -1.6rem -1.6rem 1.6rem;
+  border:1px solid var(--linea);pointer-events:none;
+}
+
+/* Cifras del propósito */
+.pilares{display:grid;gap:clamp(1.4rem,3vw,2.6rem);grid-template-columns:1fr;margin-top:clamp(2rem,5vw,3.4rem)}
+@media (min-width:760px){.pilares{grid-template-columns:repeat(3,1fr)}}
+.pilar{padding-top:1.4rem;border-top:1px solid var(--linea)}
+.pilar h3{font-size:1.5rem;color:var(--beige);margin-bottom:.6rem}
+.pilar p{font-size:.95rem;color:var(--crema-tenue);margin:0}
+
+/* ───────────────── Carta ───────────────── */
+.carta{display:grid;gap:0;margin-top:clamp(2rem,5vw,3.5rem)}
+.plato{
+  display:grid;gap:.3rem 2rem;grid-template-columns:1fr auto;
+  padding:1.5rem 0;border-top:1px solid var(--linea);
+  transition:padding-left .45s cubic-bezier(.2,.8,.2,1), background .45s;
+}
+.plato:last-child{border-bottom:1px solid var(--linea)}
+.plato:hover{padding-left:1.2rem;background:linear-gradient(90deg,rgba(243,202,155,.07),transparent 70%)}
+.plato__nombre{font-family:var(--f-display);font-size:clamp(1.25rem,3vw,1.9rem);color:var(--beige);letter-spacing:.03em}
+.plato__precio{font-size:.95rem;color:var(--beige);font-variant-numeric:tabular-nums;align-self:center}
+.plato__desc{grid-column:1/-1;font-size:.95rem;color:var(--crema-tenue);margin:0;max-width:70ch}
+.grupo{font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--crema-tenue);
+  margin:clamp(2.2rem,5vw,3.4rem) 0 .4rem}
+.grupo:first-of-type{margin-top:0}
+
+/* ───────────────── Videos ───────────────── */
+.reel{
+  display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:1.6rem .2rem 2.2rem;margin-inline:calc(50% - 50vw);
+  padding-inline:max(1.2rem, calc(50vw - var(--ancho)/2));
+  scrollbar-width:thin;scrollbar-color:var(--linea) transparent;
+}
+.reel::-webkit-scrollbar{height:5px}
+.reel::-webkit-scrollbar-thumb{background:var(--linea);border-radius:99px}
+.clip{
+  flex:0 0 clamp(200px,58vw,268px);scroll-snap-align:center;
+  aspect-ratio:9/16;position:relative;border-radius:3px;overflow:hidden;
+  background:var(--tierra-hondo);border:1px solid var(--linea);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s;
+}
+.clip:hover{transform:translateY(-8px) scale(1.015);border-color:var(--beige)}
+.clip video{width:100%;height:100%;object-fit:cover}
+.clip__vacio{
+  position:absolute;inset:0;display:grid;place-content:center;gap:.5rem;text-align:center;
+  padding:1.2rem;color:var(--crema-tenue);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  background:linear-gradient(160deg, rgba(56,76,35,.5), rgba(43,18,6,.9));
+}
+.clip__pie{
+  position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .9rem;
+  background:linear-gradient(transparent,rgba(27,11,3,.92));
+  font-size:.76rem;letter-spacing:.14em;color:var(--crema);
+}
+.presentacion{
+  position:relative;aspect-ratio:16/9;border:1px solid var(--linea);
+  border-radius:3px;overflow:hidden;background:var(--tierra-hondo);
+  margin-top:clamp(1.8rem,4vw,3rem);
+}
+.presentacion video{width:100%;height:100%;object-fit:cover}
+.presentacion .clip__vacio{font-size:.8rem}
+
+/* ───────────────── Visita ───────────────── */
+.datos{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr}
+@media (min-width:760px){.datos{grid-template-columns:repeat(3,1fr)}}
+.dato h3{font-size:1.35rem;color:var(--beige);margin-bottom:.5rem}
+.dato p,.dato a{font-size:.95rem;color:var(--crema-tenue);text-decoration:none}
+.dato a:hover{color:var(--beige)}
+.horario{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1.2rem;font-size:.95rem;
+  color:var(--crema-tenue);font-variant-numeric:tabular-nums}
+.horario dt{color:var(--crema)}
+.horario dd{margin:0;text-align:right}
+
+.redes{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:clamp(2.4rem,5vw,3.4rem)}
+.boton{
+  display:inline-block;text-decoration:none;padding:.95rem 2.1rem;
+  border:1px solid var(--beige);color:var(--beige);
+  font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;
+  position:relative;overflow:hidden;transition:color .4s;
+}
+.boton span{position:relative;z-index:1}
+.boton::before{
+  content:"";position:absolute;inset:0;background:var(--beige);
+  transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.boton:hover{color:var(--marron)}
+.boton:hover::before{transform:none}
+
+/* ───────────────── Cierre ───────────────── */
+.cita{
+  text-align:center;font-family:var(--f-display);
+  font-size:clamp(1.6rem,5vw,3.4rem);color:var(--beige);
+  max-width:20ch;margin-inline:auto;line-height:1.15;
+}
+.pie{
+  border-top:1px solid var(--linea);padding:2.6rem 0 3.4rem;
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--crema-tenue);
+}
+
+/* ───────────────── Revelado al hacer scroll ───────────────── */
+.rev{opacity:0;transform:translateY(28px);
+  transition:opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1)}
+.rev[data-visible="si"]{opacity:1;transform:none}
+.rev:nth-child(2){transition-delay:.09s}
+.rev:nth-child(3){transition-delay:.18s}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rev{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<header class="nav" id="nav">
+  <a class="nav__marca" href="#inicio">AMAKI</a>
+  <nav aria-label="Principal">
+    <ul class="nav__menu">
+      <li><a href="#historia">Historia</a></li>
+      <li><a href="#proposito">Propósito</a></li>
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#visita">Visítanos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <!-- PORTADA -->
+  <section class="portada env" id="inicio">
+    <div class="marca">
+      <div class="marca__fila">
+        <div class="marca__desde">DES<br />DE</div>
+        <h1 class="marca__nombre" aria-label="AMAKI">
+          <span style="animation-delay:.15s">A</span><span style="animation-delay:.27s">M</span><span style="animation-delay:.39s">A</span><span style="animation-delay:.51s">K</span><span style="animation-delay:.63s">I</span>
+        </h1>
+        <div class="marca__anio">20<br />25</div>
+      </div>
+      <p class="marca__sub">Restaurante amazónico</p>
+    </div>
+
+    <div class="portada__pie">
+      <p>Cocina de raíz amazónica en el corazón de Neiva. Cada plato es una forma de decirle gracias a la tierra.</p>
+      <a class="baja" href="#historia"><i></i>Entrar a la selva</a>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section class="seccion env" id="historia">
+    <div class="dos">
+      <div class="rev">
+        <p class="eyebrow">Nuestra historia</p>
+        <h2 class="titulo">Nacimos escuchando <em>el río</em></h2>
+        <p>AMAKI comenzó como un viaje: recorrer la selva, sentarnos en cocinas de leña y aprender de las manos que llevan siglos preparando el mismo caldo. Volvimos a Neiva con recetas, con nombres en lenguas que casi nadie pronuncia y con la certeza de que esos sabores merecían una mesa.</p>
+        <p class="tenue">Desde 2025 servimos esa memoria: ingredientes del Amazonas y del Huila, técnicas ancestrales y una mano de autor que las presenta sin disfrazarlas.</p>
+      </div>
+      <div class="marco rev">
+        <div class="retrato" style="background-image:linear-gradient(150deg,rgba(56,76,35,.9),rgba(77,32,0,.95))" role="img" aria-label="Espacio del restaurante AMAKI"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPÓSITO -->
+  <section class="seccion seccion--verde" id="proposito">
+    <div class="env">
+      <div class="rev">
+        <p class="eyebrow">Propósito de marca</p>
+        <h2 class="titulo">Comer con conciencia, <em>emoción y gratitud</em></h2>
+        <p>Rendimos tributo a la selva amazónica y a sus pueblos a través de la gastronomía: una experiencia que conecta a las personas con la tierra, con las raíces y con el amor por lo ancestral.</p>
+      </div>
+      <div class="pilares">
+        <article class="pilar rev">
+          <h3>Respeto</h3>
+          <p>Trabajamos con productores y comunidades que cuidan el territorio. Nada llega a la mesa sin saber de dónde viene.</p>
+        </article>
+        <article class="pilar rev">
+          <h3>Memoria</h3>
+          <p>Cada preparación conserva una técnica indígena. Cocinar es también una manera de no dejar que se olvide.</p>
+        </article>
+        <article class="pilar rev">
+          <h3>Autoría</h3>
+          <p>Interpretamos, no imitamos. El resultado es una cocina contemporánea que sigue sonando a selva.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTA -->
+  <section class="seccion env" id="carta">
+    <div class="rev">
+      <p class="eyebrow">La carta</p>
+      <h2 class="titulo">Platos que <em>cuentan un territorio</em></h2>
+      <p class="tenue">Una selección de la carta actual. Cambia con las cosechas y con lo que el río permite.</p>
+    </div>
+
+    <p class="grupo rev">Para empezar</p>
+    <div class="carta rev">
+      <article class="plato">
+        <h3 class="plato__nombre">Casabe de la maloca</h3>
+        <span class="plato__precio">$ 18.000</span>
+        <p class="plato__desc">Torta de yuca brava tostada al fogón, con ají negro amazónico y queso costeño ahumado.</p>
+      </article>
+      <article class="plato">
+        <h3 class="plato__nombre">Ceviche de copoazú</h3>
+        <span class="plato__precio">$ 26.000</span>
+        <p class="plato__desc">Pescado blanco del Magdalena curado en copoazú, leche de tigre de cocona y cebolla encurtida en chontaduro.</p>
+      </article>
+    </div>
+
+    <p class="grupo rev">Fuertes</p>
+    <div class="carta rev">
+      <article class="plato">
+        <h3 class="plato__nombre">Pirarucú a la hoja de bijao</h3>
+        <span class="plato__precio">$ 52.000</span>
+        <p class="plato__desc">Envuelto y asado lentamente sobre brasa, con puré de plátano hartón y aceite de cilantro cimarrón.</p>
+      </article>
+      <article class="plato">
+        <h3 class="plato__nombre">Costilla en tucupí negro</h3>
+        <span class="plato__precio">$ 48.000</span>
+        <p class="plato__desc">Ocho horas de cocción en tucupí reducido, jambú fresco y arroz de coco tostado.</p>
+      </article>
+      <article class="plato">
+        <h3 class="plato__nombre">Asado huilense de la casa</h3>
+        <span class="plato__precio">$ 45.000</span>
+        <p class="plato__desc">Nuestro homenaje al Huila: cerdo marinado en naranja agria, insulso de maíz y ají de arazá.</p>
+      </article>
+    </div>
+
+    <p class="grupo rev">Dulces y bebidas</p>
+    <div class="carta rev">
+      <article class="plato">
+        <h3 class="plato__nombre">Postre de asaí y arazá</h3>
+        <span class="plato__precio">$ 19.000</span>
+        <p class="plato__desc">Crema helada de asaí, gel de arazá y crocante de nuez de la Amazonía.</p>
+      </article>
+      <article class="plato">
+        <h3 class="plato__nombre">Refajo de cocona</h3>
+        <span class="plato__precio">$ 14.000</span>
+        <p class="plato__desc">Cocona fermentada, cítricos del Huila y un toque de hierbas de monte. También sin alcohol.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="seccion seccion--verde" id="videos">
+    <div class="env rev">
+      <p class="eyebrow">En video</p>
+      <h2 class="titulo">Así se siente <em>estar aquí</em></h2>
+      <p class="tenue">Nuestra presentación completa, y luego lo que se cuenta de AMAKI en redes.</p>
+    </div>
+
+    <div class="env rev">
+      <div class="presentacion">
+        <!-- Reemplaza por: <video src="assets/video/presentacion.mp4" controls poster="assets/img/poster.jpg"></video> -->
+        <div class="clip__vacio">Video de presentación · 16:9</div>
+      </div>
+    </div>
+
+    <div class="env" style="margin-top:clamp(3rem,7vw,5rem)">
+      <p class="eyebrow rev">Nos recomendaron</p>
+    </div>
+    <div class="reel">
+      <article class="clip"><div class="clip__vacio">Prensa 01 · 9:16</div><div class="clip__pie">Reseña · Instagram</div></article>
+      <article class="clip"><div class="clip__vacio">Prensa 02 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
+      <article class="clip"><div class="clip__vacio">Prensa 03 · 9:16</div><div class="clip__pie">Creador invitado</div></article>
+      <article class="clip"><div class="clip__vacio">Prensa 04 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
+    </div>
+
+    <div class="env" style="margin-top:clamp(2rem,5vw,3.4rem)">
+      <p class="eyebrow rev">Desde nuestra cocina</p>
+    </div>
+    <div class="reel">
+      <article class="clip"><div class="clip__vacio">AMAKI 01 · 9:16</div><div class="clip__pie">Detrás del fogón</div></article>
+      <article class="clip"><div class="clip__vacio">AMAKI 02 · 9:16</div><div class="clip__pie">El pirarucú</div></article>
+      <article class="clip"><div class="clip__vacio">AMAKI 03 · 9:16</div><div class="clip__pie">Nuestra gente</div></article>
+      <article class="clip"><div class="clip__vacio">AMAKI 04 · 9:16</div><div class="clip__pie">Mesa servida</div></article>
+    </div>
+  </section>
+
+  <!-- VISITA -->
+  <section class="seccion env" id="visita">
+    <div class="rev">
+      <p class="eyebrow">Visítanos</p>
+      <h2 class="titulo">Te esperamos <em>en Neiva</em></h2>
+    </div>
+    <div class="datos" style="margin-top:clamp(2rem,5vw,3.2rem)">
+      <div class="dato rev">
+        <h3>Dónde</h3>
+        <p>Neiva, Huila — Colombia<br /><span class="tenue">(dirección por confirmar)</span></p>
+      </div>
+      <div class="dato rev">
+        <h3>Horarios</h3>
+        <dl class="horario">
+          <dt>Mar – Jue</dt><dd>12:00 – 22:00</dd>
+          <dt>Vie – Sáb</dt><dd>12:00 – 23:30</dd>
+          <dt>Domingo</dt><dd>12:00 – 18:00</dd>
+          <dt>Lunes</dt><dd>Cerrado</dd>
+        </dl>
+      </div>
+      <div class="dato rev">
+        <h3>Reservas</h3>
+        <p>Escríbenos por WhatsApp o por Instagram y te confirmamos la mesa el mismo día.</p>
+        <p><a href="https://www.instagram.com/amaki.restaurante" target="_blank" rel="noopener">@amaki.restaurante</a></p>
+      </div>
+    </div>
+
+    <div class="redes">
+      <a class="boton" href="https://www.instagram.com/amaki.restaurante" target="_blank" rel="noopener"><span>Instagram</span></a>
+      <a class="boton" href="https://www.tiktok.com/@amaki.restaurante.neiva" target="_blank" rel="noopener"><span>TikTok</span></a>
+    </div>
+  </section>
+
+  <section class="seccion env">
+    <p class="cita rev">Comer aquí es volver a la tierra.</p>
+  </section>
+</main>
+
+<footer class="env">
+  <div class="pie">
+    <span>AMAKI · Restaurante amazónico</span>
+    <span>Neiva, Huila · Desde 2025</span>
+  </div>
+</footer>
+
+<script>
+  // Barra superior sólida al desplazarse
+  const nav = document.getElementById('nav');
+  const alScroll = () => nav.dataset.fijo = window.scrollY > 60 ? 'si' : 'no';
+  alScroll();
+  addEventListener('scroll', alScroll, {passive:true});
+
+  // Revelado progresivo
+  const ojo = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if (e.isIntersecting) { e.target.dataset.visible = 'si'; ojo.unobserve(e.target); }
+    }
+  }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rev').forEach(el => ojo.observe(el));
+</script>
