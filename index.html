@@ -12,6 +12,18 @@
       url("assets/fonts/TAN-Grandeur.otf") format("opentype");
   font-weight:400;font-display:swap;
 }
+/* Nourd — la sans del "DESDE 2025" del logo */
+@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-light.woff2") format("woff2");
+  font-weight:300;font-display:swap}
+@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-regular.woff2") format("woff2");
+  font-weight:400;font-display:swap}
+@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-medium.woff2") format("woff2");
+  font-weight:500;font-display:swap}
+@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-semi_bold.woff2") format("woff2");
+  font-weight:600;font-display:swap}
+@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-bold.woff2") format("woff2");
+  font-weight:700;font-display:swap}
+
 @font-face{
   font-family:"TAN Mignon";
   src:url("assets/fonts/TAN-Mignon.woff2") format("woff2"),
@@ -36,14 +48,31 @@
   --sombra:0 18px 50px -28px rgba(77,32,0,.55);
   --grano:.04;
 
-  --f-display:"TAN Grandeur","Cormorant Garamond","Bodoni MT",Didot,Georgia,serif;
-  --f-body:"TAN Mignon","Cormorant Garamond",Georgia,"Times New Roman",serif;
+  /* Las dos fuentes de marca */
+  --f-grandeur:"TAN Grandeur","Bodoni MT",Didot,Georgia,serif;
+  --f-mignon:"TAN Mignon","Cormorant Garamond",Georgia,serif;
+
+  --f-nourd:"Nourd",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+
+  /* Grandeur queda reservada para el logotipo.
+     Los títulos se pueden probar en Mignon o en Nourd. */
+  --f-display:var(--f-mignon);
+  --f-body:var(--f-mignon);
 
   --ancho:1180px;
   --r-seccion:clamp(4.5rem,11vh,8.5rem);   /* aire entre secciones */
   --r-bloque:clamp(2.2rem,5vw,3.6rem);     /* aire entre bloques   */
   --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
 }
+
+/* Alternativa: títulos en Nourd */
+:root[data-titulos="nourd"]{--f-display:var(--f-nourd)}
+:root[data-titulos="nourd"] .titulo,
+:root[data-titulos="nourd"] .grupo__titulo,
+:root[data-titulos="nourd"] .plato__nombre,
+:root[data-titulos="nourd"] .banda__texto,
+:root[data-titulos="nourd"] .cita{font-weight:500;letter-spacing:-.005em}
+:root[data-titulos="nourd"] .titulo em{font-family:var(--f-mignon);font-weight:400}
 
 /* TEMA OSCURO (alternativa) */
 :root[data-tema="oscuro"]{
@@ -133,9 +162,10 @@ p:last-child{margin-bottom:0}
   transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
 }
 .nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
-.nav__nombre{font-family:var(--f-display);font-size:1.5rem;line-height:1;letter-spacing:.02em}
-.nav__sub{font-family:var(--f-display);font-size:.62rem;letter-spacing:.06em;
-  line-height:1.4;opacity:.75}
+.nav__nombre{font-family:var(--f-mignon);font-size:1.45rem;line-height:1;letter-spacing:.14em}
+.nav__nombre::first-letter{font-family:var(--f-grandeur);font-size:1.11em}
+.nav__sub{font-family:var(--f-mignon);font-size:.6rem;letter-spacing:.05em;
+  line-height:1.5;opacity:.75}
 .nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
 .nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
 .nav__menu a{
@@ -164,24 +194,42 @@ p:last-child{margin-bottom:0}
 
 /* Logotipo compuesto con TAN Grandeur */
 .marca{display:block;text-align:center;margin:0;font-weight:400}
+/* La escala del logotipo vive aquí: todo lo demás se mide en em sobre ella */
 .marca__fila{display:flex;align-items:center;justify-content:center;
-  gap:clamp(.7rem,2.6vw,2.1rem)}
+  font-size:clamp(3.1rem,13.4vw,9.9rem);gap:.57em}
+/* "DES DE" y "20 25" van en una sans geométrica, como en el original */
 .marca__nota{
-  font-family:var(--f-body);font-size:clamp(.5rem,1.15vw,.72rem);
-  font-weight:700;letter-spacing:.3em;line-height:1.5;color:var(--acento);
-  text-align:center;opacity:0;animation:aparece 1s ease 1.15s forwards;
+  font-family:var(--f-nourd);
+  font-size:.152em;font-weight:700;letter-spacing:.2em;line-height:1.45;
+  color:var(--acento);text-align:center;
+  opacity:0;animation:aparece 1s ease 1.15s forwards;
 }
+/* El logotipo mezcla las dos fuentes, tal como el original:
+   la A inicial y la A interna son TAN Grandeur; M, K, I son TAN Mignon.
+   Las medidas salen de medir el logo original (altura de caja 65 = 1em). */
 .marca__nombre{
-  font-family:var(--f-display);color:var(--acento);
-  font-size:clamp(3.6rem,15.5vw,11.5rem);line-height:.95;letter-spacing:.01em;
-  display:inline-flex;
+  display:inline-flex;align-items:baseline;color:var(--acento);
+  font-size:1em;line-height:1;
+  padding-top:.62em;            /* aire para el asta alta de la A */
 }
-.marca__nombre span{display:inline-block;opacity:0;transform:translateY(.4em);
+.marca__nombre span{display:inline-block;opacity:0;transform:translateY(.32em);
   animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards}
+.marca__nombre .m{font-family:var(--f-mignon);font-size:1em}
+.marca__nombre .g{font-family:var(--f-grandeur)}
+.marca__nombre .g--alta{font-size:0.9703em}   /* A inicial: cap 1.60 */
+.marca__nombre .g--baja{font-size:.713em}    /* A interna: cap 1.03 */
+/* Separaciones medidas sobre el logo original.
+   Ojo: em se calcula sobre el tamaño de cada letra, por eso la A
+   interna lleva el valor dividido entre su propia escala. */
+.marca__nombre .l-m{margin-left:.069em}
+.marca__nombre .l-a{margin-left:.365em}
+.marca__nombre .l-k{margin-left:.173em}
+.marca__nombre .l-i{margin-left:.343em}
+
 .marca__sub{
-  display:block;font-family:var(--f-display);color:var(--acento);
-  font-size:clamp(1.1rem,4.4vw,2.6rem);letter-spacing:.01em;line-height:1.2;
-  margin-top:clamp(.1rem,.6vw,.4rem);
+  display:block;font-family:var(--f-mignon);color:var(--acento);
+  font-size:clamp(1.06rem,4.6vw,3.4rem);letter-spacing:.005em;line-height:1.2;
+  margin-top:clamp(.05rem,.35vw,.28rem);
   opacity:0;animation:sube 1s ease .95s forwards;
 }
 
@@ -426,6 +474,7 @@ p:last-child{margin-bottom:0}
         <li><a href="#visita">Visítanos</a></li>
       </ul>
     </nav>
+    <button class="tema" id="btn-titulos" type="button" aria-live="polite">Títulos: Mignon</button>
     <button class="tema" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
   </div>
 </header>
@@ -439,7 +488,7 @@ p:last-child{margin-bottom:0}
       <span class="marca__fila" aria-hidden="true">
         <span class="marca__nota">DES<br />DE</span>
         <span class="marca__nombre">
-          <span style="animation-delay:.20s">A</span><span style="animation-delay:.32s">M</span><span style="animation-delay:.44s">A</span><span style="animation-delay:.56s">K</span><span style="animation-delay:.68s">I</span>
+          <span class="g g--alta" style="animation-delay:.20s">A</span><span class="m l-m" style="animation-delay:.32s">M</span><span class="g g--baja l-a" style="animation-delay:.44s">A</span><span class="m l-k" style="animation-delay:.56s">K</span><span class="m l-i" style="animation-delay:.68s">I</span>
         </span>
         <span class="marca__nota">20<br />25</span>
       </span>
@@ -909,6 +958,15 @@ p:last-child{margin-bottom:0}
     const eraOscuro = raiz.dataset.tema === 'oscuro';
     raiz.dataset.tema = eraOscuro ? 'claro' : 'oscuro';
     btn.textContent = eraOscuro ? 'Tema oscuro' : 'Tema claro';
+  });
+
+  /* Prueba de tipografía para los títulos */
+  const btnT = document.getElementById('btn-titulos');
+  raiz.dataset.titulos = 'mignon';
+  btnT.addEventListener('click', () => {
+    const esNourd = raiz.dataset.titulos === 'nourd';
+    raiz.dataset.titulos = esNourd ? 'mignon' : 'nourd';
+    btnT.textContent = esNourd ? 'Títulos: Mignon' : 'Títulos: Nourd';
   });
 
   /* Barra superior */
