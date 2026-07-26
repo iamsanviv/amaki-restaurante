@@ -1,0 +1,76 @@
+/* ═══════════ Imágenes y video ═══════════ */
+
+/* Retrato con marco desplazado */
+.retrato{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:3px;margin:0;
+  background:linear-gradient(150deg,var(--verde),var(--marron));box-shadow:var(--sombra)}
+.retrato img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.retrato:hover img{transform:scale(1.04)}
+
+.marco{position:relative}
+.marco::before{content:"";position:absolute;inset:1.6rem -1.6rem -1.6rem 1.6rem;
+  border:1px solid var(--linea);pointer-events:none}
+
+/* Mosaico de fotos con etiqueta y precio */
+.mosaico{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr);
+  margin-top:var(--r-bloque)}
+@media (min-width:760px){.mosaico{grid-template-columns:repeat(4,1fr)}}
+.foto{position:relative;margin:0;overflow:hidden;border-radius:3px;aspect-ratio:3/4;
+  border:1px solid var(--linea);background:var(--fondo-alt)}
+@media (min-width:760px){.foto--doble{grid-column:span 2}}
+.foto img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.foto:hover img{transform:scale(1.05)}
+.foto figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:2.4rem .9rem .8rem;
+  background:linear-gradient(transparent,rgba(43,18,6,.86));
+  color:#F3CA9B;font-size:.78rem;letter-spacing:.14em;
+  display:flex;justify-content:space-between;gap:.8rem;align-items:baseline;
+}
+.foto figcaption b{font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Banda de ambiente a ancho completo */
+.banda{position:relative;height:clamp(300px,52vh,520px);overflow:hidden;
+  display:grid;place-items:center}
+.banda img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banda::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(43,18,6,.35),rgba(43,18,6,.72))}
+.banda__texto{position:relative;z-index:1;margin:0;text-align:center;
+  font-family:var(--f-display);color:#F3CA9B;letter-spacing:.03em;
+  font-size:clamp(1.5rem,4.4vw,3rem);max-width:18ch;line-height:1.2}
+
+/* ═══ Video ═══ */
+.presentacion{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:3px;
+  border:1px solid var(--linea);background:var(--fondo-alt);box-shadow:var(--sombra)}
+.presentacion video{width:100%;height:100%;object-fit:cover}
+
+/* Carrusel de videos verticales */
+.reel{
+  display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-block:1.4rem 2rem;margin-inline:calc(50% - 50vw);
+  padding-inline:max(1.2rem,calc(50vw - var(--ancho)/2));
+  scrollbar-width:thin;scrollbar-color:var(--linea) transparent;
+}
+.reel::-webkit-scrollbar{height:5px}
+.reel::-webkit-scrollbar-thumb{background:var(--linea);border-radius:99px}
+
+.clip{
+  flex:0 0 clamp(196px,56vw,258px);scroll-snap-align:center;aspect-ratio:9/16;
+  position:relative;overflow:hidden;border-radius:3px;border:1px solid var(--linea);
+  background:var(--fondo-alt);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
+}
+.clip:hover{transform:translateY(-8px);border-color:var(--realce);box-shadow:var(--sombra)}
+.clip video{width:100%;height:100%;object-fit:cover}
+.clip__pie{position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .85rem;
+  background:linear-gradient(transparent,color-mix(in srgb,var(--marron) 88%,transparent));
+  font-size:.75rem;letter-spacing:.14em;color:#F3CA9B}
+
+/* Marcador mientras no hay video cargado */
+.vacio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
+  padding:1.2rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--tinta-suave);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--verde) 16%,transparent),
+                                    color-mix(in srgb,var(--marron) 12%,transparent))}
+
+.sub-eyebrow{margin-top:var(--r-bloque)}

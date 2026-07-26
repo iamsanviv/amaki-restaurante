@@ -1,464 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AMAKI — Restaurante Amazónico · Neiva</title>
-<meta name="description" content="AMAKI, restaurante amazónico en Neiva, Huila. Cocina de raíz amazónica, carta completa y propuestas para eventos sociales y empresariales." />
+<title>AMAKI — Restaurante Amazónico · Neiva, Huila</title>
+<meta name="description" content="AMAKI, restaurante amazónico en Neiva, Huila. Cocina de raíz amazónica, carta completa y propuestas para eventos sociales y empresariales. Carrera 16 #51-76." />
+<link rel="canonical" href="https://iamsanviv.github.io/amaki-restaurante/" />
+<meta name="theme-color" content="#F8E7CF" />
 
-<style>
-/* ═══════════ Tipografías de marca ═══════════
-   Sube los archivos a assets/fonts/ y estas reglas
-   toman el control automáticamente.                */
-@font-face{
-  font-family:"TAN Grandeur";
-  src:url("assets/fonts/TAN-Grandeur.woff2") format("woff2"),
-      url("assets/fonts/TAN-Grandeur.otf") format("opentype");
-  font-weight:400;font-display:swap;
+<meta property="og:type" content="restaurant" />
+<meta property="og:site_name" content="AMAKI Restaurante Amazónico" />
+<meta property="og:title" content="AMAKI — Restaurante Amazónico" />
+<meta property="og:description" content="Cocina de raíz amazónica en el corazón de Neiva. Cada plato es una forma de decirle gracias a la tierra." />
+<meta property="og:image" content="assets/img/selva.jpg" />
+<meta property="og:locale" content="es_CO" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="assets/img/logo-amaki.png" />
+<link rel="apple-touch-icon" href="assets/img/logo-amaki.png" />
+
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/TAN-Grandeur.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/TAN-Mignon.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/Nourd-regular.woff2" crossorigin />
+
+<link rel="stylesheet" href="assets/css/1-fuentes.css" />
+<link rel="stylesheet" href="assets/css/2-tokens.css" />
+<link rel="stylesheet" href="assets/css/3-base.css" />
+<link rel="stylesheet" href="assets/css/4-layout.css" />
+<link rel="stylesheet" href="assets/css/5-logotipo.css" />
+<link rel="stylesheet" href="assets/css/6-portada.css" />
+<link rel="stylesheet" href="assets/css/7-media.css" />
+<link rel="stylesheet" href="assets/css/8-carta.css" />
+<link rel="stylesheet" href="assets/css/9-eventos.css" />
+<link rel="stylesheet" href="assets/css/10-contacto.css" />
+<link rel="stylesheet" href="assets/css/11-animacion.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "AMAKI Restaurante Amazónico",
+  "servesCuisine": ["Amazónica", "Colombiana", "Huilense"],
+  "priceRange": "$$",
+  "telephone": "+57 318 955 1594",
+  "email": "amakirestauranteamazonico@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Carrera 16 #51-76, Comuna 2",
+    "addressLocality": "Neiva",
+    "addressRegion": "Huila",
+    "addressCountry": "CO"
+  },
+  "sameAs": [
+    "https://www.instagram.com/amaki.restaurante",
+    "https://www.tiktok.com/@amaki.restaurante.neiva"
+  ]
 }
-/* Nourd — la sans del "DESDE 2025" del logo */
-@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-light.woff2") format("woff2");
-  font-weight:300;font-display:swap}
-@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-regular.woff2") format("woff2");
-  font-weight:400;font-display:swap}
-@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-medium.woff2") format("woff2");
-  font-weight:500;font-display:swap}
-@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-semi_bold.woff2") format("woff2");
-  font-weight:600;font-display:swap}
-@font-face{font-family:"Nourd";src:url("assets/fonts/Nourd-bold.woff2") format("woff2");
-  font-weight:700;font-display:swap}
-
-@font-face{
-  font-family:"TAN Mignon";
-  src:url("assets/fonts/TAN-Mignon.woff2") format("woff2"),
-      url("assets/fonts/TAN-Mignon.otf") format("opentype");
-  font-weight:400;font-display:swap;
-}
-
-/* ═══════════ Tokens ═══════════ */
-:root{
-  --verde:#384C23;
-  --beige:#F3CA9B;
-  --marron:#4D2000;
-
-  /* TEMA CLARO (principal) — crema de marca */
-  --fondo:#F8E7CF;
-  --fondo-alt:#F3CA9B;
-  --tinta:#3A1800;
-  --tinta-suave:rgba(58,24,0,.72);
-  --acento:#4D2000;
-  --realce:#384C23;
-  --linea:rgba(77,32,0,.22);
-  --sombra:0 18px 50px -28px rgba(77,32,0,.55);
-  --grano:.04;
-
-  /* Las dos fuentes de marca */
-  --f-grandeur:"TAN Grandeur","Bodoni MT",Didot,Georgia,serif;
-  --f-mignon:"TAN Mignon","Cormorant Garamond",Georgia,serif;
-
-  --f-nourd:"Nourd",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
-
-  /* Grandeur queda reservada para el logotipo.
-     Mignon lleva los títulos; Nourd, el texto corrido y las etiquetas. */
-  --f-display:var(--f-mignon);
-  --f-body:var(--f-nourd);
-
-  --ancho:1180px;
-  --r-seccion:clamp(4.5rem,11vh,8.5rem);   /* aire entre secciones */
-  --r-bloque:clamp(2.2rem,5vw,3.6rem);     /* aire entre bloques   */
-  --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
-}
-
-/* Alternativa para comparar: párrafos en Mignon */
-:root[data-parrafos="mignon"]{--f-body:var(--f-mignon)}
-:root[data-parrafos="mignon"] body{font-size:clamp(1.06rem,1rem + .32vw,1.2rem);
-  line-height:1.85}
-
-/* TEMA OSCURO (alternativa) */
-:root[data-tema="oscuro"]{
-  --fondo:#2B1206;
-  --fondo-alt:#1F0D04;
-  --tinta:#EDDCC6;
-  --tinta-suave:rgba(237,220,198,.66);
-  --acento:#F3CA9B;
-  --realce:#F3CA9B;
-  --linea:rgba(243,202,155,.22);
-  --sombra:0 18px 50px -28px rgba(0,0,0,.8);
-  --grano:.06;
-}
-
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--fondo);color:var(--tinta);
-  font-family:var(--f-body);
-  font-size:clamp(1rem,.96rem + .22vw,1.09rem);
-  line-height:1.72;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  transition:background .6s ease,color .6s ease;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.16),transparent 68%),
-    radial-gradient(55% 40% at 96% 26%,rgba(77,32,0,.10),transparent 72%),
-    radial-gradient(60% 45% at 50% 108%,rgba(243,202,155,.5),transparent 70%);
-}
-:root[data-tema="oscuro"] body::before{
-  background:
-    radial-gradient(70% 50% at 15% 0%,rgba(56,76,35,.55),transparent 65%),
-    radial-gradient(60% 45% at 95% 30%,rgba(77,32,0,.65),transparent 70%);
-}
-body::after{
-  content:"";position:fixed;inset:-50%;pointer-events:none;z-index:0;opacity:var(--grano);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-main,header,footer{position:relative;z-index:1}
-img,video{max-width:100%;display:block}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--realce);outline-offset:3px;border-radius:2px}
-
-.env{width:min(100% - 2.4rem,var(--ancho));margin-inline:auto}
-
-/* ═══════════ Tipografía y ritmo ═══════════ */
-h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;line-height:1.08;
-  letter-spacing:.02em;text-wrap:balance;margin:0}
-p{margin:0 0 1.2em;max-width:64ch}
-p:last-child{margin-bottom:0}
-
-.eyebrow{
-  font-family:var(--f-body);font-size:.72rem;letter-spacing:.42em;
-  text-transform:uppercase;color:var(--realce);opacity:.85;
-  margin:0 0 1.4rem;
-}
-.titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
-  margin-bottom:var(--r-titulo)}
-/* Mignon no trae cursiva: el énfasis se marca cambiando a Nourd Light */
-.titulo em{font-style:normal;font-family:var(--f-nourd);font-weight:300;
-  color:var(--tinta);letter-spacing:-.01em;font-size:.92em}
-.tenue{color:var(--tinta-suave)}
-
-/* encabezado de sección: título + entradilla con aire garantizado */
-.cabecera{margin-bottom:var(--r-bloque);max-width:64ch}
-.cabecera p{margin-bottom:0}
-
-/* ═══════════ Navegación ═══════════ */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:60;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.95rem clamp(1.2rem,4vw,3rem);
-  border-bottom:1px solid transparent;
-  transition:background .5s,backdrop-filter .5s,border-color .5s;
-}
-.nav[data-fijo="si"]{
-  background:color-mix(in srgb,var(--fondo) 88%,transparent);
-  backdrop-filter:blur(14px);border-bottom-color:var(--linea);
-}
-.nav__marca{
-  display:flex;flex-direction:column;text-decoration:none;color:var(--acento);
-  /* aparece cuando la portada ya pasó */
-  opacity:0;transform:translateY(-6px);pointer-events:none;
-  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
-}
-.nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
-.nav__nombre{font-family:var(--f-mignon);font-size:1.45rem;line-height:1;letter-spacing:.14em}
-.nav__nombre::first-letter{font-family:var(--f-grandeur);font-size:1.11em}
-.nav__sub{font-family:var(--f-mignon);font-size:.6rem;letter-spacing:.05em;
-  line-height:1.5;opacity:.75}
-.nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
-.nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
-.nav__menu a{
-  text-decoration:none;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--tinta-suave);position:relative;padding-bottom:.28rem;transition:color .3s;
-}
-.nav__menu a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
-  background:var(--realce);transition:width .4s cubic-bezier(.2,.8,.2,1)}
-.nav__menu a:hover{color:var(--acento)}
-.nav__menu a:hover::after{width:100%}
-.tema{
-  background:none;border:1px solid var(--linea);color:var(--tinta-suave);
-  font:inherit;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  padding:.5rem .9rem;cursor:pointer;border-radius:99px;
-  transition:border-color .3s,color .3s;white-space:nowrap;
-}
-.tema:hover{border-color:var(--realce);color:var(--acento)}
-@media (max-width:900px){.nav__menu{display:none}}
-
-/* ═══════════ Portada ═══════════ */
-.portada{min-height:100svh;display:grid;align-content:center;
-  padding:clamp(7rem,15vh,10rem) 0 var(--r-bloque)}
-/* Solo para lectores de pantalla */
-.vo{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
-  white-space:nowrap}
-
-/* Logotipo compuesto con TAN Grandeur */
-/* ─────────────────────────────────────────────────────────────
-   LOGOTIPO — proporciones tomadas del original. No modificar
-   valores sueltos: todo se mide en em sobre --escala-logo, así
-   el conjunto crece y se encoge sin deformarse nunca.
-   ───────────────────────────────────────────────────────────── */
-.marca{display:block;text-align:center;margin:0;font-weight:400;
-  font-size:clamp(3.1rem,13.4vw,9.9rem)}
-.marca__fila{display:flex;align-items:center;justify-content:center;
-  font-size:1em;gap:.57em}
-/* "DES DE" y "20 25" van en una sans geométrica, como en el original */
-.marca__nota{
-  font-family:var(--f-nourd);
-  font-size:.152em;font-weight:700;letter-spacing:.2em;line-height:1.45;
-  color:var(--acento);text-align:center;
-  opacity:0;animation:aparece 1s ease 1.15s forwards;
-}
-/* El logotipo mezcla las dos fuentes, tal como el original:
-   la A inicial y la A interna son TAN Grandeur; M, K, I son TAN Mignon.
-   Las medidas salen de medir el logo original (altura de caja 65 = 1em). */
-.marca__nombre{
-  display:inline-flex;align-items:baseline;color:var(--acento);
-  font-size:1em;line-height:1;
-  padding-top:.62em;            /* aire para el asta alta de la A */
-}
-.marca__nombre span{display:inline-block;opacity:0;transform:translateY(.32em);
-  animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards}
-.marca__nombre .m{font-family:var(--f-mignon);font-size:1em}
-.marca__nombre .g{font-family:var(--f-grandeur)}
-.marca__nombre .g--alta{font-size:0.9703em}   /* A inicial: cap 1.60 */
-.marca__nombre .g--baja{font-size:.713em}    /* A interna: cap 1.03 */
-/* Separaciones medidas sobre el logo original.
-   Ojo: em se calcula sobre el tamaño de cada letra, por eso la A
-   interna lleva el valor dividido entre su propia escala. */
-.marca__nombre .l-m{margin-left:.069em}
-.marca__nombre .l-a{margin-left:.365em}
-.marca__nombre .l-k{margin-left:.173em}
-.marca__nombre .l-i{margin-left:.343em}
-
-.marca__sub{
-  display:block;font-family:var(--f-mignon);color:var(--acento);
-  font-size:.2621em;          /* el subtítulo mide 0,771 del ancho de AMAKI */
-  letter-spacing:0;line-height:1;margin-top:.05em;
-  /* en el original no va centrado: arranca bajo la M y termina bajo la I */
-  position:relative;left:2.08em;
-  opacity:0;animation:sube 1s ease .95s forwards;
-}
-
-.portada__pie{margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center;
-  opacity:0;animation:aparece 1.1s ease 1.5s forwards}
-.portada__pie p{margin-inline:auto;max-width:48ch;color:var(--tinta-suave)}
-.baja{display:inline-flex;flex-direction:column;align-items:center;gap:.7rem;
-  margin-top:1.9rem;text-decoration:none;font-size:.68rem;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--realce)}
-.baja i{display:block;width:1px;height:52px;
-  background:linear-gradient(var(--realce),transparent);
-  animation:respira 2.6s ease-in-out infinite}
-
-@keyframes sube{to{opacity:1;transform:none}}
-@keyframes aparece{to{opacity:1}}
-@keyframes respira{0%,100%{transform:scaleY(.4);transform-origin:top}
-  50%{transform:scaleY(1);transform-origin:top}}
-
-/* ═══════════ Secciones ═══════════ */
-.seccion{padding-block:var(--r-seccion)}
-.seccion--tinte{background:var(--fondo-alt)}
-
-.dos{display:grid;gap:clamp(2.2rem,6vw,5rem);grid-template-columns:1fr;align-items:center}
-@media (min-width:900px){.dos{grid-template-columns:1.05fr .95fr}}
-
-.retrato{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:3px;margin:0;
-  background:linear-gradient(150deg,var(--verde),var(--marron));box-shadow:var(--sombra)}
-.retrato img{width:100%;height:100%;object-fit:cover;
-  transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-.retrato:hover img{transform:scale(1.04)}
-
-/* Galería en mosaico */
-.mosaico{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr);margin-top:var(--r-bloque)}
-@media (min-width:760px){.mosaico{grid-template-columns:repeat(4,1fr)}}
-.foto{position:relative;margin:0;overflow:hidden;border-radius:3px;aspect-ratio:3/4;
-  border:1px solid var(--linea);background:var(--fondo-alt)}
-.foto--alto{aspect-ratio:3/4}
-.foto--ancho{aspect-ratio:4/3}
-@media (min-width:760px){.foto--doble{grid-column:span 2}}
-.foto img{width:100%;height:100%;object-fit:cover;
-  transition:transform 1s cubic-bezier(.2,.8,.2,1),filter .6s}
-.foto:hover img{transform:scale(1.05)}
-.foto figcaption{
-  position:absolute;left:0;right:0;bottom:0;padding:2.4rem .9rem .8rem;
-  background:linear-gradient(transparent,rgba(43,18,6,.86));
-  color:#F3CA9B;font-size:.78rem;letter-spacing:.14em;
-  display:flex;justify-content:space-between;gap:.8rem;align-items:baseline;
-}
-.foto figcaption b{font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
-.marco{position:relative}
-.marco::before{content:"";position:absolute;inset:1.6rem -1.6rem -1.6rem 1.6rem;
-  border:1px solid var(--linea);pointer-events:none}
-
-.pilares{display:grid;gap:clamp(1.8rem,3.4vw,2.8rem);grid-template-columns:1fr}
-@media (min-width:760px){.pilares{grid-template-columns:repeat(3,1fr)}}
-.pilar{padding-top:1.5rem;border-top:1px solid var(--linea)}
-.pilar h3{font-size:1.5rem;color:var(--acento);margin-bottom:.75rem}
-.pilar p{font-size:.96rem;color:var(--tinta-suave)}
-
-/* ═══════════ Carta ═══════════ */
-.carta__nav{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:var(--r-bloque)}
-.chip{
-  font:inherit;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
-  padding:.6rem 1.2rem;border:1px solid var(--linea);background:none;color:var(--tinta-suave);
-  border-radius:99px;cursor:pointer;transition:all .35s cubic-bezier(.2,.8,.2,1);
-}
-.chip:hover{border-color:var(--realce);color:var(--acento)}
-.chip[aria-selected="true"]{background:var(--acento);border-color:var(--acento);
-  color:var(--fondo)}
-
-.grupo{margin-bottom:clamp(2.6rem,6vw,4rem)}
-.grupo:last-child{margin-bottom:0}
-.grupo__titulo{
-  font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);
-  padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
-  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-}
-.grupo__nota{font-family:var(--f-body);font-size:.72rem;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--tinta-suave)}
-
-.plato{
-  display:grid;gap:.35rem 1.8rem;grid-template-columns:1fr auto;
-  padding:1.25rem 0;border-bottom:1px solid var(--linea);
-  transition:padding-left .45s cubic-bezier(.2,.8,.2,1),background .45s;
-}
-.plato:hover{padding-left:1rem;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--realce) 9%,transparent),transparent 72%)}
-.plato__nombre{font-family:var(--f-display);font-size:clamp(1.1rem,2.4vw,1.45rem);
-  color:var(--acento);letter-spacing:.03em}
-.plato__precio{font-size:.95rem;color:var(--realce);align-self:center;
-  font-variant-numeric:tabular-nums;white-space:nowrap}
-.plato__desc{grid-column:1/-1;font-size:.94rem;color:var(--tinta-suave);
-  margin:0;max-width:72ch;line-height:1.6}
-
-/* dos columnas para listas cortas (bebidas, adiciones) */
-.columnas{columns:2;column-gap:clamp(2rem,5vw,4rem)}
-@media (max-width:640px){.columnas{columns:1}}
-.columnas .plato{break-inside:avoid}
-
-.adiciones{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
-.tag{border:1px solid var(--linea);border-radius:99px;padding:.45rem 1rem;
-  font-size:.85rem;color:var(--tinta-suave)}
-
-/* ═══════════ Eventos ═══════════ */
-.planes{display:grid;gap:clamp(1.4rem,3vw,2rem);grid-template-columns:1fr}
-@media (min-width:800px){.planes{grid-template-columns:1fr 1fr}}
-.plan{
-  border:1px solid var(--linea);border-radius:4px;padding:clamp(1.6rem,3.4vw,2.4rem);
-  background:color-mix(in srgb,var(--realce) 5%,transparent);
-  display:flex;flex-direction:column;gap:1.1rem;
-  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
-}
-.plan:hover{transform:translateY(-6px);border-color:var(--realce);box-shadow:var(--sombra)}
-.plan__foto{margin:calc(-1 * clamp(1.6rem,3.4vw,2.4rem));margin-bottom:.4rem;
-  aspect-ratio:16/10;overflow:hidden;border-radius:4px 4px 0 0}
-.plan__foto img{width:100%;height:100%;object-fit:cover;
-  transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
-.plan:hover .plan__foto img{transform:scale(1.05)}
-.plan__cabeza{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-  flex-wrap:wrap}
-.plan h3{font-size:1.6rem;color:var(--acento)}
-.plan__precio{font-family:var(--f-display);font-size:1.5rem;color:var(--realce);
-  font-variant-numeric:tabular-nums}
-.plan ul{margin:0;padding-left:1.1rem;color:var(--tinta-suave);font-size:.96rem;
-  display:grid;gap:.35rem}
-.plan__pie{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--tinta-suave);margin-top:auto}
-
-.extras{display:grid;gap:clamp(1.4rem,2.8vw,2rem);grid-template-columns:1fr;
-  margin-top:var(--r-bloque)}
-@media (min-width:640px){.extras{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1000px){.extras{grid-template-columns:repeat(4,1fr)}}
-.extra{border-top:1px solid var(--linea);padding-top:1.2rem}
-.extra__foto{margin:0 0 1.1rem;aspect-ratio:4/5;overflow:hidden;border-radius:3px;
-  background:var(--fondo-alt)}
-.extra__foto img{width:100%;height:100%;object-fit:cover;
-  transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
-.extra:hover .extra__foto img{transform:scale(1.05)}
-.extra h4{font-size:1.15rem;color:var(--acento);margin-bottom:.5rem}
-.extra p{font-size:.92rem;color:var(--tinta-suave)}
-.extra strong{color:var(--realce);font-weight:400;font-variant-numeric:tabular-nums}
-
-/* ═══════════ Videos ═══════════ */
-.presentacion{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:3px;
-  border:1px solid var(--linea);background:var(--fondo-alt);box-shadow:var(--sombra)}
-.presentacion video{width:100%;height:100%;object-fit:cover}
-
-.reel{
-  display:flex;gap:1.1rem;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding-block:1.4rem 2rem;margin-inline:calc(50% - 50vw);
-  padding-inline:max(1.2rem,calc(50vw - var(--ancho)/2));
-  scrollbar-width:thin;scrollbar-color:var(--linea) transparent;
-}
-.reel::-webkit-scrollbar{height:5px}
-.reel::-webkit-scrollbar-thumb{background:var(--linea);border-radius:99px}
-.clip{
-  flex:0 0 clamp(196px,56vw,258px);scroll-snap-align:center;aspect-ratio:9/16;
-  position:relative;overflow:hidden;border-radius:3px;border:1px solid var(--linea);
-  background:var(--fondo-alt);
-  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
-}
-.clip:hover{transform:translateY(-8px);border-color:var(--realce);box-shadow:var(--sombra)}
-.clip video{width:100%;height:100%;object-fit:cover}
-.vacio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
-  padding:1.2rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--tinta-suave);
-  background:linear-gradient(160deg,color-mix(in srgb,var(--verde) 16%,transparent),
-                                    color-mix(in srgb,var(--marron) 12%,transparent))}
-.clip__pie{position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .85rem;
-  background:linear-gradient(transparent,color-mix(in srgb,var(--marron) 88%,transparent));
-  font-size:.75rem;letter-spacing:.14em;color:#F3CA9B}
-.sub-eyebrow{margin-top:var(--r-bloque)}
-
-/* ═══════════ Visita ═══════════ */
-.datos{display:grid;gap:clamp(1.8rem,4vw,3rem);grid-template-columns:1fr}
-@media (min-width:760px){.datos{grid-template-columns:repeat(3,1fr)}}
-.dato h3{font-size:1.3rem;color:var(--acento);margin-bottom:.85rem}
-.dato p{font-size:.96rem;color:var(--tinta-suave)}
-.dato a{text-decoration:none;border-bottom:1px solid var(--linea);transition:border-color .3s,color .3s}
-.dato a:hover{color:var(--acento);border-color:var(--acento)}
-.horario{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1.2rem;
-  font-size:.95rem;color:var(--tinta-suave);font-variant-numeric:tabular-nums;margin:0}
-.horario dt{color:var(--tinta)}
-.horario dd{margin:0;text-align:right}
-
-.redes{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:var(--r-bloque)}
-.boton{display:inline-block;text-decoration:none;padding:.95rem 2.1rem;
-  border:1px solid var(--acento);color:var(--acento);
-  font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;
-  position:relative;overflow:hidden;transition:color .4s}
-.boton span{position:relative;z-index:1}
-.boton::before{content:"";position:absolute;inset:0;background:var(--acento);
-  transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
-.boton:hover{color:var(--fondo)}
-.boton:hover::before{transform:none}
-
-.banda{position:relative;height:clamp(300px,52vh,520px);overflow:hidden;
-  display:grid;place-items:center}
-.banda img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.banda::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(43,18,6,.35),rgba(43,18,6,.72))}
-.banda__texto{position:relative;z-index:1;margin:0;text-align:center;
-  font-family:var(--f-display);color:#F3CA9B;letter-spacing:.03em;
-  font-size:clamp(1.5rem,4.4vw,3rem);max-width:18ch;line-height:1.2}
-
-.cita{text-align:center;font-family:var(--f-display);
-  font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
-  max-width:22ch;margin-inline:auto;line-height:1.18}
-
-.pie{border-top:1px solid var(--linea);padding:2.6rem 0 3.4rem;
-  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
-  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-suave)}
-
-/* ═══════════ Revelado ═══════════ */
-.rev{opacity:0;transform:translateY(26px);
-  transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
-.rev[data-visible="si"]{opacity:1;transform:none}
-.pilares .rev:nth-child(2),.planes .rev:nth-child(2),.extras .rev:nth-child(2){transition-delay:.1s}
-.pilares .rev:nth-child(3),.extras .rev:nth-child(3){transition-delay:.2s}
-.extras .rev:nth-child(4){transition-delay:.3s}
-
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none !important;transition:none !important}
-  .rev{opacity:1;transform:none}
-  html{scroll-behavior:auto}
-}
-</style>
+</script>
+</head>
+<body>
 
 <header class="nav" id="nav">
   <a class="nav__marca" href="#inicio">
@@ -476,8 +76,8 @@ p:last-child{margin-bottom:0}
         <li><a href="#visita">Visítanos</a></li>
       </ul>
     </nav>
-    <button class="tema" id="btn-parrafos" type="button" aria-live="polite">Párrafos: Nourd</button>
-    <button class="tema" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
+    <button class="boton-nav" id="btn-parrafos" type="button" aria-live="polite">Párrafos: Nourd</button>
+    <button class="boton-nav" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
   </div>
 </header>
 
@@ -785,9 +385,9 @@ p:last-child{margin-bottom:0}
         </article>
       </div>
 
-      <div class="cabecera rev" style="margin-top:var(--r-seccion)">
+      <div class="cabecera cabecera--aparte rev">
         <p class="eyebrow">Para recibir invitados</p>
-        <h3 class="titulo" style="font-size:clamp(1.6rem,4vw,2.6rem)">Pasabocas y bebidas</h3>
+        <h3 class="titulo titulo--menor">Pasabocas y bebidas</h3>
       </div>
       <div class="mosaico rev">
         <figure class="foto">
@@ -819,11 +419,11 @@ p:last-child{margin-bottom:0}
           <figcaption>Sodas refrescantes <b>$ 8.000</b></figcaption>
         </figure>
       </div>
-      <p class="tenue rev" style="font-size:.88rem;margin-top:1.2rem">Las bebidas de esta selección se entregan en vaso de jugo, no en copa, para ajustar el precio.</p>
+      <p class="tenue nota-pie rev">Las bebidas de esta selección se entregan en vaso de jugo, no en copa, para ajustar el precio.</p>
 
-      <div class="cabecera rev" style="margin-top:var(--r-seccion)">
+      <div class="cabecera cabecera--aparte rev">
         <p class="eyebrow">Ambientación</p>
-        <h3 class="titulo" style="font-size:clamp(1.6rem,4vw,2.6rem)">Decoración a la medida</h3>
+        <h3 class="titulo titulo--menor">Decoración a la medida</h3>
         <p class="tenue">Trabajamos mesas de ocho personas. Cada mesa se organiza con floreros, velas decorativas, sobreplatos, vasos y cubiertos.</p>
       </div>
       <div class="extras">
@@ -920,7 +520,7 @@ p:last-child{margin-bottom:0}
             <dt>Domingo</dt><dd>12:00 – 18:00</dd>
             <dt>Lunes</dt><dd>Cerrado</dd>
           </dl>
-          <p class="tenue" style="font-size:.82rem;margin-top:.8rem">Horario por confirmar.</p>
+          <p class="tenue nota-pie">Horario por confirmar.</p>
         </div>
         <div class="dato rev">
           <h3>Contacto</h3>
@@ -951,56 +551,10 @@ p:last-child{margin-bottom:0}
   </div>
 </footer>
 
-<script>
-  /* Tema claro / oscuro — el logo cambia a su versión beige */
-  const raiz = document.documentElement;
-  const btn = document.getElementById('btn-tema');
-  raiz.dataset.tema = 'claro';
-  btn.addEventListener('click', () => {
-    const eraOscuro = raiz.dataset.tema === 'oscuro';
-    raiz.dataset.tema = eraOscuro ? 'claro' : 'oscuro';
-    btn.textContent = eraOscuro ? 'Tema oscuro' : 'Tema claro';
-  });
+<script src="assets/js/tema.js" defer></script>
+<script src="assets/js/navegacion.js" defer></script>
+<script src="assets/js/carta.js" defer></script>
+<script src="assets/js/revelado.js" defer></script>
 
-  /* Prueba de tipografía para el texto corrido */
-  const btnP = document.getElementById('btn-parrafos');
-  raiz.dataset.parrafos = 'nourd';
-  btnP.addEventListener('click', () => {
-    const esMignon = raiz.dataset.parrafos === 'mignon';
-    raiz.dataset.parrafos = esMignon ? 'nourd' : 'mignon';
-    btnP.textContent = esMignon ? 'Párrafos: Nourd' : 'Párrafos: Mignon';
-  });
-
-  /* Barra superior */
-  const nav = document.getElementById('nav');
-  const alScroll = () => nav.dataset.fijo = scrollY > 60 ? 'si' : 'no';
-  alScroll();
-  addEventListener('scroll', alScroll, {passive:true});
-
-  /* Filtros de la carta: llevan al grupo y marcan el chip */
-  const chips = [...document.querySelectorAll('.chip')];
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    chips.forEach(c => c.setAttribute('aria-selected', String(c === chip)));
-    document.getElementById(chip.dataset.ir)
-      .scrollIntoView({behavior:'smooth', block:'start'});
-  }));
-
-  /* El chip activo sigue al grupo visible */
-  const grupos = chips.map(c => document.getElementById(c.dataset.ir));
-  const vigia = new IntersectionObserver(entradas => {
-    for (const e of entradas) {
-      if (!e.isIntersecting) continue;
-      const i = grupos.indexOf(e.target);
-      if (i > -1) chips.forEach((c, j) => c.setAttribute('aria-selected', String(i === j)));
-    }
-  }, {rootMargin:'-20% 0px -70% 0px'});
-  grupos.forEach(g => vigia.observe(g));
-
-  /* Revelado progresivo */
-  const ojo = new IntersectionObserver(entradas => {
-    for (const e of entradas) {
-      if (e.isIntersecting) { e.target.dataset.visible = 'si'; ojo.unobserve(e.target); }
-    }
-  }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.rev').forEach(el => ojo.observe(el));
-</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* ═══════════ Tokens de diseño ═══════════
+   Único lugar donde se definen colores, fuentes y ritmos.
+   Ningún otro archivo debe escribir un color literal.
+   ════════════════════════════════════════ */
+
+:root{
+  /* Colores de marca (fijos) */
+  --verde:#384C23;
+  --beige:#F3CA9B;
+  --marron:#4D2000;
+
+  /* Tema claro — el principal */
+  --fondo:#F8E7CF;
+  --fondo-alt:#F3CA9B;
+  --tinta:#3A1800;
+  --tinta-suave:rgba(58,24,0,.72);
+  --acento:#4D2000;
+  --realce:#384C23;
+  --linea:rgba(77,32,0,.22);
+  --sombra:0 18px 50px -28px rgba(77,32,0,.55);
+  --grano:.04;
+
+  /* Familias */
+  --f-grandeur:"TAN Grandeur","Bodoni MT",Didot,Georgia,serif;
+  --f-mignon:"TAN Mignon","Cormorant Garamond",Georgia,serif;
+  --f-nourd:"Nourd",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+
+  /* Roles tipográficos */
+  --f-display:var(--f-mignon);   /* títulos */
+  --f-body:var(--f-nourd);       /* texto corrido y etiquetas */
+
+  /* Medidas y ritmo vertical */
+  --ancho:1180px;
+  --r-seccion:clamp(4.5rem,11vh,8.5rem);   /* aire entre secciones */
+  --r-bloque:clamp(2.2rem,5vw,3.6rem);     /* aire entre bloques   */
+  --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
+}
+
+/* Tema oscuro */
+:root[data-tema="oscuro"]{
+  --fondo:#2B1206;
+  --fondo-alt:#1F0D04;
+  --tinta:#EDDCC6;
+  --tinta-suave:rgba(237,220,198,.66);
+  --acento:#F3CA9B;
+  --realce:#F3CA9B;
+  --linea:rgba(243,202,155,.22);
+  --sombra:0 18px 50px -28px rgba(0,0,0,.8);
+  --grano:.06;
+}
+
+/* Comparador tipográfico: texto corrido en Mignon */
+:root[data-parrafos="mignon"]{--f-body:var(--f-mignon)}

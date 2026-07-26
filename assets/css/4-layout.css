@@ -1,0 +1,57 @@
+/* ═══════════ Estructura: contenedor, secciones y barra superior ═══════════ */
+
+.env{width:min(100% - 2.4rem,var(--ancho));margin-inline:auto}
+
+.seccion{padding-block:var(--r-seccion)}
+.seccion--tinte{background:var(--fondo-alt)}
+
+/* encabezado de sección: título + entradilla con aire garantizado */
+.cabecera{margin-bottom:var(--r-bloque);max-width:64ch}
+.cabecera p{margin-bottom:0}
+.cabecera--aparte{margin-top:var(--r-seccion)}
+
+/* Dos columnas */
+.dos{display:grid;gap:clamp(2.2rem,6vw,5rem);grid-template-columns:1fr;align-items:center}
+@media (min-width:900px){.dos{grid-template-columns:1.05fr .95fr}}
+
+/* ═══ Barra superior ═══ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.95rem clamp(1.2rem,4vw,3rem);
+  border-bottom:1px solid transparent;
+  transition:background .5s,backdrop-filter .5s,border-color .5s;
+}
+.nav[data-fijo="si"]{
+  background:color-mix(in srgb,var(--fondo) 88%,transparent);
+  backdrop-filter:blur(14px);border-bottom-color:var(--linea);
+}
+.nav__marca{
+  display:flex;flex-direction:column;text-decoration:none;color:var(--acento);
+  /* aparece cuando la portada ya pasó */
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
+.nav__nombre{font-family:var(--f-mignon);font-size:1.45rem;line-height:1;
+  letter-spacing:.14em}
+.nav__nombre::first-letter{font-family:var(--f-grandeur);font-size:1.11em}
+.nav__sub{font-family:var(--f-mignon);font-size:.6rem;letter-spacing:.05em;
+  line-height:1.5;opacity:.75}
+
+.nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
+.nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
+.nav__menu a{
+  text-decoration:none;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--tinta-suave);position:relative;padding-bottom:.28rem;transition:color .3s;
+}
+.nav__menu a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--realce);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.nav__menu a:hover{color:var(--acento)}
+.nav__menu a:hover::after{width:100%}
+@media (max-width:900px){.nav__menu{display:none}}
+
+/* ═══ Pie ═══ */
+.pie{border-top:1px solid var(--linea);padding:2.6rem 0 3.4rem;
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-suave)}

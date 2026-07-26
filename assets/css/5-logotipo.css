@@ -1,0 +1,67 @@
+/* ═════════════════════════════════════════════════════════════
+   LOGOTIPO — NO MODIFICAR VALORES SUELTOS
+
+   Reproduce el logo original de AMAKI. Cada medida sale de medir
+   el archivo de marca y está expresada en `em` sobre una única
+   escala (.marca), de modo que el conjunto crece y se encoge como
+   un bloque rígido y nunca se deforma.
+
+   Composición del original:
+     A inicial ...... TAN Grandeur, alto 1,600
+     M .............. TAN Mignon,   alto 1,000
+     A interna ...... TAN Grandeur, alto 1,031
+     K, I ........... TAN Mignon,   alto 1,000
+     subtítulo ...... TAN Mignon,   0,771 del ancho de AMAKI
+     DESDE / 2025 ... Nourd Bold
+
+   Si necesitas cambiar el tamaño del logo, cambia SOLO el
+   font-size de .marca. Todo lo demás se recalcula solo.
+   ═════════════════════════════════════════════════════════════ */
+
+.marca{
+  display:block;text-align:center;margin:0;font-weight:400;
+  font-size:clamp(3.1rem,13.4vw,9.9rem);   /* ← única escala */
+}
+
+.marca__fila{
+  display:flex;align-items:center;justify-content:center;
+  font-size:1em;gap:.57em;
+}
+
+/* "DES DE" y "20 25" */
+.marca__nota{
+  font-family:var(--f-nourd);
+  font-size:.152em;font-weight:700;letter-spacing:.2em;line-height:1.45;
+  color:var(--acento);text-align:center;
+  opacity:0;animation:aparece 1s ease 1.15s forwards;
+}
+
+.marca__nombre{
+  display:inline-flex;align-items:baseline;color:var(--acento);
+  font-size:1em;line-height:1;
+  padding-top:.62em;              /* aire para el asta alta de la A */
+}
+.marca__nombre span{
+  display:inline-block;opacity:0;transform:translateY(.32em);
+  animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards;
+}
+.marca__nombre .m{font-family:var(--f-mignon);font-size:1em}
+.marca__nombre .g{font-family:var(--f-grandeur)}
+.marca__nombre .g--alta{font-size:.9703em}   /* A inicial */
+.marca__nombre .g--baja{font-size:.713em}    /* A interna */
+
+/* Separaciones entre letras. Ojo: `em` se calcula sobre el tamaño
+   de cada letra, por eso la A interna lleva su valor ya dividido. */
+.marca__nombre .l-m{margin-left:.069em}
+.marca__nombre .l-a{margin-left:.365em}
+.marca__nombre .l-k{margin-left:.173em}
+.marca__nombre .l-i{margin-left:.343em}
+
+.marca__sub{
+  display:block;font-family:var(--f-mignon);color:var(--acento);
+  font-size:.2621em;
+  letter-spacing:0;line-height:1;margin-top:.05em;
+  /* en el original no va centrado: arranca bajo la M y termina bajo la I */
+  position:relative;left:2.08em;
+  opacity:0;animation:sube 1s ease .95s forwards;
+}

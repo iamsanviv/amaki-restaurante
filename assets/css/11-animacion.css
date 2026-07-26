@@ -1,0 +1,32 @@
+/* ═══════════ Animación ═══════════
+   Va al final para que sus reglas de accesibilidad
+   puedan desactivar todo lo anterior.
+   ═════════════════════════════════ */
+
+@keyframes sube{to{opacity:1;transform:none}}
+@keyframes aparece{to{opacity:1}}
+@keyframes respira{
+  0%,100%{transform:scaleY(.4);transform-origin:top}
+  50%{transform:scaleY(1);transform-origin:top}
+}
+
+/* Revelado al entrar en pantalla */
+.rev{opacity:0;transform:translateY(26px);
+  transition:opacity 1s cubic-bezier(.2,.8,.2,1),
+             transform 1s cubic-bezier(.2,.8,.2,1)}
+.rev[data-visible="si"]{opacity:1;transform:none}
+
+/* Escalonado dentro de una misma rejilla */
+.pilares .rev:nth-child(2),
+.planes  .rev:nth-child(2),
+.extras  .rev:nth-child(2){transition-delay:.1s}
+.pilares .rev:nth-child(3),
+.extras  .rev:nth-child(3){transition-delay:.2s}
+.extras  .rev:nth-child(4){transition-delay:.3s}
+
+/* Respeta a quien pide menos movimiento */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rev{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}

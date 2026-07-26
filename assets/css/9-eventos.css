@@ -1,0 +1,51 @@
+/* ═══════════ Eventos sociales y empresariales ═══════════ */
+
+.planes{display:grid;gap:clamp(1.4rem,3vw,2rem);grid-template-columns:1fr}
+@media (min-width:800px){.planes{grid-template-columns:1fr 1fr}}
+
+.plan{
+  border:1px solid var(--linea);border-radius:4px;
+  padding:clamp(1.6rem,3.4vw,2.4rem);
+  background:color-mix(in srgb,var(--realce) 5%,transparent);
+  display:flex;flex-direction:column;gap:1.1rem;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
+}
+.plan:hover{transform:translateY(-6px);border-color:var(--realce);box-shadow:var(--sombra)}
+.plan__foto{
+  margin:calc(-1 * clamp(1.6rem,3.4vw,2.4rem));margin-bottom:.4rem;
+  aspect-ratio:16/10;overflow:hidden;border-radius:4px 4px 0 0;
+}
+.plan__foto img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.plan:hover .plan__foto img{transform:scale(1.05)}
+.plan__cabeza{display:flex;align-items:baseline;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap}
+.plan h3{font-size:1.6rem;color:var(--acento)}
+.plan__precio{font-family:var(--f-display);font-size:1.5rem;color:var(--realce);
+  font-variant-numeric:tabular-nums}
+.plan ul{margin:0;padding-left:1.1rem;color:var(--tinta-suave);font-size:.96rem;
+  display:grid;gap:.35rem}
+.plan__pie{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tinta-suave);margin-top:auto}
+
+/* Opciones de decoración */
+.extras{display:grid;gap:clamp(1.4rem,2.8vw,2rem);grid-template-columns:1fr;
+  margin-top:var(--r-bloque)}
+@media (min-width:640px){.extras{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.extras{grid-template-columns:repeat(4,1fr)}}
+.extra{border-top:1px solid var(--linea);padding-top:1.2rem}
+.extra__foto{margin:0 0 1.1rem;aspect-ratio:4/5;overflow:hidden;border-radius:3px;
+  background:var(--fondo-alt)}
+.extra__foto img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.extra:hover .extra__foto img{transform:scale(1.05)}
+.extra h4{font-size:1.15rem;color:var(--acento);margin-bottom:.5rem}
+.extra p{font-size:.92rem;color:var(--tinta-suave)}
+.extra strong{color:var(--realce);font-weight:400;font-variant-numeric:tabular-nums}
+
+/* ═══ Pilares del propósito ═══ */
+.pilares{display:grid;gap:clamp(1.8rem,3.4vw,2.8rem);grid-template-columns:1fr}
+@media (min-width:760px){.pilares{grid-template-columns:repeat(3,1fr)}}
+.pilar{padding-top:1.5rem;border-top:1px solid var(--linea)}
+.pilar h3{font-size:1.5rem;color:var(--acento);margin-bottom:.75rem}
+.pilar p{font-size:.96rem;color:var(--tinta-suave)}
