@@ -607,7 +607,10 @@ p:last-child{margin-bottom:0}
 }
 .carta__panel{
   flex:0 0 100%;width:100%;
-  padding-inline:1px;          /* evita que el borde se recorte al desplazar */
+  /* Mignon saca sus astas altas fuera de la caja de línea. Sin este aire,
+     el marco (que recorta lo que sobra) le rebana la parte superior a los
+     títulos. El alto se mide con el relleno incluido, así que no descuadra. */
+  padding:.45em 1px 0;
   opacity:.3;transition:opacity .45s ease;
 }
 .carta__panel[data-activo="si"]{opacity:1}
@@ -637,7 +640,7 @@ p:last-child{margin-bottom:0}
 }
 
 .grupo__titulo{
-  font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);
+  font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);line-height:1.25;
   padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
   display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
 }
