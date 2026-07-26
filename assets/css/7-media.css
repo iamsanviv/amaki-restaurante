@@ -97,11 +97,15 @@
     rgba(31,13,4,.82) 80%,
     rgba(31,13,4,.96) 100%);
 }
+/* Fondo oscuro propio: las portadas pueden ser claras u oscuras y el
+   botón tiene que leerse en ambas. */
 .clip__play{
   position:absolute;top:50%;left:50%;translate:-50% -50%;
   width:3.1rem;height:3.1rem;border-radius:50%;
-  border:1px solid var(--linea);background:rgba(243,202,155,.1);
-  backdrop-filter:blur(2px);
+  border:1px solid rgba(243,202,155,.55);
+  background:rgba(31,13,4,.5);
+  backdrop-filter:blur(3px);
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.8);
   transition:background .4s ease,border-color .4s ease,scale .4s cubic-bezier(.2,.8,.2,1);
 }
 .clip__play::after{
