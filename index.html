@@ -123,8 +123,12 @@ p:last-child{margin-bottom:0}
   background:color-mix(in srgb,var(--fondo) 88%,transparent);
   backdrop-filter:blur(14px);border-bottom-color:var(--linea);
 }
-.nav__marca{font-family:var(--f-display);font-size:1.1rem;letter-spacing:.34em;
-  color:var(--acento);text-decoration:none}
+.nav__marca{display:block;line-height:0;text-decoration:none;
+  /* aparece cuando la portada ya pasó */
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+.nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
+.nav__marca img{width:auto;height:clamp(26px,3.4vw,34px)}
 .nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
 .nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
 .nav__menu a{
@@ -380,7 +384,11 @@ p:last-child{margin-bottom:0}
 </style>
 
 <header class="nav" id="nav">
-  <a class="nav__marca" href="#inicio">AMAKI</a>
+  <a class="nav__marca" href="#inicio" aria-label="AMAKI · Inicio">
+    <img id="logo-nav" src="assets/img/logo-amaki.png"
+         data-oscuro="assets/img/logo-amaki-beige.png"
+         alt="AMAKI · Restaurante amazónico" width="407" height="153" />
+  </a>
   <div class="nav__der">
     <nav aria-label="Principal">
       <ul class="nav__menu">
@@ -863,15 +871,14 @@ p:last-child{margin-bottom:0}
   /* Tema claro / oscuro — el logo cambia a su versión beige */
   const raiz = document.documentElement;
   const btn = document.getElementById('btn-tema');
-  const logo = document.getElementById('logo');
-  const LOGO_CLARO = logo.src;
-  const LOGO_OSCURO = logo.dataset.oscuro;
+  const logos = [...document.querySelectorAll('#logo, #logo-nav')]
+    .map(el => ({el, claro: el.src, oscuro: el.dataset.oscuro}));
   raiz.dataset.tema = 'claro';
   btn.addEventListener('click', () => {
-    const oscuro = raiz.dataset.tema === 'oscuro';
-    raiz.dataset.tema = oscuro ? 'claro' : 'oscuro';
-    btn.textContent = oscuro ? 'Tema oscuro' : 'Tema claro';
-    logo.src = oscuro ? LOGO_CLARO : LOGO_OSCURO;
+    const eraOscuro = raiz.dataset.tema === 'oscuro';
+    raiz.dataset.tema = eraOscuro ? 'claro' : 'oscuro';
+    btn.textContent = eraOscuro ? 'Tema oscuro' : 'Tema claro';
+    logos.forEach(l => l.el.src = eraOscuro ? l.claro : l.oscuro);
   });
 
   /* Barra superior */
