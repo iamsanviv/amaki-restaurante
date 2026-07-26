@@ -53,9 +53,9 @@
   --f-nourd:"Nourd",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
 
   /* Grandeur queda reservada para el logotipo.
-     Los títulos se pueden probar en Mignon o en Nourd. */
+     Mignon lleva los títulos; Nourd, el texto corrido y las etiquetas. */
   --f-display:var(--f-mignon);
-  --f-body:var(--f-mignon);
+  --f-body:var(--f-nourd);
 
   --ancho:1180px;
   --r-seccion:clamp(4.5rem,11vh,8.5rem);   /* aire entre secciones */
@@ -63,14 +63,10 @@
   --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
 }
 
-/* Alternativa: títulos en Nourd */
-:root[data-titulos="nourd"]{--f-display:var(--f-nourd)}
-:root[data-titulos="nourd"] .titulo,
-:root[data-titulos="nourd"] .grupo__titulo,
-:root[data-titulos="nourd"] .plato__nombre,
-:root[data-titulos="nourd"] .banda__texto,
-:root[data-titulos="nourd"] .cita{font-weight:500;letter-spacing:-.005em}
-:root[data-titulos="nourd"] .titulo em{font-family:var(--f-mignon);font-weight:400}
+/* Alternativa para comparar: párrafos en Mignon */
+:root[data-parrafos="mignon"]{--f-body:var(--f-mignon)}
+:root[data-parrafos="mignon"] body{font-size:clamp(1.06rem,1rem + .32vw,1.2rem);
+  line-height:1.85}
 
 /* TEMA OSCURO (alternativa) */
 :root[data-tema="oscuro"]{
@@ -90,9 +86,8 @@ html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--fondo);color:var(--tinta);
   font-family:var(--f-body);
-  /* Mignon es una tipografía de display: pide algo más de cuerpo e interlínea */
-  font-size:clamp(1.06rem,1rem + .32vw,1.2rem);
-  line-height:1.85;letter-spacing:.005em;overflow-x:hidden;
+  font-size:clamp(1rem,.96rem + .22vw,1.09rem);
+  line-height:1.72;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   transition:background .6s ease,color .6s ease;
 }
@@ -132,9 +127,9 @@ p:last-child{margin-bottom:0}
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}
-/* Las TAN no traen cursiva: se contrasta con la secundaria, no con oblicua falsa */
-.titulo em{font-style:normal;font-family:var(--f-body);color:var(--tinta);
-  letter-spacing:.01em}
+/* Mignon no trae cursiva: el énfasis se marca cambiando a Nourd Light */
+.titulo em{font-style:normal;font-family:var(--f-nourd);font-weight:300;
+  color:var(--tinta);letter-spacing:-.01em;font-size:.92em}
 .tenue{color:var(--tinta-suave)}
 
 /* encabezado de sección: título + entradilla con aire garantizado */
@@ -191,10 +186,15 @@ p:last-child{margin-bottom:0}
   white-space:nowrap}
 
 /* Logotipo compuesto con TAN Grandeur */
-.marca{display:block;text-align:center;margin:0;font-weight:400}
-/* La escala del logotipo vive aquí: todo lo demás se mide en em sobre ella */
+/* ─────────────────────────────────────────────────────────────
+   LOGOTIPO — proporciones tomadas del original. No modificar
+   valores sueltos: todo se mide en em sobre --escala-logo, así
+   el conjunto crece y se encoge sin deformarse nunca.
+   ───────────────────────────────────────────────────────────── */
+.marca{display:block;text-align:center;margin:0;font-weight:400;
+  font-size:clamp(3.1rem,13.4vw,9.9rem)}
 .marca__fila{display:flex;align-items:center;justify-content:center;
-  font-size:clamp(3.1rem,13.4vw,9.9rem);gap:.57em}
+  font-size:1em;gap:.57em}
 /* "DES DE" y "20 25" van en una sans geométrica, como en el original */
 .marca__nota{
   font-family:var(--f-nourd);
@@ -226,8 +226,10 @@ p:last-child{margin-bottom:0}
 
 .marca__sub{
   display:block;font-family:var(--f-mignon);color:var(--acento);
-  font-size:clamp(1.06rem,4.6vw,3.4rem);letter-spacing:.005em;line-height:1.2;
-  margin-top:clamp(.05rem,.35vw,.28rem);
+  font-size:.2621em;          /* el subtítulo mide 0,771 del ancho de AMAKI */
+  letter-spacing:0;line-height:1;margin-top:.05em;
+  /* en el original no va centrado: arranca bajo la M y termina bajo la I */
+  position:relative;left:2.08em;
   opacity:0;animation:sube 1s ease .95s forwards;
 }
 
@@ -472,7 +474,7 @@ p:last-child{margin-bottom:0}
         <li><a href="#visita">Visítanos</a></li>
       </ul>
     </nav>
-    <button class="tema" id="btn-titulos" type="button" aria-live="polite">Títulos: Mignon</button>
+    <button class="tema" id="btn-parrafos" type="button" aria-live="polite">Párrafos: Nourd</button>
     <button class="tema" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
   </div>
 </header>
@@ -958,13 +960,13 @@ p:last-child{margin-bottom:0}
     btn.textContent = eraOscuro ? 'Tema oscuro' : 'Tema claro';
   });
 
-  /* Prueba de tipografía para los títulos */
-  const btnT = document.getElementById('btn-titulos');
-  raiz.dataset.titulos = 'mignon';
-  btnT.addEventListener('click', () => {
-    const esNourd = raiz.dataset.titulos === 'nourd';
-    raiz.dataset.titulos = esNourd ? 'mignon' : 'nourd';
-    btnT.textContent = esNourd ? 'Títulos: Mignon' : 'Títulos: Nourd';
+  /* Prueba de tipografía para el texto corrido */
+  const btnP = document.getElementById('btn-parrafos');
+  raiz.dataset.parrafos = 'nourd';
+  btnP.addEventListener('click', () => {
+    const esMignon = raiz.dataset.parrafos === 'mignon';
+    raiz.dataset.parrafos = esMignon ? 'nourd' : 'mignon';
+    btnP.textContent = esMignon ? 'Párrafos: Nourd' : 'Párrafos: Mignon';
   });
 
   /* Barra superior */
