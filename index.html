@@ -62,11 +62,21 @@
 
 <header class="nav" id="nav">
   <a class="nav__marca" href="#inicio">
-    <span class="nav__nombre">AMAKI</span>
-    <span class="nav__sub">Restaurante amazónico</span>
+    <span class="vo">AMAKI · Restaurante amazónico · Desde 2025 — Inicio</span>
+    <span class="marca marca--nav" aria-hidden="true">
+      <span class="marca__fila">
+        <span class="marca__nota">DES<br />DE</span>
+        <span class="marca__nombre">
+          <span class="g g--alta">A</span><span class="m l-m">M</span><span class="g g--baja l-a">A</span><span class="m l-k">K</span><span class="m l-i">I</span>
+        </span>
+        <span class="marca__nota">20<br />25</span>
+      </span>
+      <span class="marca__sub">Restaurante amazónico</span>
+    </span>
   </a>
+
   <div class="nav__der">
-    <nav aria-label="Principal">
+    <nav id="menu" aria-label="Principal">
       <ul class="nav__menu">
         <li><a href="#historia">Historia</a></li>
         <li><a href="#proposito">Propósito</a></li>
@@ -76,6 +86,11 @@
         <li><a href="#visita">Visítanos</a></li>
       </ul>
     </nav>
+
+    <button class="hamburguesa" id="btn-menu" type="button"
+            aria-controls="menu" aria-expanded="false" aria-label="Abrir el menú">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
