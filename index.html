@@ -63,8 +63,9 @@ html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--fondo);color:var(--tinta);
   font-family:var(--f-body);
-  font-size:clamp(1rem,.95rem + .28vw,1.1rem);
-  line-height:1.8;overflow-x:hidden;
+  /* Mignon es una tipografía de display: pide algo más de cuerpo e interlínea */
+  font-size:clamp(1.06rem,1rem + .32vw,1.2rem);
+  line-height:1.85;letter-spacing:.005em;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   transition:background .6s ease,color .6s ease;
 }
@@ -104,7 +105,9 @@ p:last-child{margin-bottom:0}
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}
-.titulo em{font-style:italic;font-family:var(--f-body);color:var(--tinta)}
+/* Las TAN no traen cursiva: se contrasta con la secundaria, no con oblicua falsa */
+.titulo em{font-style:normal;font-family:var(--f-body);color:var(--tinta);
+  letter-spacing:.01em}
 .tenue{color:var(--tinta-suave)}
 
 /* encabezado de sección: título + entradilla con aire garantizado */
@@ -123,12 +126,16 @@ p:last-child{margin-bottom:0}
   background:color-mix(in srgb,var(--fondo) 88%,transparent);
   backdrop-filter:blur(14px);border-bottom-color:var(--linea);
 }
-.nav__marca{display:block;line-height:0;text-decoration:none;
+.nav__marca{
+  display:flex;flex-direction:column;text-decoration:none;color:var(--acento);
   /* aparece cuando la portada ya pasó */
   opacity:0;transform:translateY(-6px);pointer-events:none;
-  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
+}
 .nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
-.nav__marca img{width:auto;height:clamp(26px,3.4vw,34px)}
+.nav__nombre{font-family:var(--f-display);font-size:1.5rem;line-height:1;letter-spacing:.02em}
+.nav__sub{font-family:var(--f-display);font-size:.62rem;letter-spacing:.06em;
+  line-height:1.4;opacity:.75}
 .nav__der{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2rem)}
 .nav__menu{display:flex;gap:clamp(.9rem,2.1vw,1.9rem);list-style:none;margin:0;padding:0}
 .nav__menu a{
@@ -151,11 +158,31 @@ p:last-child{margin-bottom:0}
 /* ═══════════ Portada ═══════════ */
 .portada{min-height:100svh;display:grid;align-content:center;
   padding:clamp(7rem,15vh,10rem) 0 var(--r-bloque)}
-.logo-caja{margin:0}
-.logo{
-  display:block;margin:0 auto;width:min(680px,86vw);height:auto;
-  opacity:0;transform:translateY(.4em) scale(.985);
-  animation:sube 1.3s cubic-bezier(.2,.75,.2,1) .2s forwards;
+/* Solo para lectores de pantalla */
+.vo{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
+  white-space:nowrap}
+
+/* Logotipo compuesto con TAN Grandeur */
+.marca{display:block;text-align:center;margin:0;font-weight:400}
+.marca__fila{display:flex;align-items:center;justify-content:center;
+  gap:clamp(.7rem,2.6vw,2.1rem)}
+.marca__nota{
+  font-family:var(--f-body);font-size:clamp(.5rem,1.15vw,.72rem);
+  font-weight:700;letter-spacing:.3em;line-height:1.5;color:var(--acento);
+  text-align:center;opacity:0;animation:aparece 1s ease 1.15s forwards;
+}
+.marca__nombre{
+  font-family:var(--f-display);color:var(--acento);
+  font-size:clamp(3.6rem,15.5vw,11.5rem);line-height:.95;letter-spacing:.01em;
+  display:inline-flex;
+}
+.marca__nombre span{display:inline-block;opacity:0;transform:translateY(.4em);
+  animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards}
+.marca__sub{
+  display:block;font-family:var(--f-display);color:var(--acento);
+  font-size:clamp(1.1rem,4.4vw,2.6rem);letter-spacing:.01em;line-height:1.2;
+  margin-top:clamp(.1rem,.6vw,.4rem);
+  opacity:0;animation:sube 1s ease .95s forwards;
 }
 
 .portada__pie{margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center;
@@ -384,10 +411,9 @@ p:last-child{margin-bottom:0}
 </style>
 
 <header class="nav" id="nav">
-  <a class="nav__marca" href="#inicio" aria-label="AMAKI · Inicio">
-    <img id="logo-nav" src="assets/img/logo-amaki.png"
-         data-oscuro="assets/img/logo-amaki-beige.png"
-         alt="AMAKI · Restaurante amazónico" width="407" height="153" />
+  <a class="nav__marca" href="#inicio">
+    <span class="nav__nombre">AMAKI</span>
+    <span class="nav__sub">Restaurante amazónico</span>
   </a>
   <div class="nav__der">
     <nav aria-label="Principal">
@@ -407,10 +433,17 @@ p:last-child{margin-bottom:0}
 <main>
   <!-- ══ PORTADA ══ -->
   <section class="portada env" id="inicio">
-    <h1 class="logo-caja">
-      <img class="logo" id="logo" src="assets/img/logo-amaki.png"
-           data-oscuro="assets/img/logo-amaki-beige.png"
-           alt="AMAKI · Restaurante amazónico · Desde 2025" width="407" height="153" />
+    <!-- Logo compuesto con TAN Grandeur, no como imagen -->
+    <h1 class="marca">
+      <span class="vo">AMAKI · Restaurante amazónico · Desde 2025</span>
+      <span class="marca__fila" aria-hidden="true">
+        <span class="marca__nota">DES<br />DE</span>
+        <span class="marca__nombre">
+          <span style="animation-delay:.20s">A</span><span style="animation-delay:.32s">M</span><span style="animation-delay:.44s">A</span><span style="animation-delay:.56s">K</span><span style="animation-delay:.68s">I</span>
+        </span>
+        <span class="marca__nota">20<br />25</span>
+      </span>
+      <span class="marca__sub" aria-hidden="true">Restaurante amazónico</span>
     </h1>
 
     <div class="portada__pie">
@@ -871,14 +904,11 @@ p:last-child{margin-bottom:0}
   /* Tema claro / oscuro — el logo cambia a su versión beige */
   const raiz = document.documentElement;
   const btn = document.getElementById('btn-tema');
-  const logos = [...document.querySelectorAll('#logo, #logo-nav')]
-    .map(el => ({el, claro: el.src, oscuro: el.dataset.oscuro}));
   raiz.dataset.tema = 'claro';
   btn.addEventListener('click', () => {
     const eraOscuro = raiz.dataset.tema === 'oscuro';
     raiz.dataset.tema = eraOscuro ? 'claro' : 'oscuro';
     btn.textContent = eraOscuro ? 'Tema oscuro' : 'Tema claro';
-    logos.forEach(l => l.el.src = eraOscuro ? l.claro : l.oscuro);
   });
 
   /* Barra superior */

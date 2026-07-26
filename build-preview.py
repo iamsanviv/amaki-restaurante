@@ -35,6 +35,19 @@ def main() -> None:
         return f'{attr}="{a_data_uri(archivo)}"'
 
     html = re.sub(r'(src|data-oscuro)="(assets/img/[^"]+)"', reemplazar, html)
+
+    # Fuentes: solo woff2, y se elimina el respaldo .otf que no se puede resolver
+    def fuente(m: re.Match) -> str:
+        archivo = RAIZ / m.group(1)
+        if not archivo.exists():
+            return m.group(0)
+        b64 = base64.b64encode(archivo.read_bytes()).decode()
+        return f'url("data:font/woff2;base64,{b64}") format("woff2")'
+
+    html = re.sub(r'url\("(assets/fonts/[^"]+\.woff2)"\)\s*format\("woff2"\)',
+                  fuente, html)
+    html = re.sub(r',\s*\n\s*url\("assets/fonts/[^"]+\.otf"\)\s*format\("opentype"\)',
+                  '', html)
     salida = RAIZ / "preview.html"
     salida.write_text(html, encoding="utf-8")
     print(f"preview.html escrito · {salida.stat().st_size // 1024} KB")
