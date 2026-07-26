@@ -45,7 +45,6 @@
   font-family:var(--f-nourd);
   font-size:.152em;font-weight:700;letter-spacing:.2em;line-height:1.45;
   color:var(--acento);text-align:center;
-  opacity:0;animation:aparece 1s ease 1.15s forwards;
 }
 
 .marca__nombre{
@@ -53,10 +52,7 @@
   font-size:1em;line-height:1;
   padding-top:.62em;              /* aire para el asta alta de la A */
 }
-.marca__nombre span{
-  display:inline-block;opacity:0;transform:translateY(.32em);
-  animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards;
-}
+.marca__nombre span{display:inline-block}
 .marca__nombre .m{font-family:var(--f-mignon);font-size:1em}
 .marca__nombre .g{font-family:var(--f-grandeur)}
 .marca__nombre .g--alta{font-size:.9703em}   /* A inicial */
@@ -75,5 +71,17 @@
   letter-spacing:0;line-height:1;margin-top:.05em;
   /* en el original no va centrado: arranca bajo la M y termina bajo la I */
   position:relative;left:2.08em;
-  opacity:0;animation:sube 1s ease .95s forwards;
+}
+
+/* La entrada animada solo existe si el visitante acepta movimiento.
+   Así, con la reducción de movimiento activada, el logotipo se ve de
+   entrada en lugar de quedarse invisible esperando una animación que
+   nunca se ejecuta. */
+@media (prefers-reduced-motion:no-preference){
+  .portada .marca__nota{opacity:0;animation:aparece 1s ease 1.15s forwards}
+  .portada .marca__nombre span{
+    opacity:0;transform:translateY(.32em);
+    animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards;
+  }
+  .portada .marca__sub{opacity:0;animation:sube 1s ease .95s forwards}
 }

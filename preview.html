@@ -154,21 +154,28 @@ p:last-child{margin-bottom:0}
 
 /* ═══ Barra superior ═══ */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:60;
+  position:fixed;top:0;left:0;right:0;z-index:60;isolation:isolate;
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   padding:.5rem clamp(1.2rem,4vw,3rem);
-  border-bottom:1px solid transparent;
-  transition:background .5s,backdrop-filter .5s,border-color .5s;
 }
-.nav[data-fijo="si"]{
+/* El fondo va en una capa aparte y se atenúa con `opacity`.
+   Animar el desenfoque o el color directamente da un salto brusco;
+   la opacidad la resuelve la tarjeta gráfica y entra sin tirones. */
+.nav::before{
+  content:"";position:absolute;inset:0;z-index:-1;
   background:color-mix(in srgb,var(--fondo) 88%,transparent);
-  backdrop-filter:blur(14px);border-bottom-color:var(--linea);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--linea);
+  opacity:0;transition:opacity .7s cubic-bezier(.4,0,.2,1);
 }
+.nav[data-fijo="si"]::before{opacity:1}
+
 .nav__marca{
   display:flex;flex-direction:column;text-decoration:none;color:var(--acento);
   /* aparece cuando la portada ya pasó */
-  opacity:0;transform:translateY(-6px);pointer-events:none;
-  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1);
+  opacity:0;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),
+             transform .7s cubic-bezier(.2,.8,.2,1);
 }
 .nav[data-fijo="si"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
 
@@ -199,8 +206,9 @@ p:last-child{margin-bottom:0}
 @media (max-width:900px){
   .hamburguesa{display:flex}
 
-  /* La marca se ve siempre: en móvil el menú necesita un ancla visible */
-  .nav__marca{opacity:1;transform:none;pointer-events:auto}
+  /* Con el menú abierto la marca se ve, aunque estemos en la portada. */
+  .nav[data-menu="abierto"] .nav__marca{opacity:1;transform:none;pointer-events:auto}
+  .nav[data-menu="abierto"]::before{opacity:1}
 
   .nav__menu{
     position:fixed;inset:0;z-index:-1;
@@ -283,7 +291,6 @@ p:last-child{margin-bottom:0}
   font-family:var(--f-nourd);
   font-size:.152em;font-weight:700;letter-spacing:.2em;line-height:1.45;
   color:var(--acento);text-align:center;
-  opacity:0;animation:aparece 1s ease 1.15s forwards;
 }
 
 .marca__nombre{
@@ -291,10 +298,7 @@ p:last-child{margin-bottom:0}
   font-size:1em;line-height:1;
   padding-top:.62em;              /* aire para el asta alta de la A */
 }
-.marca__nombre span{
-  display:inline-block;opacity:0;transform:translateY(.32em);
-  animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards;
-}
+.marca__nombre span{display:inline-block}
 .marca__nombre .m{font-family:var(--f-mignon);font-size:1em}
 .marca__nombre .g{font-family:var(--f-grandeur)}
 .marca__nombre .g--alta{font-size:.9703em}   /* A inicial */
@@ -313,7 +317,19 @@ p:last-child{margin-bottom:0}
   letter-spacing:0;line-height:1;margin-top:.05em;
   /* en el original no va centrado: arranca bajo la M y termina bajo la I */
   position:relative;left:2.08em;
-  opacity:0;animation:sube 1s ease .95s forwards;
+}
+
+/* La entrada animada solo existe si el visitante acepta movimiento.
+   Así, con la reducción de movimiento activada, el logotipo se ve de
+   entrada en lugar de quedarse invisible esperando una animación que
+   nunca se ejecuta. */
+@media (prefers-reduced-motion:no-preference){
+  .portada .marca__nota{opacity:0;animation:aparece 1s ease 1.15s forwards}
+  .portada .marca__nombre span{
+    opacity:0;transform:translateY(.32em);
+    animation:sube 1s cubic-bezier(.2,.75,.2,1) forwards;
+  }
+  .portada .marca__sub{opacity:0;animation:sube 1s ease .95s forwards}
 }
 
 
@@ -396,9 +412,9 @@ p:last-child{margin-bottom:0}
 @keyframes llenar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* ── Texto de la portada ── */
-.portada__pie{
-  margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center;
-  opacity:0;animation:aparece 1.1s ease 1.5s forwards;
+.portada__pie{margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center}
+@media (prefers-reduced-motion:no-preference){
+  .portada__pie{opacity:0;animation:aparece 1.1s ease 1.5s forwards}
 }
 .portada__pie p{margin-inline:auto;max-width:48ch;color:var(--tinta)}
 
