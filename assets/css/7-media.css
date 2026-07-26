@@ -61,10 +61,49 @@
   transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
 }
 .clip:hover{transform:translateY(-8px);border-color:var(--realce);box-shadow:var(--sombra)}
-.clip video{width:100%;height:100%;object-fit:cover}
+.clip video,.clip iframe{width:100%;height:100%;border:0;display:block}
+.clip video{object-fit:cover}
 .clip__pie{position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .85rem;
   background:linear-gradient(transparent,color-mix(in srgb,var(--marron) 88%,transparent));
   font-size:.75rem;letter-spacing:.14em;color:#F3CA9B}
+
+/* ── Portada del video, antes de cargarlo ── */
+.clip__abrir{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  gap:1rem;padding:1.1rem;cursor:pointer;text-align:left;
+  font:inherit;color:var(--tinta);border:0;
+  background:
+    linear-gradient(180deg,transparent 35%,rgba(31,13,4,.9) 100%),
+    linear-gradient(150deg,
+      color-mix(in srgb,var(--verde) 42%,transparent),
+      color-mix(in srgb,var(--marron) 55%,transparent));
+}
+.clip__play{
+  position:absolute;top:50%;left:50%;translate:-50% -50%;
+  width:3.1rem;height:3.1rem;border-radius:50%;
+  border:1px solid var(--linea);background:rgba(243,202,155,.1);
+  backdrop-filter:blur(2px);
+  transition:background .4s ease,border-color .4s ease,scale .4s cubic-bezier(.2,.8,.2,1);
+}
+.clip__play::after{
+  content:"";position:absolute;top:50%;left:calc(50% + 2px);translate:-50% -50%;
+  border-style:solid;border-width:.44rem 0 .44rem .74rem;
+  border-color:transparent transparent transparent var(--acento);
+}
+.clip:hover .clip__play{background:var(--acento);border-color:var(--acento);scale:1.06}
+.clip:hover .clip__play::after{border-left-color:var(--fondo)}
+
+.clip__quien{display:grid;gap:.16rem;position:relative}
+.clip__quien b{font-family:var(--f-display);font-weight:400;font-size:1.06rem;
+  color:var(--acento);letter-spacing:.02em;line-height:1.2}
+.clip__quien i{font-style:normal;font-size:.76rem;letter-spacing:.06em;
+  color:var(--tinta-suave)}
+.clip__quien em{font-style:normal;font-size:.7rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-suave);opacity:.75;line-height:1.4}
+
+.clip[data-cargado="si"]{transform:none}
+.clip[data-cargado="si"]:hover{transform:none}
 
 /* Marcador mientras no hay video cargado */
 .vacio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;

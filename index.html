@@ -43,6 +43,13 @@
   "name": "AMAKI Restaurante Amazónico",
   "servesCuisine": ["Amazónica", "Colombiana", "Huilense"],
   "priceRange": "$$",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "12:00", "name": "Almuerzo ejecutivo" },
+    { "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday", "opens": "12:00", "name": "Carta" }
+  ],
   "telephone": "+57 318 955 1594",
   "email": "amakirestauranteamazonico@gmail.com",
   "address": {
@@ -193,12 +200,21 @@
     </div>
 
     <div class="carta__nav rev" role="tablist" aria-label="Secciones de la carta">
-      <button class="chip" role="tab" aria-selected="true" data-ir="g-entradas">Entradas</button>
+      <button class="chip" role="tab" aria-selected="true" data-ir="g-ejecutivo">Almuerzo ejecutivo</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-entradas">Entradas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-fuertes">Platos fuertes</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-hamburguesas">Hamburguesas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-bocaditos">Bocaditos</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-bebidas">Bebidas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-adiciones">Adiciones</button>
+    </div>
+
+    <div class="grupo rev" id="g-ejecutivo">
+      <h3 class="grupo__titulo">Almuerzo ejecutivo <span class="grupo__nota">Lunes a sábado</span></h3>
+      <article class="plato">
+        <h4 class="plato__nombre">Almuerzo del día</h4><span class="plato__precio">$ 15.000</span>
+        <p class="plato__desc">Todos los mediodías, de lunes a sábado. Los domingos abrimos al mediodía con la carta completa.</p>
+      </article>
     </div>
 
     <div class="grupo rev" id="g-entradas">
@@ -517,19 +533,77 @@
 
       <p class="eyebrow sub-eyebrow rev">Nos recomendaron</p>
     </div>
+
+    <!-- Los videos no cargan hasta que se pulsan: la página abre rápido
+         y no se piden datos a Instagram sin que el visitante lo decida. -->
     <div class="reel">
-      <article class="clip"><div class="vacio">Prensa 01 · 9:16</div><div class="clip__pie">Reseña · Instagram</div></article>
-      <article class="clip"><div class="vacio">Prensa 02 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
-      <article class="clip"><div class="vacio">Prensa 03 · 9:16</div><div class="clip__pie">Creador invitado</div></article>
-      <article class="clip"><div class="vacio">Prensa 04 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DQsbDxdCR6s"
+                aria-label="Ver el reel de Natalia Beltrán en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Natalia Beltrán</b>
+            <i>@nata_beltrann</i>
+            <em>Creadora de contenido y emprendedora</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DQr4xTMEuIQ"
+                aria-label="Ver el reel de Andrés Melgar en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Andrés Melgar</b>
+            <i>@andres_melgar1</i>
+            <em>Creador de contenido</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DRSsQtxAeYx"
+                aria-label="Ver el reel de Alejandra Santos en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Alejandra Santos</b>
+            <i>@alejaasantos</i>
+            <em>Creadora de contenido</em>
+          </span>
+        </button>
+      </article>
     </div>
 
     <div class="env"><p class="eyebrow sub-eyebrow rev">Desde nuestra cocina</p></div>
     <div class="reel">
-      <article class="clip"><div class="vacio">AMAKI 01 · 9:16</div><div class="clip__pie">Detrás del fogón</div></article>
-      <article class="clip"><div class="vacio">AMAKI 02 · 9:16</div><div class="clip__pie">El pirarucú</div></article>
-      <article class="clip"><div class="vacio">AMAKI 03 · 9:16</div><div class="clip__pie">Nuestra gente</div></article>
-      <article class="clip"><div class="vacio">AMAKI 04 · 9:16</div><div class="clip__pie">Mesa servida</div></article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DUI0fA6AMfa"
+                aria-label="Ver el video de cómo llegar a AMAKI">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Cómo llegar</b>
+            <em>Carrera 16 #51-76, Neiva</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DUv35mKj8BX"
+                aria-label="Ver el video del menú infantil">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Menú infantil</b>
+            <em>Para los más pequeños</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DVHzFHdDfOl"
+                aria-label="Ver el video de los almuerzos ejecutivos">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Almuerzo ejecutivo</b>
+            <em>Lunes a sábado · $ 15.000</em>
+          </span>
+        </button>
+      </article>
     </div>
   </section>
 
@@ -554,12 +628,10 @@
         <div class="dato rev">
           <h3>Horarios</h3>
           <dl class="horario">
-            <dt>Mar – Jue</dt><dd>12:00 – 22:00</dd>
-            <dt>Vie – Sáb</dt><dd>12:00 – 23:30</dd>
-            <dt>Domingo</dt><dd>12:00 – 18:00</dd>
-            <dt>Lunes</dt><dd>Cerrado</dd>
+            <dt>Lun – Sáb</dt><dd>Almuerzo ejecutivo al mediodía</dd>
+            <dt>Domingo</dt><dd>Carta desde el mediodía</dd>
           </dl>
-          <p class="tenue nota-pie">Horario por confirmar.</p>
+          <p class="tenue nota-pie">Hora de cierre por confirmar.</p>
         </div>
         <div class="dato rev">
           <h3>Contacto</h3>
@@ -606,6 +678,7 @@
 <script src="assets/js/desplazamiento.js" defer></script>
 <script src="assets/js/carta.js" defer></script>
 <script src="assets/js/carrusel.js" defer></script>
+<script src="assets/js/videos.js" defer></script>
 <script src="assets/js/revelado.js" defer></script>
 
 </body>

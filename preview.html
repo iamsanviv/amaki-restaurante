@@ -484,10 +484,49 @@ p:last-child{margin-bottom:0}
   transition:transform .5s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s;
 }
 .clip:hover{transform:translateY(-8px);border-color:var(--realce);box-shadow:var(--sombra)}
-.clip video{width:100%;height:100%;object-fit:cover}
+.clip video,.clip iframe{width:100%;height:100%;border:0;display:block}
+.clip video{object-fit:cover}
 .clip__pie{position:absolute;left:0;right:0;bottom:0;padding:2.6rem .9rem .85rem;
   background:linear-gradient(transparent,color-mix(in srgb,var(--marron) 88%,transparent));
   font-size:.75rem;letter-spacing:.14em;color:#F3CA9B}
+
+/* ── Portada del video, antes de cargarlo ── */
+.clip__abrir{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  gap:1rem;padding:1.1rem;cursor:pointer;text-align:left;
+  font:inherit;color:var(--tinta);border:0;
+  background:
+    linear-gradient(180deg,transparent 35%,rgba(31,13,4,.9) 100%),
+    linear-gradient(150deg,
+      color-mix(in srgb,var(--verde) 42%,transparent),
+      color-mix(in srgb,var(--marron) 55%,transparent));
+}
+.clip__play{
+  position:absolute;top:50%;left:50%;translate:-50% -50%;
+  width:3.1rem;height:3.1rem;border-radius:50%;
+  border:1px solid var(--linea);background:rgba(243,202,155,.1);
+  backdrop-filter:blur(2px);
+  transition:background .4s ease,border-color .4s ease,scale .4s cubic-bezier(.2,.8,.2,1);
+}
+.clip__play::after{
+  content:"";position:absolute;top:50%;left:calc(50% + 2px);translate:-50% -50%;
+  border-style:solid;border-width:.44rem 0 .44rem .74rem;
+  border-color:transparent transparent transparent var(--acento);
+}
+.clip:hover .clip__play{background:var(--acento);border-color:var(--acento);scale:1.06}
+.clip:hover .clip__play::after{border-left-color:var(--fondo)}
+
+.clip__quien{display:grid;gap:.16rem;position:relative}
+.clip__quien b{font-family:var(--f-display);font-weight:400;font-size:1.06rem;
+  color:var(--acento);letter-spacing:.02em;line-height:1.2}
+.clip__quien i{font-style:normal;font-size:.76rem;letter-spacing:.06em;
+  color:var(--tinta-suave)}
+.clip__quien em{font-style:normal;font-size:.7rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tinta-suave);opacity:.75;line-height:1.4}
+
+.clip[data-cargado="si"]{transform:none}
+.clip[data-cargado="si"]:hover{transform:none}
 
 /* Marcador mientras no hay video cargado */
 .vacio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;
@@ -837,12 +876,21 @@ p:last-child{margin-bottom:0}
     </div>
 
     <div class="carta__nav rev" role="tablist" aria-label="Secciones de la carta">
-      <button class="chip" role="tab" aria-selected="true" data-ir="g-entradas">Entradas</button>
+      <button class="chip" role="tab" aria-selected="true" data-ir="g-ejecutivo">Almuerzo ejecutivo</button>
+      <button class="chip" role="tab" aria-selected="false" data-ir="g-entradas">Entradas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-fuertes">Platos fuertes</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-hamburguesas">Hamburguesas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-bocaditos">Bocaditos</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-bebidas">Bebidas</button>
       <button class="chip" role="tab" aria-selected="false" data-ir="g-adiciones">Adiciones</button>
+    </div>
+
+    <div class="grupo rev" id="g-ejecutivo">
+      <h3 class="grupo__titulo">Almuerzo ejecutivo <span class="grupo__nota">Lunes a sábado</span></h3>
+      <article class="plato">
+        <h4 class="plato__nombre">Almuerzo del día</h4><span class="plato__precio">$ 15.000</span>
+        <p class="plato__desc">Todos los mediodías, de lunes a sábado. Los domingos abrimos al mediodía con la carta completa.</p>
+      </article>
     </div>
 
     <div class="grupo rev" id="g-entradas">
@@ -1161,19 +1209,77 @@ p:last-child{margin-bottom:0}
 
       <p class="eyebrow sub-eyebrow rev">Nos recomendaron</p>
     </div>
+
+    <!-- Los videos no cargan hasta que se pulsan: la página abre rápido
+         y no se piden datos a Instagram sin que el visitante lo decida. -->
     <div class="reel">
-      <article class="clip"><div class="vacio">Prensa 01 · 9:16</div><div class="clip__pie">Reseña · Instagram</div></article>
-      <article class="clip"><div class="vacio">Prensa 02 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
-      <article class="clip"><div class="vacio">Prensa 03 · 9:16</div><div class="clip__pie">Creador invitado</div></article>
-      <article class="clip"><div class="vacio">Prensa 04 · 9:16</div><div class="clip__pie">Reseña · TikTok</div></article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DQsbDxdCR6s"
+                aria-label="Ver el reel de Natalia Beltrán en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Natalia Beltrán</b>
+            <i>@nata_beltrann</i>
+            <em>Creadora de contenido y emprendedora</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DQr4xTMEuIQ"
+                aria-label="Ver el reel de Andrés Melgar en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Andrés Melgar</b>
+            <i>@andres_melgar1</i>
+            <em>Creador de contenido</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DRSsQtxAeYx"
+                aria-label="Ver el reel de Alejandra Santos en Instagram">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Alejandra Santos</b>
+            <i>@alejaasantos</i>
+            <em>Creadora de contenido</em>
+          </span>
+        </button>
+      </article>
     </div>
 
     <div class="env"><p class="eyebrow sub-eyebrow rev">Desde nuestra cocina</p></div>
     <div class="reel">
-      <article class="clip"><div class="vacio">AMAKI 01 · 9:16</div><div class="clip__pie">Detrás del fogón</div></article>
-      <article class="clip"><div class="vacio">AMAKI 02 · 9:16</div><div class="clip__pie">El pirarucú</div></article>
-      <article class="clip"><div class="vacio">AMAKI 03 · 9:16</div><div class="clip__pie">Nuestra gente</div></article>
-      <article class="clip"><div class="vacio">AMAKI 04 · 9:16</div><div class="clip__pie">Mesa servida</div></article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DUI0fA6AMfa"
+                aria-label="Ver el video de cómo llegar a AMAKI">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Cómo llegar</b>
+            <em>Carrera 16 #51-76, Neiva</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DUv35mKj8BX"
+                aria-label="Ver el video del menú infantil">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Menú infantil</b>
+            <em>Para los más pequeños</em>
+          </span>
+        </button>
+      </article>
+      <article class="clip">
+        <button class="clip__abrir" type="button" data-reel="DVHzFHdDfOl"
+                aria-label="Ver el video de los almuerzos ejecutivos">
+          <span class="clip__play" aria-hidden="true"></span>
+          <span class="clip__quien">
+            <b>Almuerzo ejecutivo</b>
+            <em>Lunes a sábado · $ 15.000</em>
+          </span>
+        </button>
+      </article>
     </div>
   </section>
 
@@ -1198,12 +1304,10 @@ p:last-child{margin-bottom:0}
         <div class="dato rev">
           <h3>Horarios</h3>
           <dl class="horario">
-            <dt>Mar – Jue</dt><dd>12:00 – 22:00</dd>
-            <dt>Vie – Sáb</dt><dd>12:00 – 23:30</dd>
-            <dt>Domingo</dt><dd>12:00 – 18:00</dd>
-            <dt>Lunes</dt><dd>Cerrado</dd>
+            <dt>Lun – Sáb</dt><dd>Almuerzo ejecutivo al mediodía</dd>
+            <dt>Domingo</dt><dd>Carta desde el mediodía</dd>
           </dl>
-          <p class="tenue nota-pie">Horario por confirmar.</p>
+          <p class="tenue nota-pie">Hora de cierre por confirmar.</p>
         </div>
         <div class="dato rev">
           <h3>Contacto</h3>
@@ -1491,6 +1595,39 @@ p:last-child{margin-bottom:0}
   quietud.addEventListener('change', e => (e.matches ? detener() : arrancar()));
 
   mostrar(0);
+})();
+
+
+/* ══ assets/js/videos.js ══ */
+/* Videos de Instagram bajo demanda.
+
+   Cada tarjeta muestra una portada propia y solo carga el reproductor
+   de Instagram cuando el visitante lo pide. Así la página abre rápido,
+   no arrastra los scripts de Meta en cada visita y no se envían datos
+   del visitante a Instagram sin que él lo decida. */
+
+(() => {
+  const botones = document.querySelectorAll('.clip__abrir');
+  if (!botones.length) return;
+
+  botones.forEach(boton => {
+    boton.addEventListener('click', () => {
+      const codigo = boton.dataset.reel;
+      const tarjeta = boton.closest('.clip');
+      if (!codigo || !tarjeta || tarjeta.dataset.cargado === 'si') return;
+
+      const marco = document.createElement('iframe');
+      marco.src = `https://www.instagram.com/reel/${codigo}/embed/`;
+      marco.title = boton.getAttribute('aria-label') || 'Video de Instagram';
+      marco.loading = 'lazy';
+      marco.allow = 'autoplay; clipboard-write; encrypted-media; picture-in-picture';
+      marco.allowFullscreen = true;
+      marco.referrerPolicy = 'no-referrer-when-downgrade';
+
+      tarjeta.dataset.cargado = 'si';
+      boton.replaceWith(marco);
+    });
+  });
 })();
 
 
