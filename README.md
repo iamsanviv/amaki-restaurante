@@ -3,8 +3,15 @@
 Sitio web de AMAKI, restaurante amazónico en Neiva, Huila.
 Carrera 16 #51-76, Comuna 2 · 318 955 1594
 
+**En línea: https://iamsanviv.github.io/amaki-restaurante/**
+
 Sitio estático, sin dependencias ni proceso de compilación: se abre `index.html`
-y funciona. Se publica solo en GitHub Pages con cada push.
+y funciona. Cada push a la rama principal lo publica solo en GitHub Pages
+(`.github/workflows/deploy-pages.yml`).
+
+Un solo tema visual —la selva de noche— y una sola tipografía para el texto
+corrido. No hay interruptores de tema ni de tipografía: fueron herramientas de
+decisión durante el diseño y ya cumplieron su función.
 
 ## Estructura
 
@@ -24,7 +31,6 @@ assets/
     10-contacto.css           Visítanos, botones y cierre
     11-animacion.css          Keyframes, revelado y reduced-motion
   js/                       Un módulo por responsabilidad
-    tema.js                   Tema claro/oscuro y comparador tipográfico
     navegacion.js             Barra superior al desplazarse
     carta.js                  Filtros de la carta
     revelado.js               Aparición de bloques al hacer scroll
@@ -36,7 +42,8 @@ build-preview.py            Genera preview.html (archivo único, para compartir)
 ### Reglas
 
 - **Los colores se definen solo en `2-tokens.css`.** Ningún otro archivo debe
-  escribir un color literal; todos usan `var(--…)`.
+  escribir un color literal; todos usan `var(--…)`. Cambiar la paleta completa
+  es editar ese archivo.
 - **`5-logotipo.css` no se toca.** Sus medidas salen de medir el logo original y
   están en `em` sobre una única escala. Para cambiar el tamaño del logo, se
   modifica únicamente el `font-size` de `.marca`.
