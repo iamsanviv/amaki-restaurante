@@ -1,23 +1,100 @@
 /* ═══════════ Portada ═══════════ */
 
 .portada{
+  position:relative;isolation:isolate;
   min-height:100svh;display:grid;align-content:center;
-  padding:clamp(7rem,15vh,10rem) 0 var(--r-bloque);
+  padding:clamp(7rem,15vh,10rem) 0 clamp(4rem,10vh,6rem);
+}
+.portada__contenido{position:relative;z-index:2}
+
+/* ── Carrusel de fondo ──
+   Fundido cruzado por opacidad y acercamiento lento por transform:
+   las dos únicas propiedades que el navegador anima en la tarjeta
+   gráfica, así que va fluido incluso en un celular modesto. */
+.carrusel{position:absolute;inset:0;z-index:0;overflow:hidden}
+.carrusel__vista{position:absolute;inset:0}
+
+.diapo{
+  position:absolute;inset:0;margin:0;
+  opacity:0;
+  transition:opacity 1.8s cubic-bezier(.4,0,.2,1);
+  will-change:opacity;
+}
+.diapo[data-visible="si"]{opacity:1}
+
+.diapo img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  transform:scale(1.06);
+  transition:transform 1.8s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+/* El acercamiento corre solo mientras la imagen está a la vista. */
+.diapo[data-visible="si"] img{
+  animation:acercar 9s linear forwards;
+}
+@keyframes acercar{
+  from{transform:scale(1.06)}
+  to{transform:scale(1.14)}
 }
 
+/* Velo: sin él, el logotipo no se lee sobre una foto clara. */
+.carrusel__velo{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,
+      rgba(43,18,6,.88) 0%,
+      rgba(43,18,6,.62) 38%,
+      rgba(43,18,6,.72) 72%,
+      var(--fondo) 100%),
+    radial-gradient(70% 55% at 50% 45%, rgba(43,18,6,.35), transparent 75%);
+}
+
+/* ── Puntos de control ── */
+.carrusel__mando{
+  position:absolute;z-index:3;left:50%;transform:translateX(-50%);
+  bottom:clamp(1.4rem,4vh,2.6rem);
+  display:flex;gap:.9rem;align-items:center;
+}
+.punto{
+  background:none;border:0;padding:.5rem .25rem;cursor:pointer;
+  display:block;line-height:0;
+}
+.punto i{
+  display:block;width:2.2rem;height:2px;border-radius:2px;
+  background:rgba(243,202,155,.28);position:relative;overflow:hidden;
+  transition:background .4s ease;
+}
+.punto:hover i{background:rgba(243,202,155,.5)}
+/* La barra se llena mientras esa imagen está en pantalla. */
+.punto i::after{
+  content:"";position:absolute;inset:0;transform-origin:left;
+  transform:scaleX(0);background:var(--acento);
+}
+.punto[aria-selected="true"] i::after{
+  animation:llenar 9s linear forwards;
+}
+@keyframes llenar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ── Texto de la portada ── */
 .portada__pie{
   margin-top:clamp(2.6rem,7vh,4.6rem);text-align:center;
   opacity:0;animation:aparece 1.1s ease 1.5s forwards;
 }
-.portada__pie p{margin-inline:auto;max-width:48ch;color:var(--tinta-suave)}
+.portada__pie p{margin-inline:auto;max-width:48ch;color:var(--tinta)}
 
 .baja{
   display:inline-flex;flex-direction:column;align-items:center;gap:.7rem;
   margin-top:1.9rem;text-decoration:none;font-size:.68rem;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--realce);
+  text-transform:uppercase;color:var(--acento);
 }
 .baja i{
   display:block;width:1px;height:52px;
-  background:linear-gradient(var(--realce),transparent);
+  background:linear-gradient(var(--acento),transparent);
   animation:respira 2.6s ease-in-out infinite;
+}
+
+/* Sin movimiento: una sola imagen, quieta. */
+@media (prefers-reduced-motion:reduce){
+  .diapo[data-visible="si"] img{animation:none;transform:scale(1.02)}
+  .punto[aria-selected="true"] i::after{animation:none;transform:scaleX(1)}
 }
