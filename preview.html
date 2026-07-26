@@ -338,7 +338,10 @@ p:last-child{margin-bottom:0}
 
 .portada{
   position:relative;isolation:isolate;
-  min-height:100svh;display:grid;align-content:center;
+  /* Tope de alto para que la portada siga siendo apaisada en monitores
+     altos: cuanto más cuadrada la caja, más se recorta la fotografía.
+     Va en min-height porque, si entra en conflicto, min-height manda. */
+  min-height:min(100svh,52rem);display:grid;align-content:center;
   padding:clamp(7rem,15vh,10rem) 0 clamp(4rem,10vh,6rem);
 }
 .portada__contenido{position:relative;z-index:2}
@@ -427,6 +430,35 @@ p:last-child{margin-bottom:0}
   display:block;width:1px;height:52px;
   background:linear-gradient(var(--acento),transparent);
   animation:respira 2.6s ease-in-out infinite;
+}
+
+/* ── En móvil la fotografía manda ──
+   Una pantalla de teléfono es muy vertical: con la foto de fondo a
+   pantalla completa se veía apenas una franja del centro. Aquí la
+   imagen pasa a ser una banda apaisada, con el logotipo debajo, así
+   se aprecia entera. */
+@media (max-width:820px){
+  .portada{
+    min-height:0;max-height:none;display:block;
+    padding:0 0 clamp(2.5rem,8vh,4rem);
+  }
+  .carrusel{position:relative;aspect-ratio:4/3}
+  .carrusel__velo{
+    background:
+      linear-gradient(180deg,rgba(43,18,6,.85) 0%,rgba(43,18,6,.15) 34%,
+                      rgba(43,18,6,.35) 76%,var(--fondo) 100%);
+  }
+  /* Los puntos van sobre el borde inferior de la banda (alto = 75vw
+     por la proporción 4:3), no al final de la sección. */
+  .carrusel__mando{top:calc(75vw - 2.6rem);bottom:auto}
+
+  .portada__contenido{
+    padding-top:clamp(1.6rem,5vh,2.6rem);
+    width:min(100% - 2.4rem,var(--ancho));margin-inline:auto;
+  }
+  .portada__pie{margin-top:clamp(1.6rem,4vh,2.4rem)}
+  .baja{margin-top:1.4rem}
+  .baja i{height:38px}
 }
 
 /* Sin movimiento: una sola imagen, quieta. */
