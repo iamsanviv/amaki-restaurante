@@ -1,8 +1,14 @@
 /* ═══════════ Imágenes y video ═══════════ */
 
-/* Retrato con marco desplazado */
-.retrato{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:3px;margin:0;
+/* Foto con marco desplazado.
+   La proporción sigue a la fotografía (3:2) para no recortarla: en una
+   caja vertical se perdían el letrero y la mitad de las personas.
+   En móvil se abre un poco, que es donde el ancho manda. */
+.retrato{position:relative;aspect-ratio:3/2;overflow:hidden;border-radius:3px;margin:0;
   background:linear-gradient(150deg,var(--verde),var(--marron));box-shadow:var(--sombra)}
+@media (max-width:899px){
+  .retrato{aspect-ratio:4/3}
+}
 .retrato img{width:100%;height:100%;object-fit:cover;
   transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .retrato:hover img{transform:scale(1.04)}
