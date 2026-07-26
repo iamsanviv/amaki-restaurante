@@ -568,8 +568,50 @@ p:last-child{margin-bottom:0}
 .chip[aria-selected="true"]{background:var(--acento);border-color:var(--acento);
   color:var(--fondo)}
 
-.grupo{margin-bottom:clamp(2.6rem,6vw,4rem)}
-.grupo:last-child{margin-bottom:0}
+/* ═══ Carrusel de grupos ═══
+   Los siete grupos existen siempre en la página —así los indexa Google—
+   pero solo uno ocupa espacio a la vez. El alto del marco se ajusta al
+   panel visible, de modo que la sección nunca queda con un vacío. */
+.carta__marco{
+  position:relative;overflow:hidden;
+  transition:height .55s cubic-bezier(.4,0,.2,1);
+}
+.carta__pista{
+  display:flex;align-items:flex-start;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.carta__panel{
+  flex:0 0 100%;width:100%;
+  padding-inline:1px;          /* evita que el borde se recorte al desplazar */
+  opacity:.3;transition:opacity .45s ease;
+}
+.carta__panel[data-activo="si"]{opacity:1}
+
+/* Pasos y contador */
+.carta__pasos{
+  display:flex;align-items:center;justify-content:center;gap:1.4rem;
+  margin-top:clamp(1.8rem,4vw,2.6rem);
+}
+.paso{
+  width:2.9rem;height:2.9rem;border-radius:50%;cursor:pointer;
+  background:none;border:1px solid var(--linea);color:var(--acento);
+  font-size:1rem;line-height:1;display:grid;place-items:center;
+  transition:border-color .35s,background .35s,color .35s,opacity .35s;
+}
+.paso:hover:not(:disabled){border-color:var(--acento);background:var(--acento);
+  color:var(--fondo)}
+.paso:disabled{opacity:.25;cursor:default}
+.carta__cuenta{
+  margin:0;font-size:.78rem;letter-spacing:.24em;color:var(--tinta-suave);
+  font-variant-numeric:tabular-nums;min-width:4.5rem;text-align:center;
+}
+
+/* Sin movimiento: el cambio es inmediato, sin deslizamiento. */
+@media (prefers-reduced-motion:reduce){
+  .carta__marco,.carta__pista{transition:none}
+}
+
 .grupo__titulo{
   font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);
   padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
@@ -901,7 +943,9 @@ p:last-child{margin-bottom:0}
       <button class="chip" role="tab" aria-selected="false" data-ir="g-adiciones">Adiciones</button>
     </div>
 
-    <div class="grupo rev" id="g-ejecutivo">
+    <div class="carta__marco rev">
+      <div class="carta__pista" id="carta-pista">
+<div class="carta__panel" id="g-ejecutivo">
       <h3 class="grupo__titulo">Almuerzo ejecutivo <span class="grupo__nota">Lunes a sábado</span></h3>
       <article class="plato">
         <h4 class="plato__nombre">Almuerzo del día</h4><span class="plato__precio">$ 15.000</span>
@@ -909,7 +953,7 @@ p:last-child{margin-bottom:0}
       </article>
     </div>
 
-    <div class="grupo rev" id="g-entradas">
+    <div class="carta__panel" id="g-entradas">
       <h3 class="grupo__titulo">Entradas</h3>
       <article class="plato">
         <h4 class="plato__nombre">Chorizo ahumado</h4><span class="plato__precio">$ 20.000</span>
@@ -933,7 +977,7 @@ p:last-child{margin-bottom:0}
       </article>
     </div>
 
-    <div class="grupo rev" id="g-fuertes">
+    <div class="carta__panel" id="g-fuertes">
       <h3 class="grupo__titulo">Platos fuertes <span class="grupo__nota">Del río y del campo</span></h3>
       <article class="plato">
         <h4 class="plato__nombre">Milanesa de pirarucú</h4><span class="plato__precio">$ 55.000</span>
@@ -997,7 +1041,7 @@ p:last-child{margin-bottom:0}
       </article>
     </div>
 
-    <div class="grupo rev" id="g-hamburguesas">
+    <div class="carta__panel" id="g-hamburguesas">
       <h3 class="grupo__titulo">Hamburguesas</h3>
       <article class="plato">
         <h4 class="plato__nombre">Hamburguesa tradicional</h4><span class="plato__precio">$ 18.000</span>
@@ -1009,7 +1053,7 @@ p:last-child{margin-bottom:0}
       </article>
     </div>
 
-    <div class="grupo rev" id="g-bocaditos">
+    <div class="carta__panel" id="g-bocaditos">
       <h3 class="grupo__titulo">Bocaditos</h3>
       <article class="plato">
         <h4 class="plato__nombre">Perro americano</h4><span class="plato__precio">$ 15.000</span>
@@ -1045,7 +1089,7 @@ p:last-child{margin-bottom:0}
       </article>
     </div>
 
-    <div class="grupo rev" id="g-bebidas">
+    <div class="carta__panel" id="g-bebidas">
       <h3 class="grupo__titulo">Bebidas <span class="grupo__nota">De la selva y de la casa</span></h3>
       <div class="columnas">
         <article class="plato"><h4 class="plato__nombre">Refrescante de arazá</h4><span class="plato__precio">$ 16.000</span></article>
@@ -1069,7 +1113,7 @@ p:last-child{margin-bottom:0}
       </div>
     </div>
 
-    <div class="grupo rev" id="g-adiciones">
+    <div class="carta__panel" id="g-adiciones">
       <h3 class="grupo__titulo">Adiciones <span class="grupo__nota">$ 6.000 cada una</span></h3>
       <div class="adiciones">
         <span class="tag">Puré del momento</span>
@@ -1081,6 +1125,18 @@ p:last-child{margin-bottom:0}
         <span class="tag">Bastones de yuca</span>
         <span class="tag">Patacón</span>
       </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="carta__pasos">
+      <button class="paso" id="carta-antes" type="button" aria-label="Grupo anterior">
+        <span aria-hidden="true">&#8592;</span>
+      </button>
+      <p class="carta__cuenta" id="carta-cuenta" aria-live="polite">1 / 7</p>
+      <button class="paso" id="carta-despues" type="button" aria-label="Grupo siguiente">
+        <span aria-hidden="true">&#8594;</span>
+      </button>
     </div>
   </section>
 
@@ -1503,37 +1559,87 @@ p:last-child{margin-bottom:0}
 
 
 /* ══ assets/js/carta.js ══ */
-/* Filtros de la carta: al pulsar un chip se baja al grupo,
-   y al desplazarse el chip activo sigue al grupo visible. */
+/* La carta como carrusel de grupos.
+
+   Los siete grupos siguen estando en la página —Google los indexa igual—
+   pero solo uno se muestra a la vez. Se cambia con las pestañas, con las
+   flechas, con el teclado o deslizando el dedo. */
 
 (() => {
+  const pista = document.getElementById('carta-pista');
+  const marco = pista?.closest('.carta__marco');
   const chips = [...document.querySelectorAll('.chip')];
-  if (!chips.length) return;
+  if (!pista || !marco || !chips.length) return;
 
-  const grupos = chips.map(c => document.getElementById(c.dataset.ir));
-  const marcar = indice =>
-    chips.forEach((c, i) => c.setAttribute('aria-selected', String(i === indice)));
+  const paneles = [...pista.querySelectorAll('.carta__panel')];
+  const antes = document.getElementById('carta-antes');
+  const despues = document.getElementById('carta-despues');
+  const cuenta = document.getElementById('carta-cuenta');
+  let actual = 0;
 
-  chips.forEach((chip, i) => {
-    chip.addEventListener('click', () => {
-      marcar(i);
-      const destino = grupos[i];
-      if (!destino) return;
-      // Usa el desplazamiento suave del sitio si está disponible.
-      if (window.amakiIrA) window.amakiIrA(destino);
-      else destino.scrollIntoView({ block: 'start' });
+  /* El marco toma el alto del panel visible. Sin esto quedaría un hueco
+     del tamaño del grupo más largo debajo de los grupos cortos. */
+  const ajustarAlto = () => {
+    marco.style.height = `${paneles[actual].offsetHeight}px`;
+  };
+
+  const mostrar = (i, mover = true) => {
+    actual = Math.max(0, Math.min(i, paneles.length - 1));
+
+    pista.style.transform = `translateX(-${actual * 100}%)`;
+
+    paneles.forEach((panel, j) => {
+      const activo = j === actual;
+      panel.dataset.activo = activo ? 'si' : 'no';
+      // Los grupos ocultos no deben recibir el foco del teclado.
+      panel.inert = !activo;
     });
+
+    chips.forEach((c, j) => c.setAttribute('aria-selected', String(j === actual)));
+
+    if (antes) antes.disabled = actual === 0;
+    if (despues) despues.disabled = actual === paneles.length - 1;
+    if (cuenta) cuenta.textContent = `${actual + 1} / ${paneles.length}`;
+
+    ajustarAlto();
+
+    // La pestaña activa se mantiene a la vista en la fila de filtros.
+    if (mover) chips[actual]?.scrollIntoView({ block: 'nearest', inline: 'center' });
+  };
+
+  chips.forEach((chip, i) => chip.addEventListener('click', () => mostrar(i)));
+  antes?.addEventListener('click', () => mostrar(actual - 1));
+  despues?.addEventListener('click', () => mostrar(actual + 1));
+
+  // Flechas del teclado sobre las pestañas.
+  document.querySelector('.carta__nav')?.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { mostrar(actual + 1); chips[actual].focus(); }
+    if (e.key === 'ArrowLeft')  { mostrar(actual - 1); chips[actual].focus(); }
   });
 
-  const vigia = new IntersectionObserver(entradas => {
-    for (const e of entradas) {
-      if (!e.isIntersecting) continue;
-      const i = grupos.indexOf(e.target);
-      if (i > -1) marcar(i);
-    }
-  }, { rootMargin: '-20% 0px -70% 0px' });
+  /* Deslizar con el dedo. Solo cuenta si el gesto es más horizontal que
+     vertical, para no robarle el desplazamiento normal a la página. */
+  let x0 = null, y0 = null;
+  marco.addEventListener('touchstart', e => {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
 
-  grupos.forEach(g => g && vigia.observe(g));
+  marco.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      mostrar(actual + (dx < 0 ? 1 : -1));
+    }
+    x0 = y0 = null;
+  }, { passive: true });
+
+  // El alto cambia si cambia el ancho de la ventana o al cargar las fuentes.
+  new ResizeObserver(ajustarAlto).observe(paneles[0].parentElement);
+  addEventListener('resize', ajustarAlto);
+  document.fonts?.ready.then(ajustarAlto);
+
+  mostrar(0, false);
 })();
 
 

@@ -209,7 +209,9 @@
       <button class="chip" role="tab" aria-selected="false" data-ir="g-adiciones">Adiciones</button>
     </div>
 
-    <div class="grupo rev" id="g-ejecutivo">
+    <div class="carta__marco rev">
+      <div class="carta__pista" id="carta-pista">
+<div class="carta__panel" id="g-ejecutivo">
       <h3 class="grupo__titulo">Almuerzo ejecutivo <span class="grupo__nota">Lunes a sábado</span></h3>
       <article class="plato">
         <h4 class="plato__nombre">Almuerzo del día</h4><span class="plato__precio">$ 15.000</span>
@@ -217,7 +219,7 @@
       </article>
     </div>
 
-    <div class="grupo rev" id="g-entradas">
+    <div class="carta__panel" id="g-entradas">
       <h3 class="grupo__titulo">Entradas</h3>
       <article class="plato">
         <h4 class="plato__nombre">Chorizo ahumado</h4><span class="plato__precio">$ 20.000</span>
@@ -241,7 +243,7 @@
       </article>
     </div>
 
-    <div class="grupo rev" id="g-fuertes">
+    <div class="carta__panel" id="g-fuertes">
       <h3 class="grupo__titulo">Platos fuertes <span class="grupo__nota">Del río y del campo</span></h3>
       <article class="plato">
         <h4 class="plato__nombre">Milanesa de pirarucú</h4><span class="plato__precio">$ 55.000</span>
@@ -305,7 +307,7 @@
       </article>
     </div>
 
-    <div class="grupo rev" id="g-hamburguesas">
+    <div class="carta__panel" id="g-hamburguesas">
       <h3 class="grupo__titulo">Hamburguesas</h3>
       <article class="plato">
         <h4 class="plato__nombre">Hamburguesa tradicional</h4><span class="plato__precio">$ 18.000</span>
@@ -317,7 +319,7 @@
       </article>
     </div>
 
-    <div class="grupo rev" id="g-bocaditos">
+    <div class="carta__panel" id="g-bocaditos">
       <h3 class="grupo__titulo">Bocaditos</h3>
       <article class="plato">
         <h4 class="plato__nombre">Perro americano</h4><span class="plato__precio">$ 15.000</span>
@@ -353,7 +355,7 @@
       </article>
     </div>
 
-    <div class="grupo rev" id="g-bebidas">
+    <div class="carta__panel" id="g-bebidas">
       <h3 class="grupo__titulo">Bebidas <span class="grupo__nota">De la selva y de la casa</span></h3>
       <div class="columnas">
         <article class="plato"><h4 class="plato__nombre">Refrescante de arazá</h4><span class="plato__precio">$ 16.000</span></article>
@@ -377,7 +379,7 @@
       </div>
     </div>
 
-    <div class="grupo rev" id="g-adiciones">
+    <div class="carta__panel" id="g-adiciones">
       <h3 class="grupo__titulo">Adiciones <span class="grupo__nota">$ 6.000 cada una</span></h3>
       <div class="adiciones">
         <span class="tag">Puré del momento</span>
@@ -389,6 +391,18 @@
         <span class="tag">Bastones de yuca</span>
         <span class="tag">Patacón</span>
       </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="carta__pasos">
+      <button class="paso" id="carta-antes" type="button" aria-label="Grupo anterior">
+        <span aria-hidden="true">&#8592;</span>
+      </button>
+      <p class="carta__cuenta" id="carta-cuenta" aria-live="polite">1 / 7</p>
+      <button class="paso" id="carta-despues" type="button" aria-label="Grupo siguiente">
+        <span aria-hidden="true">&#8594;</span>
+      </button>
     </div>
   </section>
 

@@ -11,8 +11,50 @@
 .chip[aria-selected="true"]{background:var(--acento);border-color:var(--acento);
   color:var(--fondo)}
 
-.grupo{margin-bottom:clamp(2.6rem,6vw,4rem)}
-.grupo:last-child{margin-bottom:0}
+/* ═══ Carrusel de grupos ═══
+   Los siete grupos existen siempre en la página —así los indexa Google—
+   pero solo uno ocupa espacio a la vez. El alto del marco se ajusta al
+   panel visible, de modo que la sección nunca queda con un vacío. */
+.carta__marco{
+  position:relative;overflow:hidden;
+  transition:height .55s cubic-bezier(.4,0,.2,1);
+}
+.carta__pista{
+  display:flex;align-items:flex-start;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.carta__panel{
+  flex:0 0 100%;width:100%;
+  padding-inline:1px;          /* evita que el borde se recorte al desplazar */
+  opacity:.3;transition:opacity .45s ease;
+}
+.carta__panel[data-activo="si"]{opacity:1}
+
+/* Pasos y contador */
+.carta__pasos{
+  display:flex;align-items:center;justify-content:center;gap:1.4rem;
+  margin-top:clamp(1.8rem,4vw,2.6rem);
+}
+.paso{
+  width:2.9rem;height:2.9rem;border-radius:50%;cursor:pointer;
+  background:none;border:1px solid var(--linea);color:var(--acento);
+  font-size:1rem;line-height:1;display:grid;place-items:center;
+  transition:border-color .35s,background .35s,color .35s,opacity .35s;
+}
+.paso:hover:not(:disabled){border-color:var(--acento);background:var(--acento);
+  color:var(--fondo)}
+.paso:disabled{opacity:.25;cursor:default}
+.carta__cuenta{
+  margin:0;font-size:.78rem;letter-spacing:.24em;color:var(--tinta-suave);
+  font-variant-numeric:tabular-nums;min-width:4.5rem;text-align:center;
+}
+
+/* Sin movimiento: el cambio es inmediato, sin deslizamiento. */
+@media (prefers-reduced-motion:reduce){
+  .carta__marco,.carta__pista{transition:none}
+}
+
 .grupo__titulo{
   font-size:clamp(1.4rem,3.4vw,2.1rem);color:var(--acento);
   padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
