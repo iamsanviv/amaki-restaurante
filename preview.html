@@ -511,12 +511,30 @@ p:last-child{margin-bottom:0}
   position:absolute;inset:0;width:100%;height:100%;
   display:flex;flex-direction:column;justify-content:flex-end;
   gap:1rem;padding:1.1rem;cursor:pointer;text-align:left;
-  font:inherit;color:var(--tinta);border:0;
-  background:
-    linear-gradient(180deg,transparent 35%,rgba(31,13,4,.9) 100%),
-    linear-gradient(150deg,
-      color-mix(in srgb,var(--verde) 42%,transparent),
-      color-mix(in srgb,var(--marron) 55%,transparent));
+  font:inherit;color:var(--tinta);border:0;overflow:hidden;
+  /* Fondo de reserva mientras no hay portada. */
+  background:linear-gradient(150deg,
+    color-mix(in srgb,var(--verde) 42%,transparent),
+    color-mix(in srgb,var(--marron) 55%,transparent));
+}
+
+/* La portada del reel. */
+.clip__portada{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s cubic-bezier(.2,.8,.2,1),filter .5s ease;
+}
+.clip:hover .clip__portada{transform:scale(1.05)}
+
+/* Desvanecimiento inferior: la foto se disuelve hacia el color del sitio
+   para que el nombre del creador se lea sin una franja dura encima. */
+.clip__abrir::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(31,13,4,0)    0%,
+    rgba(31,13,4,.06) 42%,
+    rgba(31,13,4,.45) 62%,
+    rgba(31,13,4,.82) 80%,
+    rgba(31,13,4,.96) 100%);
 }
 .clip__play{
   position:absolute;top:50%;left:50%;translate:-50% -50%;
@@ -533,7 +551,9 @@ p:last-child{margin-bottom:0}
 .clip:hover .clip__play{background:var(--acento);border-color:var(--acento);scale:1.06}
 .clip:hover .clip__play::after{border-left-color:var(--fondo)}
 
-.clip__quien{display:grid;gap:.16rem;position:relative}
+/* Ambos por encima del desvanecimiento; el botón conserva su centrado. */
+.clip__play{z-index:1}
+.clip__quien{display:grid;gap:.16rem;position:relative;z-index:1}
 .clip__quien b{font-family:var(--f-display);font-weight:400;font-size:1.06rem;
   color:var(--acento);letter-spacing:.02em;line-height:1.2}
 .clip__quien i{font-style:normal;font-size:.76rem;letter-spacing:.06em;
@@ -1288,6 +1308,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DQsbDxdCR6s"
                 aria-label="Ver el reel de Natalia Beltrán en Instagram">
+          <img class="clip__portada" src="assets/img/reel-natalia.jpg" alt="Natalia Beltrán con un cóctel de AMAKI" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Natalia Beltrán</b>
@@ -1299,6 +1320,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DQr4xTMEuIQ"
                 aria-label="Ver el reel de Andrés Melgar en Instagram">
+          <img class="clip__portada" src="assets/img/reel-andres.jpg" alt="Andrés Melgar con una bebida de AMAKI" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Andrés Melgar</b>
@@ -1310,6 +1332,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DRSsQtxAeYx"
                 aria-label="Ver el reel de Alejandra Santos en Instagram">
+          <img class="clip__portada" src="assets/img/reel-alejandra.jpg" alt="Alejandra Santos con una copa en AMAKI" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Alejandra Santos</b>
@@ -1325,6 +1348,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DUI0fA6AMfa"
                 aria-label="Ver el video de cómo llegar a AMAKI">
+          <img class="clip__portada" src="assets/img/reel-como-llegar.jpg" alt="" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Cómo llegar</b>
@@ -1335,6 +1359,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DUv35mKj8BX"
                 aria-label="Ver el video del menú infantil">
+          <img class="clip__portada" src="assets/img/reel-menu-infantil.jpg" alt="" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Menú infantil</b>
@@ -1345,6 +1370,7 @@ p:last-child{margin-bottom:0}
       <article class="clip">
         <button class="clip__abrir" type="button" data-reel="DVHzFHdDfOl"
                 aria-label="Ver el video de los almuerzos ejecutivos">
+          <img class="clip__portada" src="assets/img/reel-ejecutivo.jpg" alt="" loading="lazy" width="1080" height="1920" />
           <span class="clip__play" aria-hidden="true"></span>
           <span class="clip__quien">
             <b>Almuerzo ejecutivo</b>
@@ -1731,6 +1757,13 @@ p:last-child{margin-bottom:0}
 (() => {
   const botones = document.querySelectorAll('.clip__abrir');
   if (!botones.length) return;
+
+  /* Si una portada aún no existe, se retira y la tarjeta se queda con su
+     fondo de reserva. Así no aparece el icono de imagen rota. */
+  document.querySelectorAll('.clip__portada').forEach(img => {
+    img.addEventListener('error', () => img.remove(), { once: true });
+    if (img.complete && img.naturalWidth === 0) img.remove();
+  });
 
   botones.forEach(boton => {
     boton.addEventListener('click', () => {

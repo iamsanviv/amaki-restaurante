@@ -9,6 +9,13 @@
   const botones = document.querySelectorAll('.clip__abrir');
   if (!botones.length) return;
 
+  /* Si una portada aún no existe, se retira y la tarjeta se queda con su
+     fondo de reserva. Así no aparece el icono de imagen rota. */
+  document.querySelectorAll('.clip__portada').forEach(img => {
+    img.addEventListener('error', () => img.remove(), { once: true });
+    if (img.complete && img.naturalWidth === 0) img.remove();
+  });
+
   botones.forEach(boton => {
     boton.addEventListener('click', () => {
       const codigo = boton.dataset.reel;
