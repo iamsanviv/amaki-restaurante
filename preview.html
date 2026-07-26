@@ -45,16 +45,16 @@
   --beige:#F3CA9B;
   --marron:#4D2000;
 
-  /* Tema claro — el principal */
-  --fondo:#F8E7CF;
-  --fondo-alt:#F3CA9B;
-  --tinta:#3A1800;
-  --tinta-suave:rgba(58,24,0,.72);
-  --acento:#4D2000;
-  --realce:#384C23;
-  --linea:rgba(77,32,0,.22);
-  --sombra:0 18px 50px -28px rgba(77,32,0,.55);
-  --grano:.04;
+  /* Paleta del sitio — selva de noche */
+  --fondo:#2B1206;               /* tierra profunda, derivada del marrón */
+  --fondo-alt:#1F0D04;           /* secciones alternas */
+  --tinta:#EDDCC6;               /* texto */
+  --tinta-suave:rgba(237,220,198,.66);
+  --acento:#F3CA9B;              /* títulos, logotipo, precios */
+  --realce:#F3CA9B;
+  --linea:rgba(243,202,155,.22);
+  --sombra:0 18px 50px -28px rgba(0,0,0,.8);
+  --grano:.06;
 
   /* Familias */
   --f-grandeur:"TAN Grandeur","Bodoni MT",Didot,Georgia,serif;
@@ -72,22 +72,6 @@
   --r-titulo:clamp(1.1rem,2.4vw,1.8rem);   /* título → párrafo     */
 }
 
-/* Tema oscuro */
-:root[data-tema="oscuro"]{
-  --fondo:#2B1206;
-  --fondo-alt:#1F0D04;
-  --tinta:#EDDCC6;
-  --tinta-suave:rgba(237,220,198,.66);
-  --acento:#F3CA9B;
-  --realce:#F3CA9B;
-  --linea:rgba(243,202,155,.22);
-  --sombra:0 18px 50px -28px rgba(0,0,0,.8);
-  --grano:.06;
-}
-
-/* Comparador tipográfico: texto corrido en Mignon */
-:root[data-parrafos="mignon"]{--f-body:var(--f-mignon)}
-
 
 /* ══ assets/css/3-base.css ══ */
 /* ═══════════ Base: reset, fondo y escala tipográfica ═══════════ */
@@ -101,21 +85,11 @@ body{
   font-size:clamp(1rem,.96rem + .22vw,1.09rem);
   line-height:1.72;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
-  transition:background .6s ease,color .6s ease;
-}
-:root[data-parrafos="mignon"] body{
-  font-size:clamp(1.06rem,1rem + .32vw,1.2rem);line-height:1.85;
 }
 
 /* Atmósfera: neblinas de color y grano */
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.16),transparent 68%),
-    radial-gradient(55% 40% at 96% 26%,rgba(77,32,0,.10),transparent 72%),
-    radial-gradient(60% 45% at 50% 108%,rgba(243,202,155,.5),transparent 70%);
-}
-:root[data-tema="oscuro"] body::before{
   background:
     radial-gradient(70% 50% at 15% 0%,rgba(56,76,35,.55),transparent 65%),
     radial-gradient(60% 45% at 95% 30%,rgba(77,32,0,.65),transparent 70%);
@@ -522,15 +496,6 @@ p:last-child{margin-bottom:0}
 .boton:hover{color:var(--fondo)}
 .boton:hover::before{transform:none}
 
-/* Botón discreto de la barra (tema y tipografía) */
-.boton-nav{
-  background:none;border:1px solid var(--linea);color:var(--tinta-suave);
-  font:inherit;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  padding:.5rem .9rem;cursor:pointer;border-radius:99px;
-  transition:border-color .3s,color .3s;white-space:nowrap;
-}
-.boton-nav:hover{border-color:var(--realce);color:var(--acento)}
-
 .cita{text-align:center;font-family:var(--f-display);
   font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
   max-width:22ch;margin-inline:auto;line-height:1.18}
@@ -588,8 +553,6 @@ p:last-child{margin-bottom:0}
         <li><a href="#visita">Visítanos</a></li>
       </ul>
     </nav>
-    <button class="boton-nav" id="btn-parrafos" type="button" aria-live="polite">Párrafos: Nourd</button>
-    <button class="boton-nav" id="btn-tema" type="button" aria-live="polite">Tema oscuro</button>
   </div>
 </header>
 
@@ -1064,38 +1027,6 @@ p:last-child{margin-bottom:0}
 </footer>
 
 <script>
-/* ══ assets/js/tema.js ══ */
-/* Tema claro / oscuro y comparador de tipografía del texto corrido.
-   Ambos escriben un data-attribute en <html>; el CSS hace el resto. */
-
-(() => {
-  const raiz = document.documentElement;
-
-  const alternar = (boton, atributo, valores, etiqueta) => {
-    if (!boton) return;
-    raiz.dataset[atributo] = valores[0];
-    boton.addEventListener('click', () => {
-      const actual = raiz.dataset[atributo];
-      const siguiente = actual === valores[0] ? valores[1] : valores[0];
-      raiz.dataset[atributo] = siguiente;
-      boton.textContent = etiqueta(siguiente);
-    });
-  };
-
-  alternar(
-    document.getElementById('btn-tema'),
-    'tema', ['claro', 'oscuro'],
-    v => (v === 'oscuro' ? 'Tema claro' : 'Tema oscuro')
-  );
-
-  alternar(
-    document.getElementById('btn-parrafos'),
-    'parrafos', ['nourd', 'mignon'],
-    v => (v === 'mignon' ? 'Párrafos: Mignon' : 'Párrafos: Nourd')
-  );
-})();
-
-
 /* ══ assets/js/navegacion.js ══ */
 /* La barra superior se vuelve sólida y muestra la marca
    en cuanto la portada deja de estar a la vista. */

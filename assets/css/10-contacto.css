@@ -27,15 +27,6 @@
 .boton:hover{color:var(--fondo)}
 .boton:hover::before{transform:none}
 
-/* Botón discreto de la barra (tema y tipografía) */
-.boton-nav{
-  background:none;border:1px solid var(--linea);color:var(--tinta-suave);
-  font:inherit;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
-  padding:.5rem .9rem;cursor:pointer;border-radius:99px;
-  transition:border-color .3s,color .3s;white-space:nowrap;
-}
-.boton-nav:hover{border-color:var(--realce);color:var(--acento)}
-
 .cita{text-align:center;font-family:var(--f-display);
   font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
   max-width:22ch;margin-inline:auto;line-height:1.18}

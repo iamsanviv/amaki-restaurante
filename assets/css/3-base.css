@@ -9,21 +9,11 @@ body{
   font-size:clamp(1rem,.96rem + .22vw,1.09rem);
   line-height:1.72;overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
-  transition:background .6s ease,color .6s ease;
-}
-:root[data-parrafos="mignon"] body{
-  font-size:clamp(1.06rem,1rem + .32vw,1.2rem);line-height:1.85;
 }
 
 /* Atmósfera: neblinas de color y grano */
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(65% 45% at 12% 0%,rgba(56,76,35,.16),transparent 68%),
-    radial-gradient(55% 40% at 96% 26%,rgba(77,32,0,.10),transparent 72%),
-    radial-gradient(60% 45% at 50% 108%,rgba(243,202,155,.5),transparent 70%);
-}
-:root[data-tema="oscuro"] body::before{
   background:
     radial-gradient(70% 50% at 15% 0%,rgba(56,76,35,.55),transparent 65%),
     radial-gradient(60% 45% at 95% 30%,rgba(77,32,0,.65),transparent 70%);
