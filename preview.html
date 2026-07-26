@@ -120,9 +120,9 @@ p:last-child{margin-bottom:0}
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}
-/* Mignon no trae cursiva: el énfasis cambia a Nourd Light */
-.titulo em{font-style:normal;font-family:var(--f-nourd);font-weight:300;
-  color:var(--tinta);letter-spacing:-.01em;font-size:.92em}
+/* El énfasis no cambia de fuente: dentro de una misma frase se mantiene
+   Mignon y el contraste se hace solo con el color. */
+.titulo em{font-style:normal;font-family:inherit;color:var(--tinta)}
 .titulo--menor{font-size:clamp(1.6rem,4vw,2.6rem)}
 .tenue{color:var(--tinta-suave)}
 .nota-pie{font-size:.88rem;margin-top:1.2rem}
@@ -255,18 +255,16 @@ p:last-child{margin-bottom:0}
 }
 
 /* ── Versión reducida, para la barra superior ──
-   A tamaño de barra (unos 22 px de caja) el "DESDE 2025" quedaría en 2 px
-   y el subtítulo en 4 px: manchas ilegibles que ensucian la marca. Por eso
-   la barra usa solo el nombre, con las mismas letras, las mismas fuentes y
-   las mismas separaciones que el logotipo completo. El nombre íntegro
-   —incluido "Desde 2025"— sigue estando en el texto para buscadores y
-   lectores de pantalla, y el logotipo completo vive en la portada. */
-.marca--nav{font-size:clamp(1.15rem,4.6vw,1.42rem);line-height:1}
-.marca--nav .marca__nota,
-.marca--nav .marca__sub{display:none}
+   Lleva el nombre y el subtítulo con EXACTAMENTE las mismas proporciones
+   del logotipo: el subtítulo sigue midiendo 0,771 del ancho de AMAKI y
+   conserva su desplazamiento a la derecha. Lo único que cambia es la
+   escala, elegida para que el subtítulo siga siendo legible.
+   Se omite el "DESDE 2025", que a este tamaño quedaría en 2 px. */
+.marca--nav{font-size:clamp(1.78rem,5.4vw,2.05rem);line-height:1}
+.marca--nav .marca__nota{display:none}
 .marca--nav .marca__fila{gap:0}
-.marca--nav .marca__nombre{padding-top:.62em}
-.marca--nav .marca__nombre span{animation:none;opacity:1;transform:none}
+.marca--nav .marca__nombre span,
+.marca--nav .marca__sub{animation:none;opacity:1;transform:none}
 
 .marca__fila{
   display:flex;align-items:center;justify-content:center;
@@ -438,7 +436,8 @@ p:last-child{margin-bottom:0}
   padding-bottom:.7rem;border-bottom:1px solid var(--linea);margin-bottom:.4rem;
   display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
 }
-.grupo__nota{font-family:var(--f-body);font-size:.72rem;letter-spacing:.22em;
+/* Va en la misma línea que el título: comparte su fuente. */
+.grupo__nota{font-family:var(--f-display);font-size:.9rem;letter-spacing:.16em;
   text-transform:uppercase;color:var(--tinta-suave)}
 
 .plato{
@@ -1155,6 +1154,79 @@ p:last-child{margin-bottom:0}
 })();
 
 
+/* ══ assets/js/desplazamiento.js ══ */
+/* Desplazamiento suave entre secciones.
+   El del navegador es brusco y no se puede ajustar; este usa una curva
+   de aceleración propia y una duración proporcional a la distancia,
+   de modo que un salto corto no se arrastre y uno largo no se dispare. */
+
+(() => {
+  const raiz = document.documentElement;
+  const quietud = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // El navegador no debe interferir con su propio scroll suave.
+  if (!quietud.matches) raiz.style.scrollBehavior = 'auto';
+
+  const barra = () => document.getElementById('nav')?.offsetHeight ?? 0;
+
+  // Suave al arrancar y al frenar, sin rebote.
+  const curva = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  let animacion = null;
+
+  const irA = destino => {
+    if (animacion) cancelAnimationFrame(animacion);
+
+    const desde = window.scrollY;
+    const tope = document.body.scrollHeight - innerHeight;
+    const hasta = Math.min(
+      Math.max(destino.getBoundingClientRect().top + desde - barra() - 8, 0),
+      tope
+    );
+    const recorrido = hasta - desde;
+    if (Math.abs(recorrido) < 2) return;
+
+    // Entre 620 ms y 1250 ms según lo lejos que quede la sección.
+    const duracion = Math.min(1250, Math.max(620, Math.abs(recorrido) * 0.55));
+    const inicio = performance.now();
+
+    const paso = ahora => {
+      const t = Math.min((ahora - inicio) / duracion, 1);
+      scrollTo(0, desde + recorrido * curva(t));
+      if (t < 1) animacion = requestAnimationFrame(paso);
+      else animacion = null;
+    };
+    animacion = requestAnimationFrame(paso);
+  };
+
+  // Cualquier enlace interno usa este desplazamiento.
+  document.addEventListener('click', e => {
+    const enlace = e.target.closest('a[href^="#"]');
+    if (!enlace) return;
+
+    const id = enlace.getAttribute('href').slice(1);
+    const destino = id && document.getElementById(id);
+    if (!destino) return;
+
+    e.preventDefault();
+    history.replaceState(null, '', `#${id}`);
+
+    if (quietud.matches) destino.scrollIntoView();
+    else irA(destino);
+  });
+
+  // Si la persona toma el control, la animación se detiene.
+  ['wheel', 'touchstart', 'keydown'].forEach(evento =>
+    addEventListener(evento, () => {
+      if (animacion) { cancelAnimationFrame(animacion); animacion = null; }
+    }, { passive: true })
+  );
+
+  // Los filtros de la carta comparten el mismo desplazamiento.
+  window.amakiIrA = irA;
+})();
+
+
 /* ══ assets/js/carta.js ══ */
 /* Filtros de la carta: al pulsar un chip se baja al grupo,
    y al desplazarse el chip activo sigue al grupo visible. */
@@ -1170,7 +1242,11 @@ p:last-child{margin-bottom:0}
   chips.forEach((chip, i) => {
     chip.addEventListener('click', () => {
       marcar(i);
-      grupos[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const destino = grupos[i];
+      if (!destino) return;
+      // Usa el desplazamiento suave del sitio si está disponible.
+      if (window.amakiIrA) window.amakiIrA(destino);
+      else destino.scrollIntoView({ block: 'start' });
     });
   });
 

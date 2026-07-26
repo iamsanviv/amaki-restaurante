@@ -24,18 +24,16 @@
 }
 
 /* ── Versión reducida, para la barra superior ──
-   A tamaño de barra (unos 22 px de caja) el "DESDE 2025" quedaría en 2 px
-   y el subtítulo en 4 px: manchas ilegibles que ensucian la marca. Por eso
-   la barra usa solo el nombre, con las mismas letras, las mismas fuentes y
-   las mismas separaciones que el logotipo completo. El nombre íntegro
-   —incluido "Desde 2025"— sigue estando en el texto para buscadores y
-   lectores de pantalla, y el logotipo completo vive en la portada. */
-.marca--nav{font-size:clamp(1.15rem,4.6vw,1.42rem);line-height:1}
-.marca--nav .marca__nota,
-.marca--nav .marca__sub{display:none}
+   Lleva el nombre y el subtítulo con EXACTAMENTE las mismas proporciones
+   del logotipo: el subtítulo sigue midiendo 0,771 del ancho de AMAKI y
+   conserva su desplazamiento a la derecha. Lo único que cambia es la
+   escala, elegida para que el subtítulo siga siendo legible.
+   Se omite el "DESDE 2025", que a este tamaño quedaría en 2 px. */
+.marca--nav{font-size:clamp(1.78rem,5.4vw,2.05rem);line-height:1}
+.marca--nav .marca__nota{display:none}
 .marca--nav .marca__fila{gap:0}
-.marca--nav .marca__nombre{padding-top:.62em}
-.marca--nav .marca__nombre span{animation:none;opacity:1;transform:none}
+.marca--nav .marca__nombre span,
+.marca--nav .marca__sub{animation:none;opacity:1;transform:none}
 
 .marca__fila{
   display:flex;align-items:center;justify-content:center;

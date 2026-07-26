@@ -44,9 +44,9 @@ p:last-child{margin-bottom:0}
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}
-/* Mignon no trae cursiva: el énfasis cambia a Nourd Light */
-.titulo em{font-style:normal;font-family:var(--f-nourd);font-weight:300;
-  color:var(--tinta);letter-spacing:-.01em;font-size:.92em}
+/* El énfasis no cambia de fuente: dentro de una misma frase se mantiene
+   Mignon y el contraste se hace solo con el color. */
+.titulo em{font-style:normal;font-family:inherit;color:var(--tinta)}
 .titulo--menor{font-size:clamp(1.6rem,4vw,2.6rem)}
 .tenue{color:var(--tinta-suave)}
 .nota-pie{font-size:.88rem;margin-top:1.2rem}

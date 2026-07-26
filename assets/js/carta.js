@@ -12,7 +12,11 @@
   chips.forEach((chip, i) => {
     chip.addEventListener('click', () => {
       marcar(i);
-      grupos[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const destino = grupos[i];
+      if (!destino) return;
+      // Usa el desplazamiento suave del sitio si está disponible.
+      if (window.amakiIrA) window.amakiIrA(destino);
+      else destino.scrollIntoView({ block: 'start' });
     });
   });
 
