@@ -5,9 +5,12 @@
   const nav = document.getElementById('nav');
   if (!nav) return;
 
-  /* ── Fondo sólido al bajar ── */
+  /* ── Fondo sólido al bajar; el botón de WhatsApp aparece con él ── */
+  const wasap = document.getElementById('wasap');
   const actualizar = () => {
-    nav.dataset.fijo = window.scrollY > 60 ? 'si' : 'no';
+    const bajando = window.scrollY > 60;
+    nav.dataset.fijo = bajando ? 'si' : 'no';
+    if (wasap) wasap.dataset.visible = bajando ? 'si' : 'no';
   };
   actualizar();
   window.addEventListener('scroll', actualizar, { passive: true });

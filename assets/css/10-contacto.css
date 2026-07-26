@@ -27,6 +27,37 @@
 .boton:hover{color:var(--fondo)}
 .boton:hover::before{transform:none}
 
+/* ═══ Botón flotante de WhatsApp ═══
+   Aparece al dejar atrás la portada. En reposo es solo el círculo;
+   al acercar el cursor se despliega el texto. */
+.wasap{
+  position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:70;
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.85rem;border-radius:99px;text-decoration:none;
+  background:var(--acento);color:var(--fondo);
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.65);
+  opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;
+  transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1),
+             padding .35s ease,box-shadow .35s ease;
+}
+.wasap[data-visible="si"]{opacity:1;transform:none;pointer-events:auto}
+.wasap__icono{display:grid;place-items:center;width:26px;height:26px;flex:0 0 auto}
+.wasap__texto{
+  font-family:var(--f-body);font-size:.78rem;letter-spacing:.16em;
+  text-transform:uppercase;white-space:nowrap;
+  max-width:0;overflow:hidden;opacity:0;
+  transition:max-width .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease;
+}
+.wasap:hover,.wasap:focus-visible{padding-right:1.35rem;box-shadow:0 14px 34px -10px rgba(0,0,0,.75)}
+.wasap:hover .wasap__texto,
+.wasap:focus-visible .wasap__texto{max-width:9rem;opacity:1}
+
+/* En pantallas táctiles no hay hover: el texto va siempre visible. */
+@media (hover:none){
+  .wasap{padding-right:1.35rem}
+  .wasap__texto{max-width:9rem;opacity:1}
+}
+
 .cita{text-align:center;font-family:var(--f-display);
   font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
   max-width:22ch;margin-inline:auto;line-height:1.18}

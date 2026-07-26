@@ -114,9 +114,13 @@ h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;line-height:1.08;
 p{margin:0 0 1.2em;max-width:64ch}
 p:last-child{margin-bottom:0}
 
+/* El antetítulo va en Nourd y el título en Mignon: dos fuentes distintas
+   una encima de otra necesitan aire de sobra para no leerse como una sola
+   unidad. La medida se apoya en su interlínea, no en un valor suelto. */
 .eyebrow{
-  font-family:var(--f-body);font-size:.72rem;letter-spacing:.42em;
-  text-transform:uppercase;color:var(--realce);opacity:.85;margin:0 0 1.4rem;
+  font-family:var(--f-body);font-size:.74rem;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--realce);opacity:.85;
+  line-height:1.7;margin:0 0 clamp(1.25rem,2vw,1.75rem);
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}
@@ -136,9 +140,12 @@ p:last-child{margin-bottom:0}
 .seccion{padding-block:var(--r-seccion)}
 .seccion--tinte{background:var(--fondo-alt)}
 
-/* encabezado de sección: título + entradilla con aire garantizado */
+/* Encabezado de sección: antetítulo + título + entradilla.
+   Ojo: el antetítulo también es un <p>, así que esta regla debe apuntar
+   solo al último párrafo. Si no, le borra su margen inferior y el título
+   se le pega encima. */
 .cabecera{margin-bottom:var(--r-bloque);max-width:64ch}
-.cabecera p{margin-bottom:0}
+.cabecera > p:last-child{margin-bottom:0}
 .cabecera--aparte{margin-top:var(--r-seccion)}
 
 /* Dos columnas */
@@ -548,6 +555,37 @@ p:last-child{margin-bottom:0}
   transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
 .boton:hover{color:var(--fondo)}
 .boton:hover::before{transform:none}
+
+/* ═══ Botón flotante de WhatsApp ═══
+   Aparece al dejar atrás la portada. En reposo es solo el círculo;
+   al acercar el cursor se despliega el texto. */
+.wasap{
+  position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:70;
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.85rem;border-radius:99px;text-decoration:none;
+  background:var(--acento);color:var(--fondo);
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.65);
+  opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;
+  transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1),
+             padding .35s ease,box-shadow .35s ease;
+}
+.wasap[data-visible="si"]{opacity:1;transform:none;pointer-events:auto}
+.wasap__icono{display:grid;place-items:center;width:26px;height:26px;flex:0 0 auto}
+.wasap__texto{
+  font-family:var(--f-body);font-size:.78rem;letter-spacing:.16em;
+  text-transform:uppercase;white-space:nowrap;
+  max-width:0;overflow:hidden;opacity:0;
+  transition:max-width .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease;
+}
+.wasap:hover,.wasap:focus-visible{padding-right:1.35rem;box-shadow:0 14px 34px -10px rgba(0,0,0,.75)}
+.wasap:hover .wasap__texto,
+.wasap:focus-visible .wasap__texto{max-width:9rem;opacity:1}
+
+/* En pantallas táctiles no hay hover: el texto va siempre visible. */
+@media (hover:none){
+  .wasap{padding-right:1.35rem}
+  .wasap__texto{max-width:9rem;opacity:1}
+}
 
 .cita{text-align:center;font-family:var(--f-display);
   font-size:clamp(1.6rem,4.6vw,3.2rem);color:var(--acento);
@@ -1087,6 +1125,18 @@ p:last-child{margin-bottom:0}
   </section>
 </main>
 
+<a class="wasap" id="wasap"
+   href="https://wa.me/573189551594?text=Hola%20AMAKI,%20quiero%20hacer%20una%20reserva"
+   target="_blank" rel="noopener">
+  <span class="wasap__icono" aria-hidden="true">
+    <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" role="presentation">
+      <path d="M16.04 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.6 4.46 1.72 6.4L3.2 28.8l6.56-1.72a12.74 12.74 0 0 0 6.28 1.6h.01c7.05 0 12.79-5.74 12.79-12.8 0-3.42-1.33-6.63-3.75-9.05a12.71 12.71 0 0 0-9.05-3.63zm0 23.32h-.01c-1.87 0-3.7-.5-5.3-1.45l-.38-.23-3.94 1.03 1.05-3.84-.25-.4a10.6 10.6 0 0 1-1.63-5.66c0-5.87 4.78-10.64 10.65-10.64 2.85 0 5.52 1.11 7.53 3.12a10.57 10.57 0 0 1 3.11 7.53c0 5.87-4.78 10.64-10.63 10.64zm5.84-7.97c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1.01 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.89-1.78-2.21-.18-.32-.02-.5.14-.66.15-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.73-.98-2.36-.26-.62-.52-.54-.71-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.08 1.3 3.29c.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.89-.77 2.15-1.52.27-.74.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37z"/>
+    </svg>
+  </span>
+  <span class="wasap__texto">Escríbenos</span>
+  <span class="vo">Escríbenos por WhatsApp al 318 955 1594</span>
+</a>
+
 <footer class="env">
   <div class="pie">
     <span>AMAKI · Restaurante amazónico</span>
@@ -1103,9 +1153,12 @@ p:last-child{margin-bottom:0}
   const nav = document.getElementById('nav');
   if (!nav) return;
 
-  /* ── Fondo sólido al bajar ── */
+  /* ── Fondo sólido al bajar; el botón de WhatsApp aparece con él ── */
+  const wasap = document.getElementById('wasap');
   const actualizar = () => {
-    nav.dataset.fijo = window.scrollY > 60 ? 'si' : 'no';
+    const bajando = window.scrollY > 60;
+    nav.dataset.fijo = bajando ? 'si' : 'no';
+    if (wasap) wasap.dataset.visible = bajando ? 'si' : 'no';
   };
   actualizar();
   window.addEventListener('scroll', actualizar, { passive: true });

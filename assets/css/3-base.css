@@ -38,9 +38,13 @@ h1,h2,h3,h4{font-family:var(--f-display);font-weight:400;line-height:1.08;
 p{margin:0 0 1.2em;max-width:64ch}
 p:last-child{margin-bottom:0}
 
+/* El antetítulo va en Nourd y el título en Mignon: dos fuentes distintas
+   una encima de otra necesitan aire de sobra para no leerse como una sola
+   unidad. La medida se apoya en su interlínea, no en un valor suelto. */
 .eyebrow{
-  font-family:var(--f-body);font-size:.72rem;letter-spacing:.42em;
-  text-transform:uppercase;color:var(--realce);opacity:.85;margin:0 0 1.4rem;
+  font-family:var(--f-body);font-size:.74rem;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--realce);opacity:.85;
+  line-height:1.7;margin:0 0 clamp(1.25rem,2vw,1.75rem);
 }
 .titulo{font-size:clamp(2.05rem,5.6vw,3.9rem);color:var(--acento);
   margin-bottom:var(--r-titulo)}

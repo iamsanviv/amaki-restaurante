@@ -5,9 +5,12 @@
 .seccion{padding-block:var(--r-seccion)}
 .seccion--tinte{background:var(--fondo-alt)}
 
-/* encabezado de sección: título + entradilla con aire garantizado */
+/* Encabezado de sección: antetítulo + título + entradilla.
+   Ojo: el antetítulo también es un <p>, así que esta regla debe apuntar
+   solo al último párrafo. Si no, le borra su margen inferior y el título
+   se le pega encima. */
 .cabecera{margin-bottom:var(--r-bloque);max-width:64ch}
-.cabecera p{margin-bottom:0}
+.cabecera > p:last-child{margin-bottom:0}
 .cabecera--aparte{margin-top:var(--r-seccion)}
 
 /* Dos columnas */
